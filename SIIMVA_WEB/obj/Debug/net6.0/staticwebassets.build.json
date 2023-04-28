@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "hW1WgTZ1s571giMz7J8rX4gf6pTt1wvL8DoCOJDCdT0=",
+  "Source": "MOTOR_WORKFLOW",
+  "BasePath": "_content/MOTOR_WORKFLOW",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MOTOR_WORKFLOW\\wwwroot",
+      "Source": "MOTOR_WORKFLOW",
+      "ContentRoot": "D:\\NET 2018\\SIIMVA_WEB\\SIIMVA_WEB\\wwwroot\\",
+      "BasePath": "_content/MOTOR_WORKFLOW",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
