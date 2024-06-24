@@ -1,100 +1,239 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Entities.Tramite
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Entities
 {
     public class Tramite : DALBase
     {
         public int id { get; set; }
+
         public string nombre { get; set; }
+
         public string descripcion { get; set; }
+
         public DateTime fecha_crea { get; set; }
+
         public string usu_crea { get; set; }
+
         public DateTime fecha_modifica { get; set; }
+
         public string usu_modifica { get; set; }
+
         public bool activo { get; set; }
+
         public DateTime fecha_baja { get; set; }
+
         public string usu_baja { get; set; }
+
         public int id_unidad_organizativa { get; set; }
-        public string nombre_unidad_organizativa { get; set; }  
-        public string logo_unidad_administrativa { get; set; }  
+
+        public string nombre_unidad_organizativa { get; set; }
+
+        public string logo_unidad_administrativa { get; set; }
+
+        public int primer_paso { get; set; }
+
+        public List<Paso> lstPasos { get; set; }
+
         public Tramite()
         {
-            id = 0;
-            nombre = string.Empty;
-            descripcion = string.Empty;
-            fecha_crea = DateTime.Now;
-            usu_crea = string.Empty;
-            fecha_modifica = DateTime.Now;
-            usu_modifica = string.Empty;
-            activo = false;
-            fecha_baja = DateTime.Now;
-            usu_baja = string.Empty;
-            id_unidad_organizativa = 0;
-            nombre_unidad_organizativa = string.Empty;
-            logo_unidad_administrativa = string.Empty;
+            this.id = 0;
+            this.nombre = string.Empty;
+            this.descripcion = string.Empty;
+            this.fecha_crea = DateTime.Now;
+            this.usu_crea = string.Empty;
+            this.fecha_modifica = DateTime.Now;
+            this.usu_modifica = string.Empty;
+            this.activo = false;
+            this.fecha_baja = DateTime.Now;
+            this.usu_baja = string.Empty;
+            this.id_unidad_organizativa = 0;
+            this.nombre_unidad_organizativa = string.Empty;
+            this.logo_unidad_administrativa = string.Empty;
+            this.primer_paso = 0;
+            this.lstPasos = new List<Paso>();
         }
 
         private static List<Tramite> mapeo(SqlDataReader dr)
         {
-            List<Tramite> lst = new List<Tramite>();
-            Tramite obj;
+            List<Tramite> tramiteList = new List<Tramite>();
             if (dr.HasRows)
             {
-                int ID = dr.GetOrdinal("id");
-                int NOMBRE = dr.GetOrdinal("nombre");
-                int DESCRIPCION = dr.GetOrdinal("descripcion");
-                int FECHA_CREA = dr.GetOrdinal("fecha_crea");
-                int USU_CREA = dr.GetOrdinal("usu_crea");
-                int FECHA_MODIFICA = dr.GetOrdinal("fecha_modifica");
-                int USU_MODIFICA = dr.GetOrdinal("usu_modifica");
-                int ACTIVO = dr.GetOrdinal("activo");
-                int FECHA_BAJA = dr.GetOrdinal("fecha_baja");
-                int USU_BAJA = dr.GetOrdinal("usu_baja");
-                int ID_UNIDAD_ORGANIZATIVA = dr.GetOrdinal("id_unidad_organizativa");
-                int nombre_unidad_organizativa = dr.GetOrdinal("nombre_unidad_organizativa");
-                int logo_unidad_administrativa = dr.GetOrdinal("logo_unidad_administrativa");
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("nombre");
+                int ordinal3 = dr.GetOrdinal("descripcion");
+                int ordinal4 = dr.GetOrdinal("fecha_crea");
+                int ordinal5 = dr.GetOrdinal("usu_crea");
+                int ordinal6 = dr.GetOrdinal("fecha_modifica");
+                int ordinal7 = dr.GetOrdinal("usu_modifica");
+                int ordinal8 = dr.GetOrdinal("activo");
+                int ordinal9 = dr.GetOrdinal("fecha_baja");
+                int ordinal10 = dr.GetOrdinal("usu_baja");
+                int ordinal11 = dr.GetOrdinal("ID_UNIDAD_ORGANIZATIVA");
+                int ordinal12 = dr.GetOrdinal("nombre_unidad_organizativa");
+                int ordinal13 = dr.GetOrdinal("logo_unidad_administrativa");
                 while (dr.Read())
                 {
-                    obj = new Tramite();
-                    if (!dr.IsDBNull(ID)) { obj.id = dr.GetInt32(ID); }
-                    if (!dr.IsDBNull(NOMBRE)) { obj.nombre = dr.GetString(NOMBRE); }
-                    if (!dr.IsDBNull(DESCRIPCION)) { obj.descripcion = dr.GetString(DESCRIPCION); }
-                    if (!dr.IsDBNull(FECHA_CREA)) { obj.fecha_crea = dr.GetDateTime(FECHA_CREA); }
-                    if (!dr.IsDBNull(USU_CREA)) { obj.usu_crea = dr.GetString(USU_CREA); }
-                    if (!dr.IsDBNull(FECHA_MODIFICA)) { obj.fecha_modifica = dr.GetDateTime(FECHA_MODIFICA); }
-                    if (!dr.IsDBNull(USU_MODIFICA)) { obj.usu_modifica = dr.GetString(USU_MODIFICA); }
-                    if (!dr.IsDBNull(ACTIVO)) { obj.activo = dr.GetBoolean(ACTIVO); }
-                    if (!dr.IsDBNull(FECHA_BAJA)) { obj.fecha_baja = dr.GetDateTime(FECHA_BAJA); }
-                    if (!dr.IsDBNull(USU_BAJA)) { obj.usu_baja = dr.GetString(USU_BAJA); }
-                    if (!dr.IsDBNull(ID_UNIDAD_ORGANIZATIVA)) { obj.id_unidad_organizativa = dr.GetInt32(ID_UNIDAD_ORGANIZATIVA); }
-                    if (!dr.IsDBNull(nombre_unidad_organizativa)) { obj.nombre_unidad_organizativa = dr.GetString(nombre_unidad_organizativa); }
-                    if (!dr.IsDBNull(logo_unidad_administrativa)) { obj.logo_unidad_administrativa = dr.GetString(logo_unidad_administrativa); }
-
-                    lst.Add(obj);
+                    Tramite tramite = new Tramite();
+                    if (!dr.IsDBNull(ordinal1))
+                        tramite.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        tramite.nombre = dr.GetString(ordinal2);
+                    if (!dr.IsDBNull(ordinal3))
+                        tramite.descripcion = dr.GetString(ordinal3);
+                    if (!dr.IsDBNull(ordinal4))
+                        tramite.fecha_crea = dr.GetDateTime(ordinal4);
+                    if (!dr.IsDBNull(ordinal5))
+                        tramite.usu_crea = dr.GetString(ordinal5);
+                    if (!dr.IsDBNull(ordinal6))
+                        tramite.fecha_modifica = dr.GetDateTime(ordinal6);
+                    if (!dr.IsDBNull(ordinal7))
+                        tramite.usu_modifica = dr.GetString(ordinal7);
+                    if (!dr.IsDBNull(ordinal8))
+                        tramite.activo = dr.GetBoolean(ordinal8);
+                    if (!dr.IsDBNull(ordinal9))
+                        tramite.fecha_baja = dr.GetDateTime(ordinal9);
+                    if (!dr.IsDBNull(ordinal10))
+                        tramite.usu_baja = dr.GetString(ordinal10);
+                    if (!dr.IsDBNull(ordinal11))
+                        tramite.id_unidad_organizativa = dr.GetInt32(ordinal11);
+                    if (!dr.IsDBNull(ordinal12))
+                        tramite.nombre_unidad_organizativa = dr.GetString(ordinal12);
+                    if (!dr.IsDBNull(ordinal13))
+                        tramite.logo_unidad_administrativa = dr.GetString(ordinal13);
+                    tramiteList.Add(tramite);
                 }
             }
-            return lst;
+            return tramiteList;
+        }
+
+        private static List<Tramite> mapeoCompleto(SqlDataReader dr)
+        {
+            List<Tramite> tramiteList = new List<Tramite>();
+            if (dr.HasRows)
+            {
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("nombre");
+                int ordinal3 = dr.GetOrdinal("descripcion");
+                int ordinal4 = dr.GetOrdinal("fecha_crea");
+                int ordinal5 = dr.GetOrdinal("usu_crea");
+                int ordinal6 = dr.GetOrdinal("fecha_modifica");
+                int ordinal7 = dr.GetOrdinal("usu_modifica");
+                int ordinal8 = dr.GetOrdinal("activo");
+                int ordinal9 = dr.GetOrdinal("fecha_baja");
+                int ordinal10 = dr.GetOrdinal("usu_baja");
+                int ordinal11 = dr.GetOrdinal("ID_UNIDAD_ORGANIZATIVA");
+                int ordinal12 = dr.GetOrdinal("nombre_unidad_organizativa");
+                int ordinal13 = dr.GetOrdinal("logo_unidad_administrativa");
+                while (dr.Read())
+                {
+                    Tramite tramite = new Tramite();
+                    if (!dr.IsDBNull(ordinal1))
+                        tramite.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        tramite.nombre = dr.GetString(ordinal2);
+                    if (!dr.IsDBNull(ordinal3))
+                        tramite.descripcion = dr.GetString(ordinal3);
+                    if (!dr.IsDBNull(ordinal4))
+                        tramite.fecha_crea = dr.GetDateTime(ordinal4);
+                    if (!dr.IsDBNull(ordinal5))
+                        tramite.usu_crea = dr.GetString(ordinal5);
+                    if (!dr.IsDBNull(ordinal6))
+                        tramite.fecha_modifica = dr.GetDateTime(ordinal6);
+                    if (!dr.IsDBNull(ordinal7))
+                        tramite.usu_modifica = dr.GetString(ordinal7);
+                    if (!dr.IsDBNull(ordinal8))
+                        tramite.activo = dr.GetBoolean(ordinal8);
+                    if (!dr.IsDBNull(ordinal9))
+                        tramite.fecha_baja = dr.GetDateTime(ordinal9);
+                    if (!dr.IsDBNull(ordinal10))
+                        tramite.usu_baja = dr.GetString(ordinal10);
+                    if (!dr.IsDBNull(ordinal11))
+                        tramite.id_unidad_organizativa = dr.GetInt32(ordinal11);
+                    if (!dr.IsDBNull(ordinal12))
+                        tramite.nombre_unidad_organizativa = dr.GetString(ordinal12);
+                    if (!dr.IsDBNull(ordinal13))
+                        tramite.logo_unidad_administrativa = dr.GetString(ordinal13);
+                    tramite.lstPasos = Paso.readEnUsuario(tramite.id);
+                    tramiteList.Add(tramite);
+                }
+            }
+            return tramiteList;
         }
 
         public static List<Tramite> read()
         {
             try
             {
-                List<Tramite> lst = new List<Tramite>();
-                using (SqlConnection con = GetConnection())
+                List<Tramite> tramiteList = new List<Tramite>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Tramite";
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT A.*,                                (SELECT TOP 1 ID FROM PASO B WHERE ID_TRAMITE = A.ID                                 ORDER BY B.ORDEN ASC)                                AS primer_paso                                FROM TRAMITE A                                WHERE ACTIVO = 1";
+                    command.Connection.Open();
+                    SqlDataReader sqlDataReader = command.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        int ordinal1 = sqlDataReader.GetOrdinal("id");
+                        int ordinal2 = sqlDataReader.GetOrdinal("nombre");
+                        int ordinal3 = sqlDataReader.GetOrdinal("descripcion");
+                        int ordinal4 = sqlDataReader.GetOrdinal("fecha_crea");
+                        int ordinal5 = sqlDataReader.GetOrdinal("usu_crea");
+                        int ordinal6 = sqlDataReader.GetOrdinal("fecha_modifica");
+                        int ordinal7 = sqlDataReader.GetOrdinal("usu_modifica");
+                        int ordinal8 = sqlDataReader.GetOrdinal("activo");
+                        int ordinal9 = sqlDataReader.GetOrdinal("fecha_baja");
+                        int ordinal10 = sqlDataReader.GetOrdinal("usu_baja");
+                        int ordinal11 = sqlDataReader.GetOrdinal("id_unidad_organizativa");
+                        int ordinal12 = sqlDataReader.GetOrdinal("nombre_unidad_organizativa");
+                        int ordinal13 = sqlDataReader.GetOrdinal("logo_unidad_administrativa");
+                        int ordinal14 = sqlDataReader.GetOrdinal("primer_paso");
+                        while (sqlDataReader.Read())
+                        {
+                            Tramite tramite = new Tramite();
+                            if (!sqlDataReader.IsDBNull(ordinal1))
+                                tramite.id = sqlDataReader.GetInt32(ordinal1);
+                            if (!sqlDataReader.IsDBNull(ordinal2))
+                                tramite.nombre = sqlDataReader.GetString(ordinal2);
+                            if (!sqlDataReader.IsDBNull(ordinal3))
+                                tramite.descripcion = sqlDataReader.GetString(ordinal3);
+                            if (!sqlDataReader.IsDBNull(ordinal4))
+                                tramite.fecha_crea = sqlDataReader.GetDateTime(ordinal4);
+                            if (!sqlDataReader.IsDBNull(ordinal5))
+                                tramite.usu_crea = sqlDataReader.GetString(ordinal5);
+                            if (!sqlDataReader.IsDBNull(ordinal6))
+                                tramite.fecha_modifica = sqlDataReader.GetDateTime(ordinal6);
+                            if (!sqlDataReader.IsDBNull(ordinal7))
+                                tramite.usu_modifica = sqlDataReader.GetString(ordinal7);
+                            if (!sqlDataReader.IsDBNull(ordinal8))
+                                tramite.activo = sqlDataReader.GetBoolean(ordinal8);
+                            if (!sqlDataReader.IsDBNull(ordinal9))
+                                tramite.fecha_baja = sqlDataReader.GetDateTime(ordinal9);
+                            if (!sqlDataReader.IsDBNull(ordinal10))
+                                tramite.usu_baja = sqlDataReader.GetString(ordinal10);
+                            if (!sqlDataReader.IsDBNull(ordinal11))
+                                tramite.id_unidad_organizativa = sqlDataReader.GetInt32(ordinal11);
+                            if (!sqlDataReader.IsDBNull(ordinal12))
+                                tramite.nombre_unidad_organizativa = sqlDataReader.GetString(ordinal12);
+                            if (!sqlDataReader.IsDBNull(ordinal13))
+                                tramite.logo_unidad_administrativa = sqlDataReader.GetString(ordinal13);
+                            if (!sqlDataReader.IsDBNull(ordinal14))
+                                tramite.primer_paso = sqlDataReader.GetInt32(ordinal14);
+                            tramiteList.Add(tramite);
+                        }
+                    }
+                    return tramiteList;
                 }
             }
             catch (Exception ex)
@@ -103,28 +242,97 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static Tramite getByPk(
-        int ID)
+        public static List<Tramite> readBack()
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Tramite WHERE");
-                sql.AppendLine("id = @id");
-                Tramite obj = null;
-                using (SqlConnection con = GetConnection())
+                List<Tramite> tramiteList = new List<Tramite>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", ID);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<Tramite> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT A.*,                                (SELECT TOP 1 ID FROM PASO B WHERE ID_TRAMITE = A.ID                                 ORDER BY B.ORDEN ASC)                                AS primer_paso                                FROM TRAMITE A";
+                    command.Connection.Open();
+                    SqlDataReader sqlDataReader = command.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        int ordinal1 = sqlDataReader.GetOrdinal("id");
+                        int ordinal2 = sqlDataReader.GetOrdinal("nombre");
+                        int ordinal3 = sqlDataReader.GetOrdinal("descripcion");
+                        int ordinal4 = sqlDataReader.GetOrdinal("fecha_crea");
+                        int ordinal5 = sqlDataReader.GetOrdinal("usu_crea");
+                        int ordinal6 = sqlDataReader.GetOrdinal("fecha_modifica");
+                        int ordinal7 = sqlDataReader.GetOrdinal("usu_modifica");
+                        int ordinal8 = sqlDataReader.GetOrdinal("activo");
+                        int ordinal9 = sqlDataReader.GetOrdinal("fecha_baja");
+                        int ordinal10 = sqlDataReader.GetOrdinal("usu_baja");
+                        int ordinal11 = sqlDataReader.GetOrdinal("id_unidad_organizativa");
+                        int ordinal12 = sqlDataReader.GetOrdinal("nombre_unidad_organizativa");
+                        int ordinal13 = sqlDataReader.GetOrdinal("logo_unidad_administrativa");
+                        int ordinal14 = sqlDataReader.GetOrdinal("primer_paso");
+                        while (sqlDataReader.Read())
+                        {
+                            Tramite tramite = new Tramite();
+                            if (!sqlDataReader.IsDBNull(ordinal1))
+                                tramite.id = sqlDataReader.GetInt32(ordinal1);
+                            if (!sqlDataReader.IsDBNull(ordinal2))
+                                tramite.nombre = sqlDataReader.GetString(ordinal2);
+                            if (!sqlDataReader.IsDBNull(ordinal3))
+                                tramite.descripcion = sqlDataReader.GetString(ordinal3);
+                            if (!sqlDataReader.IsDBNull(ordinal4))
+                                tramite.fecha_crea = sqlDataReader.GetDateTime(ordinal4);
+                            if (!sqlDataReader.IsDBNull(ordinal5))
+                                tramite.usu_crea = sqlDataReader.GetString(ordinal5);
+                            if (!sqlDataReader.IsDBNull(ordinal6))
+                                tramite.fecha_modifica = sqlDataReader.GetDateTime(ordinal6);
+                            if (!sqlDataReader.IsDBNull(ordinal7))
+                                tramite.usu_modifica = sqlDataReader.GetString(ordinal7);
+                            if (!sqlDataReader.IsDBNull(ordinal8))
+                                tramite.activo = sqlDataReader.GetBoolean(ordinal8);
+                            if (!sqlDataReader.IsDBNull(ordinal9))
+                                tramite.fecha_baja = sqlDataReader.GetDateTime(ordinal9);
+                            if (!sqlDataReader.IsDBNull(ordinal10))
+                                tramite.usu_baja = sqlDataReader.GetString(ordinal10);
+                            if (!sqlDataReader.IsDBNull(ordinal11))
+                                tramite.id_unidad_organizativa = sqlDataReader.GetInt32(ordinal11);
+                            if (!sqlDataReader.IsDBNull(ordinal12))
+                                tramite.nombre_unidad_organizativa = sqlDataReader.GetString(ordinal12);
+                            if (!sqlDataReader.IsDBNull(ordinal13))
+                                tramite.logo_unidad_administrativa = sqlDataReader.GetString(ordinal13);
+                            if (!sqlDataReader.IsDBNull(ordinal14))
+                                tramite.primer_paso = sqlDataReader.GetInt32(ordinal14);
+                            tramiteList.Add(tramite);
+                        }
+                    }
+                    return tramiteList;
                 }
-                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static Tramite getByPk(int ID)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM Tramite WHERE");
+                stringBuilder.AppendLine("id = @id");
+                Tramite byPk = (Tramite)null;
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Connection.Open();
+                    List<Tramite> tramiteList = Tramite.mapeoCompleto(command.ExecuteReader());
+                    if (tramiteList.Count != 0)
+                        byPk = tramiteList[0];
+                }
+                return byPk;
             }
             catch (Exception ex)
             {
@@ -136,56 +344,33 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO Tramite(");
-                sql.AppendLine("nombre");
-                sql.AppendLine(", descripcion");
-                sql.AppendLine(", fecha_crea");
-                sql.AppendLine(", usu_crea");
-                sql.AppendLine(", fecha_modifica");
-                sql.AppendLine(", usu_modifica");
-                sql.AppendLine(", activo");
-                sql.AppendLine(", fecha_baja");
-                sql.AppendLine(", usu_baja");
-                sql.AppendLine(", id_unidad_organizativa");
-                sql.AppendLine(", nombre_unidad_organizativa");
-                sql.AppendLine(", logo_unidad_administrativa");
-                sql.AppendLine(")");
-                sql.AppendLine("VALUES");
-                sql.AppendLine("(");
-                sql.AppendLine("@nombre");
-                sql.AppendLine(", @descripcion");
-                sql.AppendLine(", @fecha_crea");
-                sql.AppendLine(", @usu_crea");
-                sql.AppendLine(", @fecha_modifica");
-                sql.AppendLine(", @usu_modifica");
-                sql.AppendLine(", @activo");
-                sql.AppendLine(", @fecha_baja");
-                sql.AppendLine(", @usu_baja");
-                sql.AppendLine(", @id_unidad_organizativa");
-                sql.AppendLine(", @nombre_unidad_organizativa");
-                sql.AppendLine(", @logo_unidad_administrativa");
-                sql.AppendLine(")");
-                sql.AppendLine("SELECT SCOPE_IDENTITY()");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("INSERT INTO Tramite(");
+                stringBuilder.AppendLine("nombre");
+                stringBuilder.AppendLine(", fecha_crea");
+                stringBuilder.AppendLine(", usu_crea");
+                stringBuilder.AppendLine(", activo");
+                stringBuilder.AppendLine(", id_unidad_organizativa");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("VALUES");
+                stringBuilder.AppendLine("(");
+                stringBuilder.AppendLine("@nombre");
+                stringBuilder.AppendLine(", GETDATE()");
+                stringBuilder.AppendLine(", @usu_crea");
+                stringBuilder.AppendLine(", 0");
+                stringBuilder.AppendLine(", @id_unidad_organizativa");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", obj.descripcion);
-                    cmd.Parameters.AddWithValue("@fecha_crea", obj.fecha_crea);
-                    cmd.Parameters.AddWithValue("@usu_crea", obj.usu_crea);
-                    cmd.Parameters.AddWithValue("@fecha_modifica", obj.fecha_modifica);
-                    cmd.Parameters.AddWithValue("@usu_modifica", obj.usu_modifica);
-                    cmd.Parameters.AddWithValue("@activo", obj.activo);
-                    cmd.Parameters.AddWithValue("@fecha_baja", obj.fecha_baja);
-                    cmd.Parameters.AddWithValue("@usu_baja", obj.usu_baja);
-                    cmd.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
-                    cmd.Parameters.AddWithValue("@nombre_unidad_organizativa", obj.nombre_unidad_organizativa);
-                    cmd.Parameters.AddWithValue("@logo_unidad_administrativa", obj.logo_unidad_administrativa);
-                    cmd.Connection.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@usu_crea", (object)obj.usu_crea);
+                    command.Parameters.AddWithValue("@id_unidad_organizativa", (object)obj.id_unidad_organizativa);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
             }
             catch (Exception ex)
@@ -198,37 +383,51 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  Tramite SET");
-                sql.AppendLine("nombre=@nombre");
-                sql.AppendLine(", descripcion=@descripcion");
-                sql.AppendLine(", fecha_crea=@fecha_crea");
-                sql.AppendLine(", usu_crea=@usu_crea");
-                sql.AppendLine(", fecha_modifica=@fecha_modifica");
-                sql.AppendLine(", usu_modifica=@usu_modifica");
-                sql.AppendLine(", activo=@activo");
-                sql.AppendLine(", fecha_baja=@fecha_baja");
-                sql.AppendLine(", usu_baja=@usu_baja");
-                sql.AppendLine(", id_unidad_organizativa=@id_unidad_organizativa");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Tramite SET");
+                stringBuilder.AppendLine("nombre=@nombre");
+                stringBuilder.AppendLine(", fecha_modifica=GETDATE()");
+                stringBuilder.AppendLine(", usu_modifica=@usu_modifica");
+                stringBuilder.AppendLine(", id_unidad_organizativa=@id_unidad_organizativa");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", obj.descripcion);
-                    cmd.Parameters.AddWithValue("@fecha_crea", obj.fecha_crea);
-                    cmd.Parameters.AddWithValue("@usu_crea", obj.usu_crea);
-                    cmd.Parameters.AddWithValue("@fecha_modifica", obj.fecha_modifica);
-                    cmd.Parameters.AddWithValue("@usu_modifica", obj.usu_modifica);
-                    cmd.Parameters.AddWithValue("@activo", obj.activo);
-                    cmd.Parameters.AddWithValue("@fecha_baja", obj.fecha_baja);
-                    cmd.Parameters.AddWithValue("@usu_baja", obj.usu_baja);
-                    cmd.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@usu_modifica", (object)obj.usu_modifica);
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id_unidad_organizativa", (object)obj.id_unidad_organizativa);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void activaDesactiva(Tramite obj)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Tramite SET");
+                stringBuilder.AppendLine("activo=@activo");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -241,18 +440,18 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  Tramite ");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  Tramite ");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -260,7 +459,5 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
     }
 }
-

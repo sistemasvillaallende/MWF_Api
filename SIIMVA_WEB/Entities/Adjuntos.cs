@@ -2,67 +2,85 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Entities
 {
     public class Adjuntos : DALBase
     {
         public int id { get; set; }
+
         public string nombre { get; set; }
+
         public int id_pasos { get; set; }
+
         public int orden { get; set; }
+
         public string archivo { get; set; }
+
+        public string extenciones_aceptadas { get; set; }
+
+        public bool multiple { get; set; }
 
         public Adjuntos()
         {
-            id = 0;
-            nombre = string.Empty;
-            id_pasos = 0;
-            orden = 0;
-            archivo = string.Empty;
+            this.id = 0;
+            this.nombre = string.Empty;
+            this.id_pasos = 0;
+            this.orden = 0;
+            this.archivo = string.Empty;
+            this.extenciones_aceptadas = string.Empty;
+            this.multiple = false;
         }
 
         private static List<Adjuntos> mapeo(SqlDataReader dr)
         {
-            List<Adjuntos> lst = new List<Adjuntos>();
-            Adjuntos obj;
+            List<Adjuntos> adjuntosList = new List<Adjuntos>();
             if (dr.HasRows)
             {
-                int id = dr.GetOrdinal("id");
-                int nombre = dr.GetOrdinal("nombre");
-                int id_pasos = dr.GetOrdinal("id_pasos");
-                int orden = dr.GetOrdinal("orden");
-                int archivo = dr.GetOrdinal("archivo");
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("nombre");
+                int ordinal3 = dr.GetOrdinal("id_pasos");
+                int ordinal4 = dr.GetOrdinal("orden");
+                int ordinal5 = dr.GetOrdinal("archivo");
+                int ordinal6 = dr.GetOrdinal("extenciones_aceptadas");
+                int ordinal7 = dr.GetOrdinal("multiple");
                 while (dr.Read())
                 {
-                    obj = new Adjuntos();
-                    if (!dr.IsDBNull(id)) { obj.id = dr.GetInt32(id); }
-                    if (!dr.IsDBNull(nombre)) { obj.nombre = dr.GetString(nombre); }
-                    if (!dr.IsDBNull(id_pasos)) { obj.id_pasos = dr.GetInt32(id_pasos); }
-                    if (!dr.IsDBNull(orden)) { obj.orden = dr.GetInt32(orden); }
-                    if (!dr.IsDBNull(archivo)) { obj.archivo = dr.GetString(archivo); }
-                    lst.Add(obj);
+                    Adjuntos adjuntos = new Adjuntos();
+                    if (!dr.IsDBNull(ordinal1))
+                        adjuntos.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        adjuntos.nombre = dr.GetString(ordinal2);
+                    if (!dr.IsDBNull(ordinal3))
+                        adjuntos.id_pasos = dr.GetInt32(ordinal3);
+                    if (!dr.IsDBNull(ordinal4))
+                        adjuntos.orden = dr.GetInt32(ordinal4);
+                    if (!dr.IsDBNull(ordinal5))
+                        adjuntos.archivo = dr.GetString(ordinal5);
+                    if (!dr.IsDBNull(ordinal6))
+                        adjuntos.extenciones_aceptadas = dr.GetString(ordinal6);
+                    if (!dr.IsDBNull(ordinal7))
+                        adjuntos.multiple = dr.GetBoolean(ordinal7);
+                    adjuntosList.Add(adjuntos);
                 }
             }
-            return lst;
+            return adjuntosList;
         }
 
         public static List<Adjuntos> read()
         {
             try
             {
-                List<Adjuntos> lst = new List<Adjuntos>();
-                using (SqlConnection con = GetConnection())
+                List<Adjuntos> adjuntosList = new List<Adjuntos>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Adjuntos";
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT *FROM Adjuntos";
+                    command.Connection.Open();
+                    return Adjuntos.mapeo(command.ExecuteReader());
                 }
             }
             catch (Exception ex)
@@ -71,92 +89,96 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static Adjuntos getByPk(
-        int id)
+        public static Adjuntos getByPk(int id)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Adjuntos WHERE");
-                sql.AppendLine("id = @id");
-                Adjuntos obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM Adjuntos WHERE");
+                stringBuilder.AppendLine("id = @id");
+                Adjuntos byPk = (Adjuntos)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<Adjuntos> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Connection.Open();
+                    List<Adjuntos> adjuntosList = Adjuntos.mapeo(command.ExecuteReader());
+                    if (adjuntosList.Count != 0)
+                        byPk = adjuntosList[0];
                 }
-                return obj;
+                return byPk;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public static Adjuntos getByIdPasos(
-        int id_pasos)
+
+        public static Adjuntos getByIdPasos(int id_pasos)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Adjuntos WHERE");
-                sql.AppendLine("id_pasos = @id_pasos");
-                Adjuntos obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM Adjuntos WHERE");
+                stringBuilder.AppendLine("id_pasos = @id_pasos");
+                Adjuntos byIdPasos = (Adjuntos)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id_pasos", id_pasos);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<Adjuntos> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id_pasos", (object)id_pasos);
+                    command.Connection.Open();
+                    List<Adjuntos> adjuntosList = Adjuntos.mapeo(command.ExecuteReader());
+                    if (adjuntosList.Count != 0)
+                        byIdPasos = adjuntosList[0];
                 }
-                return obj;
+                return byIdPasos;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
         public static int insert(Adjuntos obj)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO Adjuntos(");
-                sql.AppendLine("nombre");
-                sql.AppendLine(", id_pasos");
-                sql.AppendLine(", orden");
-                sql.AppendLine(", archivo");
-                sql.AppendLine(")");
-                sql.AppendLine("VALUES");
-                sql.AppendLine("(");
-                sql.AppendLine("@nombre");
-                sql.AppendLine(", @id_pasos");
-                sql.AppendLine(", @orden");
-                sql.AppendLine(", @archivo");
-                sql.AppendLine(")");
-                sql.AppendLine("SELECT SCOPE_IDENTITY()");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("INSERT INTO Adjuntos(");
+                stringBuilder.AppendLine("nombre");
+                stringBuilder.AppendLine(", id_pasos");
+                stringBuilder.AppendLine(", orden");
+                stringBuilder.AppendLine(", archivo");
+                stringBuilder.AppendLine(", extenciones_aceptadas");
+                stringBuilder.AppendLine(", multiple");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("VALUES");
+                stringBuilder.AppendLine("(");
+                stringBuilder.AppendLine("@nombre");
+                stringBuilder.AppendLine(", @id_pasos");
+                stringBuilder.AppendLine(", @orden");
+                stringBuilder.AppendLine(", @archivo");
+                stringBuilder.AppendLine(", @extenciones_aceptadas");
+                stringBuilder.AppendLine(", @multiple");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
-                    cmd.Parameters.AddWithValue("@orden", obj.orden);
-                    cmd.Parameters.AddWithValue("@archivo", obj.archivo);
-                    cmd.Connection.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
+                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@archivo", (object)obj.archivo);
+                    command.Parameters.AddWithValue("@extenciones_aceptadas", (object)obj.extenciones_aceptadas);
+                    command.Parameters.AddWithValue("@multiple", (object)obj.multiple);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
             }
             catch (Exception ex)
@@ -169,25 +191,51 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  Adjuntos SET");
-                sql.AppendLine("nombre=@nombre");
-                sql.AppendLine(", id_pasos=@id_pasos");
-                sql.AppendLine(", orden=@orden");
-                sql.AppendLine(", archivo=@archivo");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Adjuntos SET");
+                stringBuilder.AppendLine("nombre=@nombre");
+                stringBuilder.AppendLine(", id_pasos=@id_pasos");
+                stringBuilder.AppendLine(", orden=@orden");
+                stringBuilder.AppendLine(", archivo=@archivo");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
-                    cmd.Parameters.AddWithValue("@orden", obj.orden);
-                    cmd.Parameters.AddWithValue("@archivo", obj.archivo);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
+                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@archivo", (object)obj.archivo);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void setArchivo(int id, string archivo)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Adjuntos SET");
+                stringBuilder.AppendLine("archivo=@archivo");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@archivo", (object)archivo);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -200,18 +248,18 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  Adjuntos ");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  Adjuntos ");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -219,7 +267,5 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
     }
 }
-

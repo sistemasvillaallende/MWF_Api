@@ -1,21 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Services.ITramitesService
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using MOTOR_WORKFLOW.Entities;
+using System.Collections.Generic;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Services
 {
     public interface ITramitesService
     {
-        public int recibir(int id_tramite, int paso_actual,
-            int id_tramites);
-        public List<Tramites> read(string cuit);
-        public List<Tramites> read();
-        public List<Tramites> readOficina(int id_oficina, int estado);
-        public Tramites getByPk(int id);
-        public int insert(Tramites obj);
-        public void update(Tramites obj);
-        public void delete(Tramites obj);
+        void finalizar_rechazar(int id_tramites, int estado);
+
+        int recibir(int id_tramite, int paso_actual, int id_tramites, int cod_usuario);
+
+        List<Tramites> read(string cuit);
+
+        List<Tramites> read();
+
+        List<Tramites> readOficina(int id_oficina);
+
+        Tramites getByPk(int id);
+
+        Tramites getByPkSimple(int id);
+
+        List<ResultadoTramites> getResultados(int id);
+
+        int insert(Tramites obj);
+
+        void update(Tramites obj);
+
+        void delete(Tramites obj);
     }
 }
-

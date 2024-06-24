@@ -1,38 +1,36 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Controllers.Validacion_x_campo_formularioController
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using Newtonsoft.Json;
+using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
 
+#nullable enable
 namespace MOTOR_WORKFLOW.Controllers
 {
-    [ApiController]
-    [Route("[controller]/[action]")]
-    public class Validacion_x_campo_formularioController : Controller
+  [ApiController]
+  [Route("[controller]/[action]")]
+  public class Validacion_x_campo_formularioController : Controller
+  {
+    private IValidacion_x_campo_formularioService _Validacion_x_campo_formularioService;
+
+    public Validacion_x_campo_formularioController(
+      IValidacion_x_campo_formularioService Validacion_x_campo_formularioService)
     {
-        private IValidacion_x_campo_formularioService _Validacion_x_campo_formularioService;
-        public Validacion_x_campo_formularioController(IValidacion_x_campo_formularioService Validacion_x_campo_formularioService)
-        {
-            _Validacion_x_campo_formularioService = Validacion_x_campo_formularioService;
-        }
-        [HttpGet]
-        public IActionResult getByPk(
-        int ID)
-        {
-            var Validacion_x_campo_formulario = _Validacion_x_campo_formularioService.getByPk(ID);
-            if (Validacion_x_campo_formulario == null)
-            {
-                return BadRequest(new { message = "Error al obtener los datos" });
-            }
-            return Ok(Validacion_x_campo_formulario);
-        }
-
-
-
-
-
-
-
+      this._Validacion_x_campo_formularioService = Validacion_x_campo_formularioService;
     }
-}
 
+    [HttpGet]
+    public IActionResult getByPk(int ID)
+    {
+      Validacion_x_campo_formulario byPk = this._Validacion_x_campo_formularioService.getByPk(ID);
+      return byPk == null ? (IActionResult) this.BadRequest((object) new
+      {
+        message = "Error al obtener los datos"
+      }) : (IActionResult) this.Ok((object) byPk);
+    }
+  }
+}

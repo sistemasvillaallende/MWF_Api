@@ -33,33 +33,33 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public int insert(campos_x_formulario obj)
+        public int insert(CampoTextoModel obj)
         {
             try
             {
-                return campos_x_formulario.insert(obj);
+                return Entities.campos_x_formulario.insert(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void update(campos_x_formulario obj)
+        public void update(CampoTextoModel obj)
         {
             try
             {
-                campos_x_formulario.update(obj);
+                Entities.campos_x_formulario.update(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void delete(campos_x_formulario obj)
+        public void delete(int id)
         {
             try
             {
-                campos_x_formulario.delete(obj);
+                campos_x_formulario.delete(id);
             }
             catch (Exception ex)
             {

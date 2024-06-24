@@ -1,56 +1,62 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Entities.Tipo_campo
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Entities
 {
     public class Tipo_campo : DALBase
     {
         public int id { get; set; }
+
         public string nombre { get; set; }
 
         public Tipo_campo()
         {
-            id = 0;
-            nombre = string.Empty;
+            this.id = 0;
+            this.nombre = string.Empty;
         }
 
         private static List<Tipo_campo> mapeo(SqlDataReader dr)
         {
-            List<Tipo_campo> lst = new List<Tipo_campo>();
-            Tipo_campo obj;
+            List<Tipo_campo> tipoCampoList = new List<Tipo_campo>();
             if (dr.HasRows)
             {
-                int ID = dr.GetOrdinal("id");
-                int NOMBRE = dr.GetOrdinal("nombre");
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("nombre");
                 while (dr.Read())
                 {
-                    obj = new Tipo_campo();
-                    if (!dr.IsDBNull(ID)) { obj.id = dr.GetInt32(ID); }
-                    if (!dr.IsDBNull(NOMBRE)) { obj.nombre = dr.GetString(NOMBRE); }
-                    lst.Add(obj);
+                    Tipo_campo tipoCampo = new Tipo_campo();
+                    if (!dr.IsDBNull(ordinal1))
+                        tipoCampo.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        tipoCampo.nombre = dr.GetString(ordinal2);
+                    tipoCampoList.Add(tipoCampo);
                 }
             }
-            return lst;
+            return tipoCampoList;
         }
 
         public static List<Tipo_campo> read()
         {
             try
             {
-                List<Tipo_campo> lst = new List<Tipo_campo>();
-                using (SqlConnection con = GetConnection())
+                List<Tipo_campo> tipoCampoList = new List<Tipo_campo>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Tipo_campo";
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT *FROM Tipo_campo";
+                    command.Connection.Open();
+                    return Tipo_campo.mapeo(command.ExecuteReader());
                 }
             }
             catch (Exception ex)
@@ -59,28 +65,26 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static Tipo_campo getByPk(
-        int ID)
+        public static Tipo_campo getByPk(int ID)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Tipo_campo WHERE");
-                sql.AppendLine("id = @id");
-                Tipo_campo obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM Tipo_campo WHERE");
+                stringBuilder.AppendLine("id = @id");
+                Tipo_campo byPk = (Tipo_campo)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", ID);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<Tipo_campo> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Connection.Open();
+                    List<Tipo_campo> tipoCampoList = Tipo_campo.mapeo(command.ExecuteReader());
+                    if (tipoCampoList.Count != 0)
+                        byPk = tipoCampoList[0];
                 }
-                return obj;
+                return byPk;
             }
             catch (Exception ex)
             {
@@ -92,23 +96,23 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO Tipo_campo(");
-                sql.AppendLine("nombre");
-                sql.AppendLine(")");
-                sql.AppendLine("VALUES");
-                sql.AppendLine("(");
-                sql.AppendLine("@nombre");
-                sql.AppendLine(")");
-                sql.AppendLine("SELECT SCOPE_IDENTITY()");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("INSERT INTO Tipo_campo(");
+                stringBuilder.AppendLine("nombre");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("VALUES");
+                stringBuilder.AppendLine("(");
+                stringBuilder.AppendLine("@nombre");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Connection.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
             }
             catch (Exception ex)
@@ -121,19 +125,19 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  Tipo_campo SET");
-                sql.AppendLine("nombre=@nombre");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Tipo_campo SET");
+                stringBuilder.AppendLine("nombre=@nombre");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -146,18 +150,18 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  Tipo_campo ");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  Tipo_campo ");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -165,7 +169,5 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
     }
 }
-

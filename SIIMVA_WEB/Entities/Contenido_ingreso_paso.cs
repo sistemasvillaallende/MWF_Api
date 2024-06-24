@@ -1,110 +1,128 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Entities.contenido_ingreso_paso
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Entities
 {
     public class contenido_ingreso_paso : DALBase
     {
         public int id { get; set; }
+
         public int id_ingreso_paso { get; set; }
+
         public int id_formulario { get; set; }
+
         public int id_adjunto { get; set; }
+
         public int id_ddjj { get; set; }
+
         public int orden { get; set; }
+
         public int row { get; set; }
+
         public int col { get; set; }
+
         public bool activo { get; set; }
 
         public Formulario objFormulario { get; set; }
+
         public Adjunto objAdjunto { get; set; }
+
         public ddjj objDDJJ { get; set; }
 
         public contenido_ingreso_paso()
         {
-            id = 0;
-            id_ingreso_paso = 0;
-            id_formulario = 0;
-            id_adjunto = 0;
-            id_ddjj = 0;
-            orden = 0;
-            row = 0;
-            col = 0;
-            activo = false;
-            objFormulario = new Formulario();
-            objAdjunto = new Adjunto();
-            objDDJJ = new ddjj();
+            this.id = 0;
+            this.id_ingreso_paso = 0;
+            this.id_formulario = 0;
+            this.id_adjunto = 0;
+            this.id_ddjj = 0;
+            this.orden = 0;
+            this.row = 0;
+            this.col = 0;
+            this.activo = false;
+            this.objFormulario = new Formulario();
+            this.objAdjunto = new Adjunto();
+            this.objDDJJ = new ddjj();
         }
 
         private static List<contenido_ingreso_paso> mapeo(SqlDataReader dr)
         {
-            List<contenido_ingreso_paso> lst = new List<contenido_ingreso_paso>();
-            contenido_ingreso_paso obj;
+            List<contenido_ingreso_paso> contenidoIngresoPasoList = new List<contenido_ingreso_paso>();
             if (dr.HasRows)
             {
-                int ID = dr.GetOrdinal("id");
-                int ID_INGRESO_PASO = dr.GetOrdinal("id_ingreso_paso");
-                int ID_FORMULARIO = dr.GetOrdinal("id_formulario");
-                int ID_ADJUNTO = dr.GetOrdinal("id_adjunto");
-                int ID_DDJJ = dr.GetOrdinal("id_ddjj");
-                int ORDEN = dr.GetOrdinal("orden");
-                int ROW = dr.GetOrdinal("row");
-                int COL = dr.GetOrdinal("col");
-                int ACTIVO = dr.GetOrdinal("activo");
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("id_ingreso_paso");
+                int ordinal3 = dr.GetOrdinal("id_formulario");
+                int ordinal4 = dr.GetOrdinal("id_adjunto");
+                int ordinal5 = dr.GetOrdinal("id_ddjj");
+                int ordinal6 = dr.GetOrdinal("orden");
+                int ordinal7 = dr.GetOrdinal("row");
+                int ordinal8 = dr.GetOrdinal("col");
+                int ordinal9 = dr.GetOrdinal("activo");
                 while (dr.Read())
                 {
-                    obj = new contenido_ingreso_paso();
-                    if (!dr.IsDBNull(ID)) { obj.id = dr.GetInt32(ID); }
-                    if (!dr.IsDBNull(ID_INGRESO_PASO)) { obj.id_ingreso_paso = dr.GetInt32(ID_INGRESO_PASO); }
-                    if (!dr.IsDBNull(ID_FORMULARIO)) { obj.id_formulario = dr.GetInt32(ID_FORMULARIO); }
-                    if (!dr.IsDBNull(ID_ADJUNTO)) { obj.id_adjunto = dr.GetInt32(ID_ADJUNTO); }
-                    if (!dr.IsDBNull(ID_DDJJ)) { obj.id_ddjj = dr.GetInt32(ID_DDJJ); }
-                    if (!dr.IsDBNull(ORDEN)) { obj.orden = dr.GetInt32(ORDEN); }
-                    if (!dr.IsDBNull(ROW)) { obj.row = dr.GetInt32(ROW); }
-                    if (!dr.IsDBNull(COL)) { obj.col = dr.GetInt32(COL); }
-                    if (!dr.IsDBNull(ACTIVO)) { obj.activo = dr.GetBoolean(ACTIVO); }
-
-                    if (obj.id_formulario != 0)
-                        obj.objFormulario = Formulario.getByPk(obj.id_formulario);
-                    if (obj.id_adjunto != 0)
-                        obj.objAdjunto = Adjunto.getByPk(obj.id_adjunto);
-                    if (obj.id_ddjj != 0)
-                        obj.objDDJJ = ddjj.getByPk(obj.id_ddjj);
-
-                    lst.Add(obj);
+                    contenido_ingreso_paso contenidoIngresoPaso = new contenido_ingreso_paso();
+                    if (!dr.IsDBNull(ordinal1))
+                        contenidoIngresoPaso.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        contenidoIngresoPaso.id_ingreso_paso = dr.GetInt32(ordinal2);
+                    if (!dr.IsDBNull(ordinal3))
+                        contenidoIngresoPaso.id_formulario = dr.GetInt32(ordinal3);
+                    if (!dr.IsDBNull(ordinal4))
+                        contenidoIngresoPaso.id_adjunto = dr.GetInt32(ordinal4);
+                    if (!dr.IsDBNull(ordinal5))
+                        contenidoIngresoPaso.id_ddjj = dr.GetInt32(ordinal5);
+                    if (!dr.IsDBNull(ordinal6))
+                        contenidoIngresoPaso.orden = dr.GetInt32(ordinal6);
+                    if (!dr.IsDBNull(ordinal7))
+                        contenidoIngresoPaso.row = dr.GetInt32(ordinal7);
+                    if (!dr.IsDBNull(ordinal8))
+                        contenidoIngresoPaso.col = dr.GetInt32(ordinal8);
+                    if (!dr.IsDBNull(ordinal9))
+                        contenidoIngresoPaso.activo = dr.GetBoolean(ordinal9);
+                    if (contenidoIngresoPaso.id_formulario != 0)
+                        contenidoIngresoPaso.objFormulario = Formulario.getByPk(contenidoIngresoPaso.id_formulario);
+                    if (contenidoIngresoPaso.id_adjunto != 0)
+                        contenidoIngresoPaso.objAdjunto = Adjunto.getByPk(contenidoIngresoPaso.id_adjunto);
+                    if (contenidoIngresoPaso.id_ddjj != 0)
+                        contenidoIngresoPaso.objDDJJ = ddjj.getByPk(contenidoIngresoPaso.id_ddjj);
+                    contenidoIngresoPasoList.Add(contenidoIngresoPaso);
                 }
             }
-            return lst;
+            return contenidoIngresoPasoList;
         }
 
         public static List<contenido_ingreso_paso> read(int idIngresoPaso)
         {
             try
             {
-                List<contenido_ingreso_paso> lst = new List<contenido_ingreso_paso>();
-                using (SqlConnection con = GetConnection())
+                List<contenido_ingreso_paso> contenidoIngresoPasoList = new List<contenido_ingreso_paso>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText =
-                        @"SELECT 
-	                        A.*,
-	                        B.id AS id_formulario,
-	                        C.id AS id_adjunto,
-	                        D.id AS id_ddjj
-                        FROM contenido_ingreso_paso A
-                        LEFT JOIN FORMULARIO B ON A.id=B.id_contenido_ingreso_paso
-                        LEFT JOIN ADJUNTO C ON A.id=C.id_contenido_ingreso_paso
-                        LEFT JOIN DDJJ D ON A.id=D.id_contenido_ingreso_paso
-                        WHERE id_ingreso_paso=@id_ingreso_paso";
-                    cmd.Parameters.AddWithValue("@id_ingreso_paso", idIngresoPaso);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"
+                            SELECT A.*, B.id AS id_formulario,
+                                C.id AS id_adjunto,
+                                D.id AS id_ddjj
+                            FROM contenido_ingreso_paso A
+                                LEFT JOIN FORMULARIO B ON A.id=B.id_contenido_ingreso_paso
+                                LEFT JOIN ADJUNTO C ON A.id=C.id_contenido_ingreso_paso
+                                LEFT JOIN DDJJ D ON A.id=D.id_contenido_ingreso_paso
+                            WHERE id_ingreso_paso=@id_ingreso_paso";
+                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)idIngresoPaso);
+                    command.Connection.Open();
+                    return contenido_ingreso_paso.mapeo(command.ExecuteReader());
                 }
             }
             catch (Exception ex)
@@ -113,38 +131,33 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static contenido_ingreso_paso getByPk(
-        int ID)
+        public static contenido_ingreso_paso getByPk(int ID)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM contenido_ingreso_paso WHERE");
-                sql.AppendLine("id = @id");
-                contenido_ingreso_paso obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM contenido_ingreso_paso WHERE");
+                stringBuilder.AppendLine("id = @id");
+                contenido_ingreso_paso byPk = (contenido_ingreso_paso)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = 
-                        @"SELECT 
-	                        A.*,
-	                        B.id AS id_formulario,
-	                        C.id AS id_adjunto,
-	                        D.id AS id_ddjj
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"
+                        SELECT A.*, B.id AS id_formulario, C.id AS id_adjunto,
+                            D.id AS id_ddjj
                         FROM contenido_ingreso_paso A
-                        LEFT JOIN FORMULARIO B ON A.id=B.id_pasos
-                        LEFT JOIN ADJUNTO C ON A.id=C.id_pasos
-                        LEFT JOIN DDJJ D ON A.id=D.id_pasos
+                            LEFT JOIN FORMULARIO B ON A.id=B.ID_CONTENIDO_INGRESO_PASO
+                            LEFT JOIN ADJUNTO C ON A.id=C.ID_CONTENIDO_INGRESO_PASO
+                            LEFT JOIN DDJJ D ON A.id=D.ID_CONTENIDO_INGRESO_PASO
                         WHERE A.id=@id";
-                    cmd.Parameters.AddWithValue("@id", ID);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<contenido_ingreso_paso> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Connection.Open();
+                    List<contenido_ingreso_paso> contenidoIngresoPasoList = contenido_ingreso_paso.mapeo(command.ExecuteReader());
+                    if (contenidoIngresoPasoList.Count != 0)
+                        byPk = contenidoIngresoPasoList[0];
                 }
-                return obj;
+                return byPk;
             }
             catch (Exception ex)
             {
@@ -152,49 +165,135 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static int insert(contenido_ingreso_paso obj)
+        public static int maxOrden(int id_ingreso_paso)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO contenido_ingreso_paso(");
-                sql.AppendLine("id_ingreso_paso");
-                sql.AppendLine(", id_formulario");
-                sql.AppendLine(", id_adjunto");
-                sql.AppendLine(", id_ddjj");
-                sql.AppendLine(", orden");
-                sql.AppendLine(", row");
-                sql.AppendLine(", col");
-                sql.AppendLine(", activo");
-                sql.AppendLine(")");
-                sql.AppendLine("VALUES");
-                sql.AppendLine("(");
-                sql.AppendLine("@id_ingreso_paso");
-                sql.AppendLine(", @id_formulario");
-                sql.AppendLine(", @id_adjunto");
-                sql.AppendLine(", @id_ddjj");
-                sql.AppendLine(", @orden");
-                sql.AppendLine(", @row");
-                sql.AppendLine(", @col");
-                sql.AppendLine(", @activo");
-                sql.AppendLine(")");
-                sql.AppendLine("SELECT SCOPE_IDENTITY()");
-                using (SqlConnection con = GetConnection())
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
-                    cmd.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
-                    cmd.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
-                    cmd.Parameters.AddWithValue("@id_ddjj", obj.id_ddjj);
-                    cmd.Parameters.AddWithValue("@orden", obj.orden);
-                    cmd.Parameters.AddWithValue("@row", obj.row);
-                    cmd.Parameters.AddWithValue("@col", obj.col);
-                    cmd.Parameters.AddWithValue("@activo", obj.activo);
-                    cmd.Connection.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"
+                            SELECT ISNULL(MAX(orden), 0) 
+                            FROM contenido_ingreso_paso 
+                            WHERE id_ingreso_paso=@id_ingreso_paso";
+                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)id_ingreso_paso);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int maxRow(int id_ingreso_paso)
+        {
+            try
+            {
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"
+                        SELECT ISNULL(MAX(row), 0)
+                        FROM contenido_ingreso_paso
+                        WHERE id_ingreso_paso=@id_ingreso_paso";
+                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)id_ingreso_paso);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void _insert(contenido_ingreso_paso_model obj)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("INSERT INTO contenido_ingreso_paso(");
+                stringBuilder.AppendLine("id_ingreso_paso");
+                stringBuilder.AppendLine(", orden");
+                stringBuilder.AppendLine(", row");
+                stringBuilder.AppendLine(", col");
+                stringBuilder.AppendLine(", activo");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("VALUES");
+                stringBuilder.AppendLine("(");
+                stringBuilder.AppendLine("@id_ingreso_paso");
+                stringBuilder.AppendLine(", @orden");
+                stringBuilder.AppendLine(", @row");
+                stringBuilder.AppendLine(", @col");
+                stringBuilder.AppendLine(", @activo");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)obj.id_ingreso_paso);
+                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@row", (object)obj.row);
+                    command.Parameters.AddWithValue("@col", (object)obj.col);
+                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int insert(contenido_ingreso_paso_model obj)
+        {
+            try
+            {
+                int num1 = contenido_ingreso_paso.maxOrden(obj.id_ingreso_paso);
+                int num2 = contenido_ingreso_paso.maxRow(obj.id_ingreso_paso);
+                switch (obj.col)
+                {
+                    case 3:
+                        obj.orden = num1 + 1;
+                        obj.row = num2 + 1;
+                        contenido_ingreso_paso._insert(obj);
+                        obj.orden = num1 + 2;
+                        contenido_ingreso_paso._insert(obj);
+                        obj.orden = num1 + 3;
+                        contenido_ingreso_paso._insert(obj);
+                        obj.orden = num1 + 4;
+                        contenido_ingreso_paso._insert(obj);
+                        break;
+                    case 4:
+                        obj.orden = num1 + 1;
+                        obj.row = num2 + 1;
+                        contenido_ingreso_paso._insert(obj);
+                        obj.orden = num1 + 2;
+                        contenido_ingreso_paso._insert(obj);
+                        obj.orden = num1 + 3;
+                        contenido_ingreso_paso._insert(obj);
+                        break;
+                    case 6:
+                        obj.orden = num1 + 1;
+                        obj.row = num2 + 1;
+                        contenido_ingreso_paso._insert(obj);
+                        obj.orden = num1 + 2;
+                        contenido_ingreso_paso._insert(obj);
+                        break;
+                    case 12:
+                        obj.orden = num1 + 1;
+                        obj.row = num2 + 1;
+                        contenido_ingreso_paso._insert(obj);
+                        break;
+                }
+                return 0;
             }
             catch (Exception ex)
             {
@@ -206,33 +305,33 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  contenido_ingreso_paso SET");
-                sql.AppendLine("id_ingreso_paso=@id_ingreso_paso");
-                sql.AppendLine(", id_formulario=@id_formulario");
-                sql.AppendLine(", id_adjunto=@id_adjunto");
-                sql.AppendLine(", id_ddjj=@id_ddjj");
-                sql.AppendLine(", orden=@orden");
-                sql.AppendLine(", row=@row");
-                sql.AppendLine(", col=@col");
-                sql.AppendLine(", activo=@activo");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  contenido_ingreso_paso SET");
+                stringBuilder.AppendLine("id_ingreso_paso=@id_ingreso_paso");
+                stringBuilder.AppendLine(", id_formulario=@id_formulario");
+                stringBuilder.AppendLine(", id_adjunto=@id_adjunto");
+                stringBuilder.AppendLine(", id_ddjj=@id_ddjj");
+                stringBuilder.AppendLine(", orden=@orden");
+                stringBuilder.AppendLine(", row=@row");
+                stringBuilder.AppendLine(", col=@col");
+                stringBuilder.AppendLine(", activo=@activo");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
-                    cmd.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
-                    cmd.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
-                    cmd.Parameters.AddWithValue("@id_ddjj", obj.id_ddjj);
-                    cmd.Parameters.AddWithValue("@orden", obj.orden);
-                    cmd.Parameters.AddWithValue("@row", obj.row);
-                    cmd.Parameters.AddWithValue("@col", obj.col);
-                    cmd.Parameters.AddWithValue("@activo", obj.activo);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)obj.id_ingreso_paso);
+                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
+                    command.Parameters.AddWithValue("@id_adjunto", (object)obj.id_adjunto);
+                    command.Parameters.AddWithValue("@id_ddjj", (object)obj.id_ddjj);
+                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@row", (object)obj.row);
+                    command.Parameters.AddWithValue("@col", (object)obj.col);
+                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -241,22 +340,22 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void delete(contenido_ingreso_paso obj)
+        public static void delete(int id)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  contenido_ingreso_paso ");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  contenido_ingreso_paso ");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -264,7 +363,5 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
     }
 }
-

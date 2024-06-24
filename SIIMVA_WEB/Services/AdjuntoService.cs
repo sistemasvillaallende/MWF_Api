@@ -1,11 +1,14 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Services.AdjuntoService
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
+using MOTOR_WORKFLOW.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.Extensions.Options;
-using MOTOR_WORKFLOW.Entities;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Services
 {
     public class AdjuntoService : IAdjuntoService
@@ -21,6 +24,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
         public List<Adjunto> read()
         {
             try
@@ -32,7 +36,8 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public int insert(Adjunto obj)
+
+        public int insert(AdjuntoModel obj)
         {
             try
             {
@@ -43,7 +48,8 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public void update(Adjunto obj)
+
+        public void update(AdjuntoModel obj)
         {
             try
             {
@@ -54,6 +60,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
         public void delete(Adjunto obj)
         {
             try
@@ -67,4 +74,3 @@ namespace MOTOR_WORKFLOW.Services
         }
     }
 }
-

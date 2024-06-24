@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MOTOR_WORKFLOW")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c57289eae0d1efc9b75ba64323fc3b6b3421c07b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MOTOR_WORKFLOW")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MOTOR_WORKFLOW")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

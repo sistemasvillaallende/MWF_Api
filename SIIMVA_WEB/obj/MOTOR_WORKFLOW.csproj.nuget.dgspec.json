@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\NET 2018\\SIIMVA_WEB\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj": {}
+    "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj": {}
   },
   "projects": {
-    "D:\\NET 2018\\SIIMVA_WEB\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj": {
+    "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\NET 2018\\SIIMVA_WEB\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
+        "projectUniqueName": "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
         "projectName": "MOTOR_WORKFLOW",
-        "projectPath": "D:\\NET 2018\\SIIMVA_WEB\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
-        "packagesPath": "C:\\Users\\mvelez\\.nuget\\packages\\",
-        "outputPath": "D:\\NET 2018\\SIIMVA_WEB\\SIIMVA_WEB\\obj\\",
+        "projectPath": "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
+        "packagesPath": "C:\\Users\\Martin\\.nuget\\packages\\",
+        "outputPath": "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mvelez\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Martin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -47,19 +48,19 @@
           "dependencies": {
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[13.0.2, )"
+              "version": "[13.0.3, )"
             },
             "RestSharp": {
               "target": "Package",
-              "version": "[108.0.3, )"
+              "version": "[111.2.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.3, )"
+              "version": "[6.6.2, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",
-              "version": "[4.8.5, )"
+              "version": "[4.8.6, )"
             }
           },
           "imports": [
@@ -81,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

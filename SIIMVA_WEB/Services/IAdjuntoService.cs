@@ -1,17 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Services.IAdjuntoService
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using MOTOR_WORKFLOW.Entities;
+using System.Collections.Generic;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Services
 {
     public interface IAdjuntoService
     {
-        public List<Adjunto> read();
-        public Adjunto getByPk(int ID);
-        public int insert(Adjunto obj);
-        public void update(Adjunto obj);
-        public void delete(Adjunto obj);
+        List<Adjunto> read();
+
+        Adjunto getByPk(int ID);
+
+        int insert(AdjuntoModel obj);
+
+        void update(AdjuntoModel obj);
+
+        void delete(Adjunto obj);
     }
 }
-

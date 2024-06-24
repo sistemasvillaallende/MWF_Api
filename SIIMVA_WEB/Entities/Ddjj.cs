@@ -1,58 +1,67 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Entities.ddjj
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Entities
 {
     public class ddjj : DALBase
     {
         public int id { get; set; }
+
         public string texto { get; set; }
+
         public int id_contenido_ingreso_paso { get; set; }
+
         public ddjj()
         {
-            id = 0;
-            texto = string.Empty;
+            this.id = 0;
+            this.texto = string.Empty;
         }
 
         private static List<ddjj> mapeo(SqlDataReader dr)
         {
-            List<ddjj> lst = new List<ddjj>();
-            ddjj obj;
+            List<ddjj> ddjjList = new List<ddjj>();
             if (dr.HasRows)
             {
-                int ID = dr.GetOrdinal("id");
-                int TEXTO = dr.GetOrdinal("texto");
-                int ID_CONTENIDO_INGRESO_PASO = dr.GetOrdinal("ID_CONTENIDO_INGRESO_PASO");
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("texto");
+                int ordinal3 = dr.GetOrdinal("ID_CONTENIDO_INGRESO_PASO");
                 while (dr.Read())
                 {
-                    obj = new ddjj();
-                    if (!dr.IsDBNull(ID)) { obj.id = dr.GetInt32(ID); }
-                    if (!dr.IsDBNull(TEXTO)) { obj.texto = dr.GetString(TEXTO); }
-                    if (!dr.IsDBNull(ID_CONTENIDO_INGRESO_PASO)) { obj.id_contenido_ingreso_paso = dr.GetInt32(ID_CONTENIDO_INGRESO_PASO); }
-                    lst.Add(obj);
+                    ddjj ddjj = new ddjj();
+                    if (!dr.IsDBNull(ordinal1))
+                        ddjj.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        ddjj.texto = dr.GetString(ordinal2);
+                    if (!dr.IsDBNull(ordinal3))
+                        ddjj.id_contenido_ingreso_paso = dr.GetInt32(ordinal3);
+                    ddjjList.Add(ddjj);
                 }
             }
-            return lst;
+            return ddjjList;
         }
 
         public static List<ddjj> read()
         {
             try
             {
-                List<ddjj> lst = new List<ddjj>();
-                using (SqlConnection con = GetConnection())
+                List<ddjj> ddjjList = new List<ddjj>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM ddjj";
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT *FROM ddjj";
+                    command.Connection.Open();
+                    return ddjj.mapeo(command.ExecuteReader());
                 }
             }
             catch (Exception ex)
@@ -61,28 +70,26 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static ddjj getByPk(
-        int ID)
+        public static ddjj getByPk(int ID)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM ddjj WHERE");
-                sql.AppendLine("id = @id");
-                ddjj obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM ddjj WHERE");
+                stringBuilder.AppendLine("id = @id");
+                ddjj byPk = (ddjj)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", ID);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<ddjj> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Connection.Open();
+                    List<ddjj> ddjjList = ddjj.mapeo(command.ExecuteReader());
+                    if (ddjjList.Count != 0)
+                        byPk = ddjjList[0];
                 }
-                return obj;
+                return byPk;
             }
             catch (Exception ex)
             {
@@ -94,24 +101,24 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO ddjj(");
-                sql.AppendLine("texto,");
-                sql.AppendLine("ID_CONTENIDO_INGRESO_PASO)");
-                sql.AppendLine("VALUES");
-                sql.AppendLine("(");
-                sql.AppendLine("@texto,");
-                sql.AppendLine("@ID_CONTENIDO_INGRESO_PASO)");
-                sql.AppendLine("SELECT SCOPE_IDENTITY()");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("INSERT INTO ddjj(");
+                stringBuilder.AppendLine("texto,");
+                stringBuilder.AppendLine("ID_CONTENIDO_INGRESO_PASO)");
+                stringBuilder.AppendLine("VALUES");
+                stringBuilder.AppendLine("(");
+                stringBuilder.AppendLine("@texto,");
+                stringBuilder.AppendLine("@ID_CONTENIDO_INGRESO_PASO)");
+                stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@texto", obj.texto);
-                    cmd.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", obj.id_contenido_ingreso_paso);
-                    cmd.Connection.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@texto", (object)obj.texto);
+                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", (object)obj.id_contenido_ingreso_paso);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
             }
             catch (Exception ex)
@@ -124,20 +131,20 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  ddjj SET");
-                sql.AppendLine("texto=@texto");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  ddjj SET");
+                stringBuilder.AppendLine("texto=@texto");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@texto", obj.texto);
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@texto", (object)obj.texto);
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -150,18 +157,18 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  ddjj ");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  ddjj ");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -170,6 +177,28 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
+        public static void delete(int ID_CONTENIDO_INGRESO_PASO)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  ddjj ");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("ID_CONTENIDO_INGRESO_PASO=@ID_CONTENIDO_INGRESO_PASO");
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", (object)ID_CONTENIDO_INGRESO_PASO);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
-

@@ -9,9 +9,9 @@ namespace MOTOR_WORKFLOW.Services
     {
         public List<campos_x_formulario> read(int idFormulario);
         public campos_x_formulario getByPk(int ID);
-        public int insert(campos_x_formulario obj);
-        public void update(campos_x_formulario obj);
-        public void delete(campos_x_formulario obj);
+        public int insert(CampoTextoModel obj);
+        public void update(CampoTextoModel obj);
+        public void delete(int id);
     }
 }
 

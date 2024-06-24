@@ -1,70 +1,84 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Entities.Formularios
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Entities
 {
     public class Formularios : DALBase
     {
         public int id { get; set; }
+
         public int id_pasos { get; set; }
+
         public int id_formulario { get; set; }
+
         public string nombre { get; set; }
+
         public string descripcion { get; set; }
+
         public List<Respuesta_formulario> lstRespuesta { get; set; }
+
         public Formularios()
         {
-            id = 0;
-            id_pasos = 0;
-            id_formulario = 0;
-            nombre = string.Empty;
-            descripcion = string.Empty;
-            lstRespuesta = new List<Respuesta_formulario>();
+            this.id = 0;
+            this.id_pasos = 0;
+            this.id_formulario = 0;
+            this.nombre = string.Empty;
+            this.descripcion = string.Empty;
+            this.lstRespuesta = new List<Respuesta_formulario>();
         }
 
         private static List<Formularios> mapeo(SqlDataReader dr)
         {
-            List<Formularios> lst = new List<Formularios>();
-            Formularios obj;
+            List<Formularios> formulariosList = new List<Formularios>();
             if (dr.HasRows)
             {
-                int id = dr.GetOrdinal("id");
-                int id_pasos = dr.GetOrdinal("id_pasos");
-                int id_formulario = dr.GetOrdinal("id_formulario");
-                int nombre = dr.GetOrdinal("nombre");
-                int descripcion = dr.GetOrdinal("descripcion");
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("id_pasos");
+                int ordinal3 = dr.GetOrdinal("id_formulario");
+                int ordinal4 = dr.GetOrdinal("nombre");
+                int ordinal5 = dr.GetOrdinal("descripcion");
                 while (dr.Read())
                 {
-                    obj = new Formularios();
-                    if (!dr.IsDBNull(id)) { obj.id = dr.GetInt32(id); }
-                    if (!dr.IsDBNull(id_pasos)) { obj.id_pasos = dr.GetInt32(id_pasos); }
-                    if (!dr.IsDBNull(id_formulario)) { obj.id_formulario = dr.GetInt32(id_formulario); }
-                    if (!dr.IsDBNull(nombre)) { obj.nombre = dr.GetString(nombre); }
-                    if (!dr.IsDBNull(descripcion)) { obj.descripcion = dr.GetString(descripcion); }
-                    obj.lstRespuesta = Respuesta_formulario.read(obj.id);
-                    lst.Add(obj);
+                    Formularios formularios = new Formularios();
+                    if (!dr.IsDBNull(ordinal1))
+                        formularios.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        formularios.id_pasos = dr.GetInt32(ordinal2);
+                    if (!dr.IsDBNull(ordinal3))
+                        formularios.id_formulario = dr.GetInt32(ordinal3);
+                    if (!dr.IsDBNull(ordinal4))
+                        formularios.nombre = dr.GetString(ordinal4);
+                    if (!dr.IsDBNull(ordinal5))
+                        formularios.descripcion = dr.GetString(ordinal5);
+                    formularios.lstRespuesta = Respuesta_formulario.read(formularios.id);
+                    formulariosList.Add(formularios);
                 }
             }
-            return lst;
+            return formulariosList;
         }
 
         public static List<Formularios> read()
         {
             try
             {
-                List<Formularios> lst = new List<Formularios>();
-                using (SqlConnection con = GetConnection())
+                List<Formularios> formulariosList = new List<Formularios>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Formularios";
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT *FROM Formularios";
+                    command.Connection.Open();
+                    return Formularios.mapeo(command.ExecuteReader());
                 }
             }
             catch (Exception ex)
@@ -73,92 +87,90 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static Formularios getByPk(
-        int id)
+        public static Formularios getByPk(int id)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Formularios WHERE");
-                sql.AppendLine("id = @id");
-                Formularios obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM Formularios WHERE");
+                stringBuilder.AppendLine("id = @id");
+                Formularios byPk = (Formularios)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<Formularios> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Connection.Open();
+                    List<Formularios> formulariosList = Formularios.mapeo(command.ExecuteReader());
+                    if (formulariosList.Count != 0)
+                        byPk = formulariosList[0];
                 }
-                return obj;
+                return byPk;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public static Formularios getByIdPasos(
-        int id_pasos)
+
+        public static Formularios getByIdPasos(int id_pasos)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Formularios WHERE");
-                sql.AppendLine("id_pasos = @id_pasos");
-                Formularios obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM Formularios WHERE");
+                stringBuilder.AppendLine("id_pasos = @id_pasos");
+                Formularios byIdPasos = (Formularios)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id_pasos", id_pasos);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<Formularios> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id_pasos", (object)id_pasos);
+                    command.Connection.Open();
+                    List<Formularios> formulariosList = Formularios.mapeo(command.ExecuteReader());
+                    if (formulariosList.Count != 0)
+                        byIdPasos = formulariosList[0];
                 }
-                return obj;
+                return byIdPasos;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
         public static int insert(Formularios obj)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO Formularios(");
-                sql.AppendLine("id_pasos");
-                sql.AppendLine(", id_formulario");
-                sql.AppendLine(", nombre");
-                sql.AppendLine(", descripcion");
-                sql.AppendLine(")");
-                sql.AppendLine("VALUES");
-                sql.AppendLine("(");
-                sql.AppendLine("@id_pasos");
-                sql.AppendLine(", @id_formulario");
-                sql.AppendLine(", @nombre");
-                sql.AppendLine(", @descripcion");
-                sql.AppendLine(")");
-                sql.AppendLine("SELECT SCOPE_IDENTITY()");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("INSERT INTO Formularios(");
+                stringBuilder.AppendLine("id_pasos");
+                stringBuilder.AppendLine(", id_formulario");
+                stringBuilder.AppendLine(", nombre");
+                stringBuilder.AppendLine(", descripcion");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("VALUES");
+                stringBuilder.AppendLine("(");
+                stringBuilder.AppendLine("@id_pasos");
+                stringBuilder.AppendLine(", @id_formulario");
+                stringBuilder.AppendLine(", @nombre");
+                stringBuilder.AppendLine(", @descripcion");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
-                    cmd.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", obj.descripcion);
-                    cmd.Connection.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
+                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@descripcion", (object)obj.descripcion);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
             }
             catch (Exception ex)
@@ -171,25 +183,25 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  Formularios SET");
-                sql.AppendLine("id_pasos=@id_pasos");
-                sql.AppendLine(", id_formulario=@id_formulario");
-                sql.AppendLine(", nombre=@nombre");
-                sql.AppendLine(", descripcion=@descripcion");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Formularios SET");
+                stringBuilder.AppendLine("id_pasos=@id_pasos");
+                stringBuilder.AppendLine(", id_formulario=@id_formulario");
+                stringBuilder.AppendLine(", nombre=@nombre");
+                stringBuilder.AppendLine(", descripcion=@descripcion");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
-                    cmd.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
-                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", obj.descripcion);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
+                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
+                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@descripcion", (object)obj.descripcion);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -202,18 +214,18 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  Formularios ");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  Formularios ");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -221,7 +233,5 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
     }
 }
-

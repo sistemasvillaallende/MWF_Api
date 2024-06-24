@@ -1,38 +1,35 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Controllers.Tipo_campoController
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using Newtonsoft.Json;
+using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
 
+#nullable enable
 namespace MOTOR_WORKFLOW.Controllers
 {
-    [ApiController]
-    [Route("[controller]/[action]")]
-    public class Tipo_campoController : Controller
+  [ApiController]
+  [Route("[controller]/[action]")]
+  public class Tipo_campoController : Controller
+  {
+    private ITipo_campoService _Tipo_campoService;
+
+    public Tipo_campoController(ITipo_campoService Tipo_campoService)
     {
-        private ITipo_campoService _Tipo_campoService;
-        public Tipo_campoController(ITipo_campoService Tipo_campoService)
-        {
-            _Tipo_campoService = Tipo_campoService;
-        }
-        [HttpGet]
-        public IActionResult getByPk(
-        int ID)
-        {
-            var Tipo_campo = _Tipo_campoService.getByPk(ID);
-            if (Tipo_campo == null)
-            {
-                return BadRequest(new { message = "Error al obtener los datos" });
-            }
-            return Ok(Tipo_campo);
-        }
-
-
-
-
-
-
-
+      this._Tipo_campoService = Tipo_campoService;
     }
-}
 
+    [HttpGet]
+    public IActionResult getByPk(int ID)
+    {
+      Tipo_campo byPk = this._Tipo_campoService.getByPk(ID);
+      return byPk == null ? (IActionResult) this.BadRequest((object) new
+      {
+        message = "Error al obtener los datos"
+      }) : (IActionResult) this.Ok((object) byPk);
+    }
+  }
+}

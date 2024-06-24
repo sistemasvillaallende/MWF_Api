@@ -1,11 +1,14 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Services.TramiteService
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
+using MOTOR_WORKFLOW.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.Extensions.Options;
-using MOTOR_WORKFLOW.Entities;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Services
 {
     public class TramiteService : ITramiteService
@@ -21,6 +24,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
         public List<Tramite> read()
         {
             try
@@ -32,6 +36,19 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
+        public List<Tramite> readBack()
+        {
+            try
+            {
+                return Tramite.readBack();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public int insert(Tramite obj)
         {
             try
@@ -43,6 +60,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
         public void update(Tramite obj)
         {
             try
@@ -54,6 +72,19 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
+        public void activaDesactiva(Tramite obj)
+        {
+            try
+            {
+                Tramite.activaDesactiva(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void delete(Tramite obj)
         {
             try
@@ -67,4 +98,3 @@ namespace MOTOR_WORKFLOW.Services
         }
     }
 }
-

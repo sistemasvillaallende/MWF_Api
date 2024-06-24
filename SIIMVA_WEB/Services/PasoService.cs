@@ -1,11 +1,14 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Services.PasoService
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
+using MOTOR_WORKFLOW.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.Extensions.Options;
-using MOTOR_WORKFLOW.Entities;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Services
 {
     public class PasoService : IPasoService
@@ -21,18 +24,32 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public List<Paso> read()
+
+        public List<Paso> readBackEnd(int idTramite)
         {
             try
             {
-                return Paso.read();
+                return Paso.readBackEnd(idTramite);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public int insert(Paso obj)
+
+        public List<Paso> read(int idTramite)
+        {
+            try
+            {
+                return Paso.read(idTramite);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public int insert(PasoModel obj)
         {
             try
             {
@@ -43,7 +60,8 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public void update(Paso obj)
+
+        public void update(PasoModel obj)
         {
             try
             {
@@ -54,6 +72,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
         public void delete(Paso obj)
         {
             try
@@ -67,4 +86,3 @@ namespace MOTOR_WORKFLOW.Services
         }
     }
 }
-

@@ -1,76 +1,93 @@
+// Decompiled with JetBrains decompiler
+// Type: MOTOR_WORKFLOW.Entities.Respuesta_formulario
+// Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
+// Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 namespace MOTOR_WORKFLOW.Entities
 {
     public class Respuesta_formulario : DALBase
     {
         public int id { get; set; }
+
         public int id_formularios { get; set; }
+
         public string nombre_campo { get; set; }
+
         public string respuesta_usuario { get; set; }
+
         public int id_tipo_campo { get; set; }
+
         public int orden { get; set; }
+
         public string etiqueta_campo { get; set; }
+
         public Respuesta_formulario()
         {
-            id = 0;
-            id_formularios = 0;
-            nombre_campo = string.Empty;
-            respuesta_usuario = string.Empty;
-            id_tipo_campo = 0;
-            orden = 0;
-            etiqueta_campo = string.Empty;
+            this.id = 0;
+            this.id_formularios = 0;
+            this.nombre_campo = string.Empty;
+            this.respuesta_usuario = string.Empty;
+            this.id_tipo_campo = 0;
+            this.orden = 0;
+            this.etiqueta_campo = string.Empty;
         }
 
         private static List<Respuesta_formulario> mapeo(SqlDataReader dr)
         {
-            List<Respuesta_formulario> lst = new List<Respuesta_formulario>();
-            Respuesta_formulario obj;
+            List<Respuesta_formulario> respuestaFormularioList = new List<Respuesta_formulario>();
             if (dr.HasRows)
             {
-                int id = dr.GetOrdinal("id");
-                int id_formularios = dr.GetOrdinal("id_formularios");
-                int nombre_campo = dr.GetOrdinal("nombre_campo");
-                int respuesta_usuario = dr.GetOrdinal("respuesta_usuario");
-                int id_tipo_campo = dr.GetOrdinal("id_tipo_campo");
-                int orden = dr.GetOrdinal("orden");
-                int etiqueta_campo = dr.GetOrdinal("etiqueta_campo");
+                int ordinal1 = dr.GetOrdinal("id");
+                int ordinal2 = dr.GetOrdinal("id_formularios");
+                int ordinal3 = dr.GetOrdinal("nombre_campo");
+                int ordinal4 = dr.GetOrdinal("respuesta_usuario");
+                int ordinal5 = dr.GetOrdinal("id_tipo_campo");
+                int ordinal6 = dr.GetOrdinal("orden");
+                int ordinal7 = dr.GetOrdinal("etiqueta_campo");
                 while (dr.Read())
                 {
-                    obj = new Respuesta_formulario();
-                    if (!dr.IsDBNull(id)) { obj.id = dr.GetInt32(id); }
-                    if (!dr.IsDBNull(id_formularios)) { obj.id_formularios = dr.GetInt32(id_formularios); }
-                    if (!dr.IsDBNull(nombre_campo)) { obj.nombre_campo = dr.GetString(nombre_campo); }
-                    if (!dr.IsDBNull(respuesta_usuario)) { obj.respuesta_usuario = dr.GetString(respuesta_usuario); }
-                    if (!dr.IsDBNull(id_tipo_campo)) { obj.id_tipo_campo = dr.GetInt32(id_tipo_campo); }
-                    if (!dr.IsDBNull(orden)) { obj.orden = dr.GetInt32(orden); }
-                    if (!dr.IsDBNull(etiqueta_campo)) { obj.etiqueta_campo = dr.GetString(etiqueta_campo); }
-                    lst.Add(obj);
+                    Respuesta_formulario respuestaFormulario = new Respuesta_formulario();
+                    if (!dr.IsDBNull(ordinal1))
+                        respuestaFormulario.id = dr.GetInt32(ordinal1);
+                    if (!dr.IsDBNull(ordinal2))
+                        respuestaFormulario.id_formularios = dr.GetInt32(ordinal2);
+                    if (!dr.IsDBNull(ordinal3))
+                        respuestaFormulario.nombre_campo = dr.GetString(ordinal3);
+                    if (!dr.IsDBNull(ordinal4))
+                        respuestaFormulario.respuesta_usuario = dr.GetString(ordinal4);
+                    if (!dr.IsDBNull(ordinal5))
+                        respuestaFormulario.id_tipo_campo = dr.GetInt32(ordinal5);
+                    if (!dr.IsDBNull(ordinal6))
+                        respuestaFormulario.orden = dr.GetInt32(ordinal6);
+                    if (!dr.IsDBNull(ordinal7))
+                        respuestaFormulario.etiqueta_campo = dr.GetString(ordinal7);
+                    respuestaFormularioList.Add(respuestaFormulario);
                 }
             }
-            return lst;
+            return respuestaFormularioList;
         }
 
         public static List<Respuesta_formulario> read(int id_formularios)
         {
             try
             {
-                List<Respuesta_formulario> lst = new List<Respuesta_formulario>();
-                using (SqlConnection con = GetConnection())
+                List<Respuesta_formulario> respuestaFormularioList = new List<Respuesta_formulario>();
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Respuesta_formulario WHERE id_formularios=@id_formularios";
-                    cmd.Parameters.AddWithValue("@id_formularios", id_formularios);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT *FROM Respuesta_formulario WHERE id_formularios=@id_formularios";
+                    command.Parameters.AddWithValue("@id_formularios", (object)id_formularios);
+                    command.Connection.Open();
+                    return Respuesta_formulario.mapeo(command.ExecuteReader());
                 }
             }
             catch (Exception ex)
@@ -79,26 +96,24 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static Respuesta_formulario getByPk(
-        )
+        public static Respuesta_formulario getByPk()
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Respuesta_formulario WHERE");
-                Respuesta_formulario obj = null;
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("SELECT *FROM Respuesta_formulario WHERE");
+                Respuesta_formulario byPk = (Respuesta_formulario)null;
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    List<Respuesta_formulario> lst = mapeo(dr);
-                    if (lst.Count != 0)
-                        obj = lst[0];
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Connection.Open();
+                    List<Respuesta_formulario> respuestaFormularioList = Respuesta_formulario.mapeo(command.ExecuteReader());
+                    if (respuestaFormularioList.Count != 0)
+                        byPk = respuestaFormularioList[0];
                 }
-                return obj;
+                return byPk;
             }
             catch (Exception ex)
             {
@@ -110,38 +125,37 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO Respuesta_formulario(");
-                sql.AppendLine("id_formularios");
-                sql.AppendLine(", nombre_campo");
-                sql.AppendLine(", respuesta_usuario");
-                sql.AppendLine(", id_tipo_campo");
-                sql.AppendLine(", orden");
-                sql.AppendLine(", etiqueta_campo");
-                sql.AppendLine(")");
-                sql.AppendLine("VALUES");
-                sql.AppendLine("(");
-
-                sql.AppendLine("@id_formularios");
-                sql.AppendLine(", @nombre_campo");
-                sql.AppendLine(", @respuesta_usuario");
-                sql.AppendLine(", @id_tipo_campo");
-                sql.AppendLine(", @orden");
-                sql.AppendLine(", @etiqueta_campo");
-                sql.AppendLine(")");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("INSERT INTO Respuesta_formulario(");
+                stringBuilder.AppendLine("id_formularios");
+                stringBuilder.AppendLine(", nombre_campo");
+                stringBuilder.AppendLine(", respuesta_usuario");
+                stringBuilder.AppendLine(", id_tipo_campo");
+                stringBuilder.AppendLine(", orden");
+                stringBuilder.AppendLine(", etiqueta_campo");
+                stringBuilder.AppendLine(")");
+                stringBuilder.AppendLine("VALUES");
+                stringBuilder.AppendLine("(");
+                stringBuilder.AppendLine("@id_formularios");
+                stringBuilder.AppendLine(", @nombre_campo");
+                stringBuilder.AppendLine(", @respuesta_usuario");
+                stringBuilder.AppendLine(", @id_tipo_campo");
+                stringBuilder.AppendLine(", @orden");
+                stringBuilder.AppendLine(", @etiqueta_campo");
+                stringBuilder.AppendLine(")");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id_formularios", obj.id_formularios);
-                    cmd.Parameters.AddWithValue("@nombre_campo", obj.nombre_campo);
-                    cmd.Parameters.AddWithValue("@respuesta_usuario", obj.respuesta_usuario);
-                    cmd.Parameters.AddWithValue("@id_tipo_campo", obj.id_tipo_campo);
-                    cmd.Parameters.AddWithValue("@orden", obj.orden);
-                    cmd.Parameters.AddWithValue("@etiqueta_campo", obj.etiqueta_campo);
-                    cmd.Connection.Open();
-                    return cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id_formularios", (object)obj.id_formularios);
+                    command.Parameters.AddWithValue("@nombre_campo", (object)obj.nombre_campo);
+                    command.Parameters.AddWithValue("@respuesta_usuario", (object)obj.respuesta_usuario);
+                    command.Parameters.AddWithValue("@id_tipo_campo", (object)obj.id_tipo_campo);
+                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@etiqueta_campo", (object)obj.etiqueta_campo);
+                    command.Connection.Open();
+                    return command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -154,30 +168,30 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  Respuesta_formulario SET");
-                sql.AppendLine("id_formularios=@id_formularios");
-                sql.AppendLine(", nombre_campo=@nombre_campo");
-                sql.AppendLine(", respuesta_usuario=@respuesta_usuario");
-                sql.AppendLine(", id_tipo_campo=@id_tipo_campo");
-                sql.AppendLine(", orden=@orden");
-                sql.AppendLine(", etiqueta_campo=@etiqueta_campo");
-                sql.AppendLine("WHERE");
-                sql.AppendLine("id=@id");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Respuesta_formulario SET");
+                stringBuilder.AppendLine("id_formularios=@id_formularios");
+                stringBuilder.AppendLine(", nombre_campo=@nombre_campo");
+                stringBuilder.AppendLine(", respuesta_usuario=@respuesta_usuario");
+                stringBuilder.AppendLine(", id_tipo_campo=@id_tipo_campo");
+                stringBuilder.AppendLine(", orden=@orden");
+                stringBuilder.AppendLine(", etiqueta_campo=@etiqueta_campo");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@id", obj.id);
-                    cmd.Parameters.AddWithValue("@id_formularios", obj.id_formularios);
-                    cmd.Parameters.AddWithValue("@nombre_campo", obj.nombre_campo);
-                    cmd.Parameters.AddWithValue("@respuesta_usuario", obj.respuesta_usuario);
-                    cmd.Parameters.AddWithValue("@id_tipo_campo", obj.id_tipo_campo);
-                    cmd.Parameters.AddWithValue("@orden", obj.orden);
-                    cmd.Parameters.AddWithValue("@etiqueta_campo", obj.etiqueta_campo);
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id_formularios", (object)obj.id_formularios);
+                    command.Parameters.AddWithValue("@nombre_campo", (object)obj.nombre_campo);
+                    command.Parameters.AddWithValue("@respuesta_usuario", (object)obj.respuesta_usuario);
+                    command.Parameters.AddWithValue("@id_tipo_campo", (object)obj.id_tipo_campo);
+                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@etiqueta_campo", (object)obj.etiqueta_campo);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -190,16 +204,16 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  Respuesta_formulario ");
-                sql.AppendLine("WHERE");
-                using (SqlConnection con = GetConnection())
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("DELETE  Respuesta_formulario ");
+                stringBuilder.AppendLine("WHERE");
+                using (SqlConnection connection = DALBase.GetConnection())
                 {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -207,7 +221,5 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
     }
 }
-
