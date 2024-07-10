@@ -989,19 +989,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Martin\\.nuget\\packages\\": {}
+    "C:\\Users\\Lenovo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
+      "projectUniqueName": "D:\\Muni\\Dev\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
       "projectName": "MOTOR_WORKFLOW",
-      "projectPath": "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
-      "packagesPath": "C:\\Users\\Martin\\.nuget\\packages\\",
-      "outputPath": "C:\\Muni\\DEV\\MWF_Api\\SIIMVA_WEB\\obj\\",
+      "projectPath": "D:\\Muni\\Dev\\MWF_Api\\SIIMVA_WEB\\MOTOR_WORKFLOW.csproj",
+      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+      "outputPath": "D:\\Muni\\Dev\\MWF_Api\\SIIMVA_WEB\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Martin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1069,7 +1069,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

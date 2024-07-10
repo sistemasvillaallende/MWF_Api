@@ -2,7 +2,7 @@
   "profiles": {
     "SIIMVA_WEB": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Muni\\DEV\\MOTOR_WORKFLOW",
+      "workingDirectory": "D:\\Muni\\Dev\\MWF_Api\\SIIMVA_WEB",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
