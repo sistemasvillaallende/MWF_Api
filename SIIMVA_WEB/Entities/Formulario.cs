@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using MOTOR_WORKFLOW.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -100,7 +101,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<Formulario> formularioList = Formulario.mapeo(command.ExecuteReader());
                     if (formularioList.Count != 0)
@@ -114,7 +115,7 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static int insert(Formulario obj)
+        public static int insert(FormularioModel obj)
         {
             try
             {
@@ -138,9 +139,9 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@descripcion", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@id_contenido_ingreso_paso", (object)obj.id_contenido_ingreso_paso);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@descripcion", obj.nombre);
+                    command.Parameters.AddWithValue("@id_contenido_ingreso_paso", obj.id_contenido_ingreso_paso);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -151,7 +152,7 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void update(Formulario obj)
+        public static void update(FormularioModel obj)
         {
             try
             {
@@ -165,8 +166,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@id", obj.Id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -177,20 +178,16 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void delete(Formulario obj)
+        public static void delete(string id)
         {
             try
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("DELETE  Formulario ");
-                stringBuilder.AppendLine("WHERE");
-                stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
                 {
                     SqlCommand command = connection.CreateCommand();
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_Formulario_delete";
+                    command.Parameters.AddWithValue("@id_formulario", id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -214,7 +211,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", (object)ID_CONTENIDO_INGRESO_PASO);
+                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", ID_CONTENIDO_INGRESO_PASO);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

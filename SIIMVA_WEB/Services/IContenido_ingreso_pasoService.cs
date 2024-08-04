@@ -22,7 +22,7 @@ namespace MOTOR_WORKFLOW.Services
 
         void update(contenido_ingreso_paso obj);
 
-        void delete(int id);
+        void delete(int id, int row);
     }
 }
 

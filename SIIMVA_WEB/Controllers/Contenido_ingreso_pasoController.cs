@@ -6,6 +6,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
+using MOTOR_WORKFLOW.Models;
 using MOTOR_WORKFLOW.Services;
 using System;
 using System.Collections.Generic;
@@ -38,26 +39,26 @@ namespace MOTOR_WORKFLOW.Controllers
         public IActionResult getByPk(int ID)
         {
             contenido_ingreso_paso byPk = this._Contenido_ingreso_pasoService.getByPk(ID);
-            return byPk == null ? (IActionResult)this.BadRequest((object)new
+            return byPk == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPk);
+            }) : (IActionResult)this.Ok(byPk);
         }
 
         [HttpGet]
         public IActionResult read(int id_ingreso_paso)
         {
             List<contenido_ingreso_paso> contenidoIngresoPasoList = this._Contenido_ingreso_pasoService.read(id_ingreso_paso);
-            return contenidoIngresoPasoList == null ? (IActionResult)this.BadRequest((object)new
+            return contenidoIngresoPasoList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)contenidoIngresoPasoList);
+            }) : (IActionResult)this.Ok(contenidoIngresoPasoList);
         }
 
         [HttpGet]
         public IActionResult maxRow(int id_ingreso_paso)
         {
-            return (IActionResult)this.Ok((object)this._Contenido_ingreso_pasoService.maxRow(id_ingreso_paso));
+            return (IActionResult)this.Ok(this._Contenido_ingreso_pasoService.maxRow(id_ingreso_paso));
         }
 
         [HttpPost]
@@ -87,7 +88,19 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [HttpGet]
+        public IActionResult deleteDDJJ(string id)
+        {
+            try
+            {
+                this._DdjjService.delete(id);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpPost]
         public IActionResult insertAdjunto(AdjuntoModel obj)
         {
@@ -101,7 +114,6 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
         [HttpPost]
         public IActionResult updateAdjunto(AdjuntoModel obj)
         {
@@ -115,9 +127,21 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [HttpGet]
+        public IActionResult deleteAdjunto(string id)
+        {
+            try
+            {
+                this._AdjuntoService.delete(id);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpPost]
-        public IActionResult insertFormulario(Formulario obj)
+        public IActionResult insertFormulario(FormularioModel obj)
         {
             try
             {
@@ -129,9 +153,8 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
         [HttpPost]
-        public IActionResult updateFormlario(Formulario obj)
+        public IActionResult updateFormlario(FormularioModel obj)
         {
             try
             {
@@ -143,13 +166,26 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [HttpGet]
+        public IActionResult deleteFormulario(string id)
+        {
+            try
+            {
+                this._FormularioService.delete(id);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpPost]
         public IActionResult insert(contenido_ingreso_paso_model obj)
         {
             try
             {
                 this._Contenido_ingreso_pasoService.insert(obj);
+
                 return (IActionResult)this.Ok();
             }
             catch (Exception ex)
@@ -172,12 +208,12 @@ namespace MOTOR_WORKFLOW.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult delete(int id)
+        [HttpGet]
+        public IActionResult delete(int id, int row)
         {
             try
             {
-                this._Contenido_ingreso_pasoService.delete(id);
+                this._Contenido_ingreso_pasoService.delete(id, row);
                 return (IActionResult)this.Ok();
             }
             catch (Exception ex)

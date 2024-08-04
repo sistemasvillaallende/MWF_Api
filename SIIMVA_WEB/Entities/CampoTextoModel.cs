@@ -31,7 +31,7 @@
         public int row { get; set; }
 
         public int col { get; set; }
-
+        public string cod_enlaza { get; set; }
         public CampoTextoModel()
         {
             this.id = 0;
@@ -49,6 +49,7 @@
             this.formato_resultado = string.Empty;
             this.row = 0;
             this.col = 0;
+            cod_enlaza = string.Empty;
         }
     }
 }

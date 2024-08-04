@@ -61,11 +61,11 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public void delete(Adjunto obj)
+        public void delete(string id)
         {
             try
             {
-                Adjunto.delete(obj);
+                Adjunto.delete(id);
             }
             catch (Exception ex)
             {

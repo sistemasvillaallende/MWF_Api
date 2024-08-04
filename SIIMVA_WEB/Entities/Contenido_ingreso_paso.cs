@@ -120,7 +120,7 @@ namespace MOTOR_WORKFLOW.Entities
                                 LEFT JOIN ADJUNTO C ON A.id=C.id_contenido_ingreso_paso
                                 LEFT JOIN DDJJ D ON A.id=D.id_contenido_ingreso_paso
                             WHERE id_ingreso_paso=@id_ingreso_paso";
-                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)idIngresoPaso);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", idIngresoPaso);
                     command.Connection.Open();
                     return contenido_ingreso_paso.mapeo(command.ExecuteReader());
                 }
@@ -151,7 +151,7 @@ namespace MOTOR_WORKFLOW.Entities
                             LEFT JOIN ADJUNTO C ON A.id=C.ID_CONTENIDO_INGRESO_PASO
                             LEFT JOIN DDJJ D ON A.id=D.ID_CONTENIDO_INGRESO_PASO
                         WHERE A.id=@id";
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<contenido_ingreso_paso> contenidoIngresoPasoList = contenido_ingreso_paso.mapeo(command.ExecuteReader());
                     if (contenidoIngresoPasoList.Count != 0)
@@ -177,7 +177,7 @@ namespace MOTOR_WORKFLOW.Entities
                             SELECT ISNULL(MAX(orden), 0) 
                             FROM contenido_ingreso_paso 
                             WHERE id_ingreso_paso=@id_ingreso_paso";
-                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)id_ingreso_paso);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", id_ingreso_paso);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -200,7 +200,7 @@ namespace MOTOR_WORKFLOW.Entities
                         SELECT ISNULL(MAX(row), 0)
                         FROM contenido_ingreso_paso
                         WHERE id_ingreso_paso=@id_ingreso_paso";
-                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)id_ingreso_paso);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", id_ingreso_paso);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -237,11 +237,11 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)obj.id_ingreso_paso);
-                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
-                    command.Parameters.AddWithValue("@row", (object)obj.row);
-                    command.Parameters.AddWithValue("@col", (object)obj.col);
-                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
+                    command.Parameters.AddWithValue("@orden", obj.orden);
+                    command.Parameters.AddWithValue("@row", obj.row);
+                    command.Parameters.AddWithValue("@col", obj.col);
+                    command.Parameters.AddWithValue("@activo", obj.activo);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -322,14 +322,14 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)obj.id_ingreso_paso);
-                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
-                    command.Parameters.AddWithValue("@id_adjunto", (object)obj.id_adjunto);
-                    command.Parameters.AddWithValue("@id_ddjj", (object)obj.id_ddjj);
-                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
-                    command.Parameters.AddWithValue("@row", (object)obj.row);
-                    command.Parameters.AddWithValue("@col", (object)obj.col);
-                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
+                    command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
+                    command.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
+                    command.Parameters.AddWithValue("@id_ddjj", obj.id_ddjj);
+                    command.Parameters.AddWithValue("@orden", obj.orden);
+                    command.Parameters.AddWithValue("@row", obj.row);
+                    command.Parameters.AddWithValue("@col", obj.col);
+                    command.Parameters.AddWithValue("@activo", obj.activo);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -340,20 +340,17 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void delete(int id)
+        public static void delete(int id, int row)
         {
             try
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("DELETE  contenido_ingreso_paso ");
-                stringBuilder.AppendLine("WHERE");
-                stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
                 {
                     SqlCommand command = connection.CreateCommand();
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_contenido_ingreso_x_paso_delete";
+                    command.Parameters.AddWithValue("@id_ingreso_x_paso", id);
+                    command.Parameters.AddWithValue("@row", row);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

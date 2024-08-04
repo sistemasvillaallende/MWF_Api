@@ -28,10 +28,10 @@ namespace MOTOR_WORKFLOW.Controllers
         public IActionResult getByPk(int ID)
         {
             campos_x_formulario byPk = this._Campos_x_formularioService.getByPk(ID);
-            return byPk == null ? (IActionResult)this.BadRequest((object)new
+            return byPk == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPk);
+            }) : (IActionResult)this.Ok(byPk);
         }
 
         [HttpPost]
@@ -47,7 +47,19 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [HttpPost]
+        public IActionResult insertEnlazados(List<Entities.CampoTextoModel> lst)
+        {
+            try
+            {
+                this._Campos_x_formularioService.insertEnlazados(lst);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpPost]
         public IActionResult update(CampoTextoModel obj)
         {
@@ -62,7 +74,7 @@ namespace MOTOR_WORKFLOW.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult delete(int id)
         {
             try

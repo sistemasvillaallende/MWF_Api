@@ -49,7 +49,7 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public int insert(Tramite obj)
+        public int insert(Models.TramiteInsert obj)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public void update(Tramite obj)
+        public void update(Models.TramiteInsert obj)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public void activaDesactiva(Tramite obj)
+        public void activaDesactiva(Models.TramiteInsert obj)
         {
             try
             {
@@ -85,11 +85,11 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public void delete(Tramite obj)
+        public void delete(int id_tramite)
         {
             try
             {
-                Tramite.delete(obj);
+                Tramite.delete(id_tramite);
             }
             catch (Exception ex)
             {

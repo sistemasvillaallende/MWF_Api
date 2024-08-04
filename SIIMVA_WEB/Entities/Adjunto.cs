@@ -135,7 +135,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<Adjunto> adjuntoList = Adjunto.mapeo(command.ExecuteReader());
                     if (adjuntoList.Count != 0)
@@ -154,7 +154,7 @@ namespace MOTOR_WORKFLOW.Entities
             try
             {
                 DateTime now = DateTime.Now;
-                obj.nombre = string.Format("Campo_{0}{1}{2}{3}{4}{5}", (object)now.Year, (object)now.Month, (object)now.Day, (object)now.Hour, (object)now.Minute, (object)now.Second);
+                obj.nombre = string.Format("Campo_{0}{1}{2}{3}{4}{5}", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine("INSERT INTO Adjunto(");
                 stringBuilder.AppendLine("descripcion");
@@ -183,14 +183,14 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@descripcion", (object)obj.descripcion);
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@etiqueta", (object)obj.etiqueta);
-                    command.Parameters.AddWithValue("@requerido", (object)obj.requerido);
-                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
-                    command.Parameters.AddWithValue("@id_contenido_ingreso_paso", (object)obj.id_contenido_ingreso_paso);
-                    command.Parameters.AddWithValue("@extenciones_aceptadas", (object)obj.extenciones_aceptadas);
-                    command.Parameters.AddWithValue("@multiple", (object)obj.multiple);
+                    command.Parameters.AddWithValue("@descripcion", obj.descripcion);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@etiqueta", obj.etiqueta);
+                    command.Parameters.AddWithValue("@requerido", obj.requerido);
+                    command.Parameters.AddWithValue("@activo", obj.activo);
+                    command.Parameters.AddWithValue("@id_contenido_ingreso_paso", obj.id_contenido_ingreso_paso);
+                    command.Parameters.AddWithValue("@extenciones_aceptadas", obj.extenciones_aceptadas);
+                    command.Parameters.AddWithValue("@multiple", obj.multiple);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -215,8 +215,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", (object)string.Format("{campo_{0}", (object)id));
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@nombre", string.Format("{campo_{0}", id));
+                    command.Parameters.AddWithValue("@id", id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -245,12 +245,12 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@descripcion", (object)obj.descripcion);
-                    command.Parameters.AddWithValue("@etiqueta", (object)obj.etiqueta);
-                    command.Parameters.AddWithValue("@requerido", (object)obj.requerido);
-                    command.Parameters.AddWithValue("@extenciones_aceptadas", (object)obj.extenciones_aceptadas);
-                    command.Parameters.AddWithValue("@multiple", (object)obj.multiple);
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@descripcion", obj.descripcion);
+                    command.Parameters.AddWithValue("@etiqueta", obj.etiqueta);
+                    command.Parameters.AddWithValue("@requerido", obj.requerido);
+                    command.Parameters.AddWithValue("@extenciones_aceptadas", obj.extenciones_aceptadas);
+                    command.Parameters.AddWithValue("@multiple", obj.multiple);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -261,20 +261,16 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void delete(Adjunto obj)
+        public static void delete(string id)
         {
             try
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("DELETE  Adjunto ");
-                stringBuilder.AppendLine("WHERE");
-                stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
                 {
                     SqlCommand command = connection.CreateCommand();
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_Adjunto_delete";
+                    command.Parameters.AddWithValue("@id_adjunto", id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -298,7 +294,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", (object)ID_CONTENIDO_INGRESO_PASO);
+                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", ID_CONTENIDO_INGRESO_PASO);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

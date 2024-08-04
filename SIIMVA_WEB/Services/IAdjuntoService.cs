@@ -20,6 +20,6 @@ namespace MOTOR_WORKFLOW.Services
 
         void update(AdjuntoModel obj);
 
-        void delete(Adjunto obj);
+        void delete(string id);
     }
 }

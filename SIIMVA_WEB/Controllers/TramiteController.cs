@@ -28,54 +28,54 @@ namespace MOTOR_WORKFLOW.Controllers
         public IActionResult getByPk(int ID)
         {
             Tramite byPk = this._TramiteService.getByPk(ID);
-            return byPk == null ? (IActionResult)this.BadRequest((object)new
+            return byPk == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPk);
+            }) : (IActionResult)this.Ok(byPk);
         }
 
         [HttpGet]
         public IActionResult read()
         {
             List<Tramite> tramiteList = this._TramiteService.read();
-            return tramiteList == null ? (IActionResult)this.BadRequest((object)new
+            return tramiteList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)tramiteList);
+            }) : (IActionResult)this.Ok(tramiteList);
         }
 
         [HttpGet]
         public IActionResult readBack()
         {
             List<Tramite> tramiteList = this._TramiteService.readBack();
-            return tramiteList == null ? (IActionResult)this.BadRequest((object)new
+            return tramiteList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)tramiteList);
+            }) : (IActionResult)this.Ok(tramiteList);
         }
 
         [HttpGet]
         public IActionResult IniciaTramite(int ID)
         {
             Tramite byPk = this._TramiteService.getByPk(ID);
-            return byPk == null ? (IActionResult)this.BadRequest((object)new
+            return byPk == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPk);
+            }) : (IActionResult)this.Ok(byPk);
         }
 
         [HttpGet]
         public IActionResult getDatosIniciador(int ID)
         {
             Tramite byPk = this._TramiteService.getByPk(ID);
-            return byPk == null ? (IActionResult)this.BadRequest((object)new
+            return byPk == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPk);
+            }) : (IActionResult)this.Ok(byPk);
         }
 
         [HttpPost]
-        public IActionResult insert(Tramite obj)
+        public IActionResult insert(Models.TramiteInsert obj)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace MOTOR_WORKFLOW.Controllers
         }
 
         [HttpPost]
-        public IActionResult update(Tramite obj)
+        public IActionResult update(Models.TramiteInsert obj)
         {
             try
             {
@@ -103,10 +103,11 @@ namespace MOTOR_WORKFLOW.Controllers
         }
 
         [HttpPost]
-        public IActionResult activaDesactiva(Tramite obj)
+        public IActionResult activaDesactiva(Models.TramiteInsert obj)
         {
             try
             {
+
                 this._TramiteService.activaDesactiva(obj);
                 return (IActionResult)this.Ok();
             }
@@ -115,5 +116,19 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [HttpGet]
+        public IActionResult delete(int id_tramite)
+        {
+            try
+            {
+                this._TramiteService.delete(id_tramite);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

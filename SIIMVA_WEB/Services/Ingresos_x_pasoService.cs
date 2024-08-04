@@ -43,6 +43,17 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+        public int insertValidaForm(ingreso_paso_model obj)
+        {
+            try
+            {
+                return ingresos_x_paso.insertValidaForm(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public void update(ingreso_paso_model obj)
         {
             try
@@ -54,11 +65,11 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public void delete(ingresos_x_paso obj)
+        public void delete(string id)
         {
             try
             {
-                ingresos_x_paso.delete(obj);
+                ingresos_x_paso.delete(id);
             }
             catch (Exception ex)
             {

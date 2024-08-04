@@ -78,7 +78,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<Tipo_campo> tipoCampoList = Tipo_campo.mapeo(command.ExecuteReader());
                     if (tipoCampoList.Count != 0)
@@ -110,7 +110,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -135,7 +135,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -159,7 +159,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

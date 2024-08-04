@@ -22,6 +22,6 @@ namespace MOTOR_WORKFLOW.Services
 
         void update(PasoModel obj);
 
-        void delete(Paso obj);
+        void delete(int idPaso);
     }
 }

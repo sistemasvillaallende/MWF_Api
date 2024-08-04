@@ -28,10 +28,10 @@ namespace MOTOR_WORKFLOW.Controllers
     public IActionResult read(int ID)
     {
       List<Ws_web_service> wsWebServiceList = this._Ws_web_serviceService.read();
-      return wsWebServiceList == null ? (IActionResult) this.BadRequest((object) new
+      return wsWebServiceList == null ? (IActionResult) this.BadRequest( new
       {
         message = "Error al obtener los datos"
-      }) : (IActionResult) this.Ok((object) wsWebServiceList);
+      }) : (IActionResult) this.Ok( wsWebServiceList);
     }
 
     [HttpPost]

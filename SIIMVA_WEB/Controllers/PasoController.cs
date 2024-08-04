@@ -169,7 +169,7 @@ namespace MOTOR_WORKFLOW.Controllers
                                     nombreImagen = (string)null;
                                 }
                             }
-                            Adjuntos.setArchivo(idAdjuntos, JsonConvert.SerializeObject((object)lstContenido));
+                            Adjuntos.setArchivo(idAdjuntos, JsonConvert.SerializeObject(lstContenido));
                             carpetaImagenes = (string)null;
                             lstContenido = (List<ContenidoAdjunto>)null;
                         }
@@ -306,7 +306,7 @@ namespace MOTOR_WORKFLOW.Controllers
                                     nombreImagen = (string)null;
                                 }
                             }
-                            Adjuntos.setArchivo(idAdjuntos, JsonConvert.SerializeObject((object)lstContenido));
+                            Adjuntos.setArchivo(idAdjuntos, JsonConvert.SerializeObject(lstContenido));
                             carpetaImagenes = (string)null;
                             lstContenido = (List<ContenidoAdjunto>)null;
                         }
@@ -441,7 +441,7 @@ namespace MOTOR_WORKFLOW.Controllers
                                     respuestaFormulario.respuesta_usuario = Convert.ToString(objFormulario.respuesta_usuario);
                                     break;
                                 case 9:
-                                    respuestaFormulario.respuesta_usuario = JsonConvert.SerializeObject((object)objFormulario.respuesta_usuario);
+                                    respuestaFormulario.respuesta_usuario = JsonConvert.SerializeObject(objFormulario.respuesta_usuario);
                                     break;
                                 case 14:
                                     respuestaFormulario.respuesta_usuario = Convert.ToString(objFormulario.respuesta_usuario);
@@ -464,7 +464,7 @@ namespace MOTOR_WORKFLOW.Controllers
                         adjuntos.multiple = byPk4.multiple;
                         int idAdjuntos = Adjuntos.insert(adjuntos);
                         if (files == null || files.Count == 0)
-                            return (IActionResult)pasoController1.BadRequest((object)"No se han proporcionado imágenes.");
+                            return (IActionResult)pasoController1.BadRequest("No se han proporcionado imágenes.");
                         string carpetaImagenes = "C:\\inetpub\\wwwroot\\img\\MWF";
                         if (!Directory.Exists(carpetaImagenes))
                             Directory.CreateDirectory(carpetaImagenes);
@@ -482,7 +482,7 @@ namespace MOTOR_WORKFLOW.Controllers
                                 nombreImagen = (string)null;
                             }
                         }
-                        Adjuntos.setArchivo(idAdjuntos, JsonConvert.SerializeObject((object)lstContenido));
+                        Adjuntos.setArchivo(idAdjuntos, JsonConvert.SerializeObject(lstContenido));
                         carpetaImagenes = (string)null;
                         lstContenido = (List<ContenidoAdjunto>)null;
                     }
@@ -538,28 +538,28 @@ namespace MOTOR_WORKFLOW.Controllers
         public IActionResult read(int idTramite)
         {
             List<MOTOR_WORKFLOW.Entities.Paso> pasoList = this._PasoService.read(idTramite);
-            return pasoList == null ? (IActionResult)this.BadRequest((object)new
+            return pasoList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)pasoList);
+            }) : (IActionResult)this.Ok(pasoList);
         }
         [HttpGet]
         public IActionResult getByPk(int ID)
         {
             MOTOR_WORKFLOW.Entities.Paso byPk = this._PasoService.getByPk(ID);
-            return byPk == null ? (IActionResult)this.BadRequest((object)new
+            return byPk == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPk);
+            }) : (IActionResult)this.Ok(byPk);
         }
         [HttpGet]
         public IActionResult readBackEnd(int idTramite)
         {
             List<MOTOR_WORKFLOW.Entities.Paso> pasoList = this._PasoService.readBackEnd(idTramite);
-            return pasoList == null ? (IActionResult)this.BadRequest((object)new
+            return pasoList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)pasoList);
+            }) : (IActionResult)this.Ok(pasoList);
         }
 
         [HttpPost]
@@ -583,6 +583,19 @@ namespace MOTOR_WORKFLOW.Controllers
             try
             {
                 this._PasoService.update(obj);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpGet]
+        public IActionResult delete(int idPaso)
+        {
+            try
+            {
+                this._PasoService.delete(idPaso);
                 return (IActionResult)this.Ok();
             }
             catch (Exception ex)

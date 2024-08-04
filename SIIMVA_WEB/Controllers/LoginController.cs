@@ -24,13 +24,13 @@ namespace MOTOR_WORKFLOW.Controllers
         [HttpGet]
         public IActionResult ValidaUsuarioConOficina(string user, string password)
         {
-            return (IActionResult)this.Ok((object)this._iusuarioConOficinaService.ValidUser(user, password));
+            return (IActionResult)this.Ok(this._iusuarioConOficinaService.ValidUser(user, password));
         }
 
         [HttpGet]
         public IActionResult ValidaPermisoConOficina(string user, string proceso)
         {
-            return (IActionResult)this.Ok((object)this._iusuarioConOficinaService.ValidaPermiso(user, proceso));
+            return (IActionResult)this.Ok(this._iusuarioConOficinaService.ValidaPermiso(user, proceso));
         }
     }
 }

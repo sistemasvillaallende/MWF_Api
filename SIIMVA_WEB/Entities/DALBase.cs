@@ -16,7 +16,7 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                return new SqlConnection("Data Source=10.0.0.8;Initial Catalog=MOTOR_WORKFLOW;User id=general");
+                return new SqlConnection("Data Source=10.0.0.23;Initial Catalog=MOTOR_WORKFLOW;User id=general");
             }
             catch (Exception ex)
             {
@@ -28,7 +28,7 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                return new SqlConnection("Data Source=10.0.0.8;Initial Catalog=SIIMVA;User id=general");
+                return new SqlConnection("Data Source=10.0.0.23;Initial Catalog=SIIMVA;User id=general");
             }
             catch (Exception ex)
             {

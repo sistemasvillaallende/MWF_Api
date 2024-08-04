@@ -15,6 +15,7 @@ namespace MOTOR_WORKFLOW.Services
         void finalizar_rechazar(int id_tramites, int estado);
 
         int recibir(int id_tramite, int paso_actual, int id_tramites, int cod_usuario);
+        int valida(int id_tramite);
 
         List<Tramites> read(string cuit);
 

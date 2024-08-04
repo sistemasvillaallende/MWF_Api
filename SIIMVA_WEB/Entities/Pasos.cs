@@ -130,7 +130,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = "SELECT *FROM Pasos WHERE id_tramites=@id_tramites";
-                    command.Parameters.AddWithValue("@id_tramites", (object)id_tramites);
+                    command.Parameters.AddWithValue("@id_tramites", id_tramites);
                     command.Connection.Open();
                     return Pasos.mapeo(command.ExecuteReader());
                 }
@@ -152,7 +152,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = "SELECT *FROM PASOS WHERE ID=@ID";
-                    command.Parameters.AddWithValue("@ID", (object)id);
+                    command.Parameters.AddWithValue("@ID", id);
                     command.Connection.Open();
                     List<Pasos> pasosList = Pasos.mapeo(command.ExecuteReader());
                     if (pasosList.Count != 0)
@@ -204,17 +204,17 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_tramites", (object)obj.id_tramites);
-                    command.Parameters.AddWithValue("@id_paso", (object)obj.id_paso);
-                    command.Parameters.AddWithValue("@orden_paso", (object)obj.orden_paso);
-                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)obj.id_ingreso_paso);
-                    command.Parameters.AddWithValue("@orden_ingreso_paso", (object)obj.orden_ingreso_paso);
-                    command.Parameters.AddWithValue("@nombre_ingreso_paso", (object)obj.nombre_ingreso_paso);
-                    command.Parameters.AddWithValue("@row", (object)obj.row);
-                    command.Parameters.AddWithValue("@col", (object)obj.col);
-                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
-                    command.Parameters.AddWithValue("@id_adjunto", (object)obj.id_adjunto);
-                    command.Parameters.AddWithValue("@id_ddjj", (object)obj.id_ddjj);
+                    command.Parameters.AddWithValue("@id_tramites", obj.id_tramites);
+                    command.Parameters.AddWithValue("@id_paso", obj.id_paso);
+                    command.Parameters.AddWithValue("@orden_paso", obj.orden_paso);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
+                    command.Parameters.AddWithValue("@orden_ingreso_paso", obj.orden_ingreso_paso);
+                    command.Parameters.AddWithValue("@nombre_ingreso_paso", obj.nombre_ingreso_paso);
+                    command.Parameters.AddWithValue("@row", obj.row);
+                    command.Parameters.AddWithValue("@col", obj.col);
+                    command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
+                    command.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
+                    command.Parameters.AddWithValue("@id_ddjj", obj.id_ddjj);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -249,17 +249,17 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_tramites", (object)obj.id_tramites);
-                    command.Parameters.AddWithValue("@id_paso", (object)obj.id_paso);
-                    command.Parameters.AddWithValue("@orden_paso", (object)obj.orden_paso);
-                    command.Parameters.AddWithValue("@id_ingreso_paso", (object)obj.id_ingreso_paso);
-                    command.Parameters.AddWithValue("@orden_ingreso_paso", (object)obj.orden_ingreso_paso);
-                    command.Parameters.AddWithValue("@nombre_ingreso_paso", (object)obj.nombre_ingreso_paso);
-                    command.Parameters.AddWithValue("@row", (object)obj.row);
-                    command.Parameters.AddWithValue("@col", (object)obj.col);
-                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
-                    command.Parameters.AddWithValue("@id_adjunto", (object)obj.id_adjunto);
-                    command.Parameters.AddWithValue("@id_ddjj", (object)obj.id_ddjj);
+                    command.Parameters.AddWithValue("@id_tramites", obj.id_tramites);
+                    command.Parameters.AddWithValue("@id_paso", obj.id_paso);
+                    command.Parameters.AddWithValue("@orden_paso", obj.orden_paso);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
+                    command.Parameters.AddWithValue("@orden_ingreso_paso", obj.orden_ingreso_paso);
+                    command.Parameters.AddWithValue("@nombre_ingreso_paso", obj.nombre_ingreso_paso);
+                    command.Parameters.AddWithValue("@row", obj.row);
+                    command.Parameters.AddWithValue("@col", obj.col);
+                    command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
+                    command.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
+                    command.Parameters.AddWithValue("@id_ddjj", obj.id_ddjj);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -283,7 +283,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

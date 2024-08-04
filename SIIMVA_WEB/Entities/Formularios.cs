@@ -100,7 +100,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@id", id);
                     command.Connection.Open();
                     List<Formularios> formulariosList = Formularios.mapeo(command.ExecuteReader());
                     if (formulariosList.Count != 0)
@@ -127,7 +127,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_pasos", (object)id_pasos);
+                    command.Parameters.AddWithValue("@id_pasos", id_pasos);
                     command.Connection.Open();
                     List<Formularios> formulariosList = Formularios.mapeo(command.ExecuteReader());
                     if (formulariosList.Count != 0)
@@ -165,10 +165,10 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
-                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@descripcion", (object)obj.descripcion);
+                    command.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
+                    command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@descripcion", obj.descripcion);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -196,10 +196,10 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
-                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@descripcion", (object)obj.descripcion);
+                    command.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
+                    command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@descripcion", obj.descripcion);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -223,7 +223,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

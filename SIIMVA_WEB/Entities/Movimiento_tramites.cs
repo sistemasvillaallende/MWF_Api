@@ -138,7 +138,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@id", id);
                     command.Connection.Open();
                     List<Movimiento_tramites> movimientoTramitesList = Movimiento_tramites.mapeo(command.ExecuteReader());
                     if (movimientoTramitesList.Count != 0)
@@ -190,17 +190,17 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@fecha", (object)obj.fecha);
-                    command.Parameters.AddWithValue("@id_tramites", (object)obj.id_tramites);
-                    command.Parameters.AddWithValue("@id_oficina", (object)obj.id_oficina);
-                    command.Parameters.AddWithValue("@id_direccion", (object)obj.id_direccion);
-                    command.Parameters.AddWithValue("@id_secretaria", (object)obj.id_secretaria);
-                    command.Parameters.AddWithValue("@en_vecino", (object)obj.en_vecino);
-                    command.Parameters.AddWithValue("@cuit", (object)obj.cuit);
-                    command.Parameters.AddWithValue("@cod_usuario", (object)obj.cod_usuario);
-                    command.Parameters.AddWithValue("@accion", (object)obj.accion);
-                    command.Parameters.AddWithValue("@cod_oficina_destino", (object)obj.cod_oficina_destino);
-                    command.Parameters.AddWithValue("@destino_vecino", (object)obj.destino_vecino);
+                    command.Parameters.AddWithValue("@fecha", obj.fecha);
+                    command.Parameters.AddWithValue("@id_tramites", obj.id_tramites);
+                    command.Parameters.AddWithValue("@id_oficina", obj.id_oficina);
+                    command.Parameters.AddWithValue("@id_direccion", obj.id_direccion);
+                    command.Parameters.AddWithValue("@id_secretaria", obj.id_secretaria);
+                    command.Parameters.AddWithValue("@en_vecino", obj.en_vecino);
+                    command.Parameters.AddWithValue("@cuit", obj.cuit);
+                    command.Parameters.AddWithValue("@cod_usuario", obj.cod_usuario);
+                    command.Parameters.AddWithValue("@accion", obj.accion);
+                    command.Parameters.AddWithValue("@cod_oficina_destino", obj.cod_oficina_destino);
+                    command.Parameters.AddWithValue("@destino_vecino", obj.destino_vecino);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -235,17 +235,17 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@fecha", (object)obj.fecha);
-                    command.Parameters.AddWithValue("@id_tramites", (object)obj.id_tramites);
-                    command.Parameters.AddWithValue("@id_oficina", (object)obj.id_oficina);
-                    command.Parameters.AddWithValue("@id_direccion", (object)obj.id_direccion);
-                    command.Parameters.AddWithValue("@id_secretaria", (object)obj.id_secretaria);
-                    command.Parameters.AddWithValue("@en_vecino", (object)obj.en_vecino);
-                    command.Parameters.AddWithValue("@cuit", (object)obj.cuit);
-                    command.Parameters.AddWithValue("@cod_usuario", (object)obj.cod_usuario);
-                    command.Parameters.AddWithValue("@accion", (object)obj.accion);
-                    command.Parameters.AddWithValue("@cod_oficina_destino", (object)obj.cod_oficina_destino);
-                    command.Parameters.AddWithValue("@destino_vecino", (object)obj.destino_vecino);
+                    command.Parameters.AddWithValue("@fecha", obj.fecha);
+                    command.Parameters.AddWithValue("@id_tramites", obj.id_tramites);
+                    command.Parameters.AddWithValue("@id_oficina", obj.id_oficina);
+                    command.Parameters.AddWithValue("@id_direccion", obj.id_direccion);
+                    command.Parameters.AddWithValue("@id_secretaria", obj.id_secretaria);
+                    command.Parameters.AddWithValue("@en_vecino", obj.en_vecino);
+                    command.Parameters.AddWithValue("@cuit", obj.cuit);
+                    command.Parameters.AddWithValue("@cod_usuario", obj.cod_usuario);
+                    command.Parameters.AddWithValue("@accion", obj.accion);
+                    command.Parameters.AddWithValue("@cod_oficina_destino", obj.cod_oficina_destino);
+                    command.Parameters.AddWithValue("@destino_vecino", obj.destino_vecino);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -269,7 +269,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

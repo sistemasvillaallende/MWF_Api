@@ -261,7 +261,7 @@ namespace MOTOR_WORKFLOW.Entities
                                 A.cuit COLLATE SQL_Latin1_General_CP1_CI_AS =
                                 C.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
                             WHERE A.cuit = @cuit";
-                    command.Parameters.AddWithValue("@cuit", (object)cuit);
+                    command.Parameters.AddWithValue("@cuit", cuit);
                     command.Connection.Open();
                     return Tramites.mapeo(command.ExecuteReader());
                 }
@@ -299,7 +299,7 @@ namespace MOTOR_WORKFLOW.Entities
                                 A.cuit COLLATE SQL_Latin1_General_CP1_CI_AS =
                                 C.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
                             WHERE A.id_oficina = @id_oficina";
-                    command.Parameters.AddWithValue("@id_oficina", (object)id_oficina);
+                    command.Parameters.AddWithValue("@id_oficina", id_oficina);
                     command.Connection.Open();
                     return Tramites.mapeo(command.ExecuteReader());
                 }
@@ -379,7 +379,7 @@ namespace MOTOR_WORKFLOW.Entities
                                 LEFT JOIN SIIMVA.dbo.OFICINAS D ON 
                                 A.id_oficina = D.codigo_oficina
                             WHERE A.id=@id";
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@id", id);
                     command.Connection.Open();
                     List<Tramites> tramitesList = Tramites.mapeoCompleto(command.ExecuteReader());
                     if (tramitesList.Count != 0)
@@ -403,7 +403,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = "SELECT A.*,                                 B.nombre_unidad_organizativa,                                B.NOMBRE as nombre_tramite, C.cuit,                                C.apellido + ', ' + C.NOMBRE as nombre_contribuyente,                                 B.logo_unidad_administrativa, A.avatar,                                _Estado = CASE estado                                    WHEN 1 THEN 'INICIADO'                                    WHEN 2 THEN 'EN PROCESO'                                    WHEN 3 THEN 'CANCELADO'                                    WHEN 4 THEN 'FINALIZADO'                                    WHEN 5 THEN 'CAMBIO OFICINA'                                END                                FROM TRAMITES A                                INNER JOIN TRAMITE B ON A.id_tramite=B.ID                                INNER JOIN SIIMVA.dbo.VECINO_DIGITAL C ON                                 A.cuit COLLATE SQL_Latin1_General_CP1_CI_AS =                                C.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS                                LEFT JOIN SIIMVA.dbo.OFICINAS D ON                                 A.id_oficina = D.codigo_oficina                                WHERE A.id=@id";
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@id", id);
                     command.Connection.Open();
                     List<Tramites> tramitesList = Tramites.mapeo(command.ExecuteReader());
                     if (tramitesList.Count != 0)
@@ -557,7 +557,7 @@ namespace MOTOR_WORKFLOW.Entities
 	                    INNER JOIN PASO P ON A.paso_actual=P.ID     
                     WHERE A.id = @idTramite            
                     ORDER BY orden_ingreso_paso, row";
-                    command.Parameters.AddWithValue("@idTramite", (object)idTramite);
+                    command.Parameters.AddWithValue("@idTramite", idTramite);
                     command.Connection.Open();
                     SqlDataReader sqlDataReader = command.ExecuteReader();
                     if (sqlDataReader.HasRows)
@@ -682,14 +682,14 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_tramite", (object)obj.id_tramite);
-                    command.Parameters.AddWithValue("@cuit", (object)obj.cuit);
-                    command.Parameters.AddWithValue("@cuit_representado", (object)obj.cuit_representado);
-                    command.Parameters.AddWithValue("@fecha", (object)obj.fecha);
-                    command.Parameters.AddWithValue("@paso_anterior", (object)obj.paso_anterior);
-                    command.Parameters.AddWithValue("@paso_actual", (object)obj.paso_actual);
-                    command.Parameters.AddWithValue("@nro_expediente", (object)obj.nro_expediente);
-                    command.Parameters.AddWithValue("@id_oficina", (object)obj.id_oficina);
+                    command.Parameters.AddWithValue("@id_tramite", obj.id_tramite);
+                    command.Parameters.AddWithValue("@cuit", obj.cuit);
+                    command.Parameters.AddWithValue("@cuit_representado", obj.cuit_representado);
+                    command.Parameters.AddWithValue("@fecha", obj.fecha);
+                    command.Parameters.AddWithValue("@paso_anterior", obj.paso_anterior);
+                    command.Parameters.AddWithValue("@paso_actual", obj.paso_actual);
+                    command.Parameters.AddWithValue("@nro_expediente", obj.nro_expediente);
+                    command.Parameters.AddWithValue("@id_oficina", obj.id_oficina);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -719,12 +719,12 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_tramite", (object)obj.id_tramite);
-                    command.Parameters.AddWithValue("@cuit", (object)obj.cuit);
-                    command.Parameters.AddWithValue("@cuit_representado", (object)obj.cuit_representado);
-                    command.Parameters.AddWithValue("@fecha", (object)obj.fecha);
-                    command.Parameters.AddWithValue("@paso_anterior", (object)obj.paso_anterior);
-                    command.Parameters.AddWithValue("@paso_actual", (object)obj.paso_actual);
+                    command.Parameters.AddWithValue("@id_tramite", obj.id_tramite);
+                    command.Parameters.AddWithValue("@cuit", obj.cuit);
+                    command.Parameters.AddWithValue("@cuit_representado", obj.cuit_representado);
+                    command.Parameters.AddWithValue("@fecha", obj.fecha);
+                    command.Parameters.AddWithValue("@paso_anterior", obj.paso_anterior);
+                    command.Parameters.AddWithValue("@paso_actual", obj.paso_actual);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -754,10 +754,10 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@paso_anterior", (object)paso_actual);
-                    command.Parameters.AddWithValue("@paso_actual", (object)proximo.id);
-                    command.Parameters.AddWithValue("@id_oficina", (object)proximo.id_oficina);
-                    command.Parameters.AddWithValue("@id", (object)id_tramites);
+                    command.Parameters.AddWithValue("@paso_anterior", paso_actual);
+                    command.Parameters.AddWithValue("@paso_actual", proximo.id);
+                    command.Parameters.AddWithValue("@id_oficina", proximo.id_oficina);
+                    command.Parameters.AddWithValue("@id", id_tramites);
                     command.Connection.Open();
                     num = Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -797,10 +797,10 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@paso_anterior", (object)paso_anterior);
-                    command.Parameters.AddWithValue("@paso_actual", (object)paso_actual);
-                    command.Parameters.AddWithValue("@id_oficina", (object)id_oficina);
-                    command.Parameters.AddWithValue("@id", (object)id_tramites);
+                    command.Parameters.AddWithValue("@paso_anterior", paso_anterior);
+                    command.Parameters.AddWithValue("@paso_actual", paso_actual);
+                    command.Parameters.AddWithValue("@id_oficina", id_oficina);
+                    command.Parameters.AddWithValue("@id", id_tramites);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -826,8 +826,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@estado", (object)estado);
-                    command.Parameters.AddWithValue("@id", (object)id_tramites);
+                    command.Parameters.AddWithValue("@estado", estado);
+                    command.Parameters.AddWithValue("@id", id_tramites);
                     command.Connection.Open();
                     num = Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -851,9 +851,28 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static int valida(int idTramite)
+        {
+            try
+            {
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT COUNT(*) FROM TRAMITES WHERE ID_TRAMITE = @idTramite";
+                    command.Parameters.AddWithValue("@idTramite", idTramite);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
             }
             catch (Exception ex)

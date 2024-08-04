@@ -104,7 +104,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connectionSiimva.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@COD_BARRIO", (object)COD_BARRIO);
+                    command.Parameters.AddWithValue("@COD_BARRIO", COD_BARRIO);
                     command.Connection.Open();
                     List<Barrios> barriosList = Barrios.mapeo(command.ExecuteReader());
                     if (barriosList.Count != 0)
@@ -139,9 +139,9 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connectionSiimva.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@COD_BARRIO", (object)obj.COD_BARRIO);
-                    command.Parameters.AddWithValue("@NOM_BARRIO", (object)obj.NOM_BARRIO);
-                    command.Parameters.AddWithValue("@BarrioCerrado", (object)obj.BarrioCerrado);
+                    command.Parameters.AddWithValue("@COD_BARRIO", obj.COD_BARRIO);
+                    command.Parameters.AddWithValue("@NOM_BARRIO", obj.NOM_BARRIO);
+                    command.Parameters.AddWithValue("@BarrioCerrado", obj.BarrioCerrado);
                     command.Connection.Open();
                     return command.ExecuteNonQuery();
                 }
@@ -167,9 +167,9 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connectionSiimva.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@COD_BARRIO", (object)obj.COD_BARRIO);
-                    command.Parameters.AddWithValue("@NOM_BARRIO", (object)obj.NOM_BARRIO);
-                    command.Parameters.AddWithValue("@BarrioCerrado", (object)obj.BarrioCerrado);
+                    command.Parameters.AddWithValue("@COD_BARRIO", obj.COD_BARRIO);
+                    command.Parameters.AddWithValue("@NOM_BARRIO", obj.NOM_BARRIO);
+                    command.Parameters.AddWithValue("@BarrioCerrado", obj.BarrioCerrado);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -193,7 +193,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connectionSiimva.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@COD_BARRIO", (object)obj.COD_BARRIO);
+                    command.Parameters.AddWithValue("@COD_BARRIO", obj.COD_BARRIO);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

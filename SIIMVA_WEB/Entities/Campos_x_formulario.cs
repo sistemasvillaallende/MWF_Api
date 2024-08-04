@@ -60,6 +60,7 @@ namespace MOTOR_WORKFLOW.Entities
 
         public int col { get; set; }
 
+        public string cod_enlaza { get; set; }
         public campos_x_formulario()
         {
             this.id = 0;
@@ -87,6 +88,7 @@ namespace MOTOR_WORKFLOW.Entities
             this.formato_resultado = string.Empty;
             this.row = 0;
             this.col = 0;
+            cod_enlaza = string.Empty;
         }
 
         private static List<campos_x_formulario> mapeo(SqlDataReader dr)
@@ -94,9 +96,9 @@ namespace MOTOR_WORKFLOW.Entities
             List<campos_x_formulario> camposXFormularioList = new List<campos_x_formulario>();
             if (dr.HasRows)
             {
-                int ordinal1 = dr.GetOrdinal("id");
-                int ordinal2 = dr.GetOrdinal("id_formulario");
-                int ordinal3 = dr.GetOrdinal("id_tipo_campo");
+                int id = dr.GetOrdinal("id");
+                int id_formulario = dr.GetOrdinal("id_formulario");
+                int id_tipo_campo = dr.GetOrdinal("id_tipo_campo");
                 int ordinal4 = dr.GetOrdinal("nombre");
                 int ordinal5 = dr.GetOrdinal("etiqueta");
                 int ordinal6 = dr.GetOrdinal("place_holder");
@@ -114,19 +116,21 @@ namespace MOTOR_WORKFLOW.Entities
                 int ordinal18 = dr.GetOrdinal("max_length");
                 int ordinal19 = dr.GetOrdinal("min_fecha");
                 int ordinal20 = dr.GetOrdinal("max_fecha");
-                int ordinal21 = dr.GetOrdinal("MENSAJE_ERROR");
-                int ordinal22 = dr.GetOrdinal("formato_resultado");
-                int ordinal23 = dr.GetOrdinal("row");
-                int ordinal24 = dr.GetOrdinal("col");
+                int MENSAJE_ERROR = dr.GetOrdinal("MENSAJE_ERROR");
+                int formato_resultado = dr.GetOrdinal("formato_resultado");
+                int row = dr.GetOrdinal("row");
+                int col = dr.GetOrdinal("col");
+                int cod_enlaza = dr.GetOrdinal("cod_enlaza");
+
                 while (dr.Read())
                 {
                     campos_x_formulario camposXFormulario = new campos_x_formulario();
-                    if (!dr.IsDBNull(ordinal1))
-                        camposXFormulario.id = dr.GetInt32(ordinal1);
-                    if (!dr.IsDBNull(ordinal2))
-                        camposXFormulario.id_formulario = dr.GetInt32(ordinal2);
-                    if (!dr.IsDBNull(ordinal3))
-                        camposXFormulario.id_tipo_campo = dr.GetInt32(ordinal3);
+                    if (!dr.IsDBNull(id))
+                        camposXFormulario.id = dr.GetInt32(id);
+                    if (!dr.IsDBNull(id_formulario))
+                        camposXFormulario.id_formulario = dr.GetInt32(id_formulario);
+                    if (!dr.IsDBNull(id_tipo_campo))
+                        camposXFormulario.id_tipo_campo = dr.GetInt32(id_tipo_campo);
                     if (!dr.IsDBNull(ordinal4))
                         camposXFormulario.nombre = dr.GetString(ordinal4);
                     if (!dr.IsDBNull(ordinal5))
@@ -161,14 +165,16 @@ namespace MOTOR_WORKFLOW.Entities
                         camposXFormulario.min_fecha = new DateTime?(dr.GetDateTime(ordinal19));
                     if (!dr.IsDBNull(ordinal20))
                         camposXFormulario.max_fecha = new DateTime?(dr.GetDateTime(ordinal20));
-                    if (!dr.IsDBNull(ordinal21))
-                        camposXFormulario.mensaje_error = dr.GetString(ordinal21);
-                    if (!dr.IsDBNull(ordinal22))
-                        camposXFormulario.formato_resultado = dr.GetString(ordinal22);
-                    if (!dr.IsDBNull(ordinal23))
-                        camposXFormulario.row = dr.GetInt32(ordinal23);
-                    if (!dr.IsDBNull(ordinal24))
-                        camposXFormulario.col = dr.GetInt32(ordinal24);
+                    if (!dr.IsDBNull(MENSAJE_ERROR))
+                        camposXFormulario.mensaje_error = dr.GetString(MENSAJE_ERROR);
+                    if (!dr.IsDBNull(formato_resultado))
+                        camposXFormulario.formato_resultado = dr.GetString(formato_resultado);
+                    if (!dr.IsDBNull(row))
+                        camposXFormulario.row = dr.GetInt32(row);
+                    if (!dr.IsDBNull(col))
+                        camposXFormulario.col = dr.GetInt32(col);
+                    if (!dr.IsDBNull(cod_enlaza))
+                        camposXFormulario.cod_enlaza = dr.GetString(cod_enlaza);
                     if (camposXFormulario.id_ws != 0)
                     {
                         RestResponse restResponse = new RestClient(Ws_web_service.getByPk(camposXFormulario.id_ws).URL).Execute(new RestRequest()
@@ -193,7 +199,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = "SELECT *FROM campos_x_formulario WHERE id_formulario = @id_formulario";
-                    command.Parameters.AddWithValue("@id_formulario", (object)idFormulario);
+                    command.Parameters.AddWithValue("@id_formulario", idFormulario);
                     command.Connection.Open();
                     return campos_x_formulario.mapeo(command.ExecuteReader());
                 }
@@ -213,8 +219,12 @@ namespace MOTOR_WORKFLOW.Entities
                 {
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT ISNULL(MAX(orden), 0)                                 FROM campos_x_formulario                                 WHERE id_formulario = @id_formulario";
-                    command.Parameters.AddWithValue("@id_formulario", (object)idFormulario);
+                    command.CommandText = @"
+                        SELECT ISNULL(MAX(orden), 0)      
+                        FROM campos_x_formulario   
+                        WHERE id_formulario = @id_formulario";
+
+                    command.Parameters.AddWithValue("@id_formulario", idFormulario);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -234,8 +244,11 @@ namespace MOTOR_WORKFLOW.Entities
                 {
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT ISNULL(MAX(row), 0)                                 FROM campos_x_formulario                                 WHERE id_formulario = @id_formulario";
-                    command.Parameters.AddWithValue("@id_formulario", (object)idFormulario);
+                    command.CommandText = @"
+                        SELECT ISNULL(MAX(row), 0) 
+                        FROM campos_x_formulario 
+                        WHERE id_formulario = @id_formulario";
+                    command.Parameters.AddWithValue("@id_formulario", idFormulario);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -259,7 +272,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<campos_x_formulario> camposXFormularioList = campos_x_formulario.mapeo(command.ExecuteReader());
                     if (camposXFormularioList.Count != 0)
@@ -282,7 +295,7 @@ namespace MOTOR_WORKFLOW.Entities
                 obj.orden = num1;
                 obj.row = num2;
                 DateTime now = DateTime.Now;
-                obj.nombre = string.Format("Campo_{0}{1}{2}{3}{4}{5}", (object)now.Year, (object)now.Month, (object)now.Day, (object)now.Hour, (object)now.Minute, (object)now.Second);
+                obj.nombre = string.Format("Campo_{0}{1}{2}{3}{4}{5}", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine("INSERT INTO campos_x_formulario(");
                 stringBuilder.AppendLine("id_formulario");
@@ -303,6 +316,8 @@ namespace MOTOR_WORKFLOW.Entities
                     stringBuilder.AppendLine(", formato_resultado");
                 stringBuilder.AppendLine(", row");
                 stringBuilder.AppendLine(", col");
+                if (obj.cod_enlaza != string.Empty)
+                    stringBuilder.AppendLine(",cod_enlaza");
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("VALUES");
                 stringBuilder.AppendLine("(");
@@ -324,6 +339,8 @@ namespace MOTOR_WORKFLOW.Entities
                     stringBuilder.AppendLine(", @formato_resultado");
                 stringBuilder.AppendLine(", @row");
                 stringBuilder.AppendLine(", @col");
+                if (obj.cod_enlaza != string.Empty)
+                    stringBuilder.AppendLine(", @cod_enlaza");
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -331,24 +348,26 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_formulario", (object)obj.id_formulario);
-                    command.Parameters.AddWithValue("@id_tipo_campo", (object)obj.id_tipo_campo);
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@etiqueta", (object)obj.etiqueta);
-                    command.Parameters.AddWithValue("@place_holder", (object)obj.place_holder);
-                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
-                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
-                    command.Parameters.AddWithValue("@requerido", (object)obj.requerido);
+                    command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
+                    command.Parameters.AddWithValue("@id_tipo_campo", obj.id_tipo_campo);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@etiqueta", obj.etiqueta);
+                    command.Parameters.AddWithValue("@place_holder", obj.place_holder);
+                    command.Parameters.AddWithValue("@orden", obj.orden);
+                    command.Parameters.AddWithValue("@activo", obj.activo);
+                    command.Parameters.AddWithValue("@requerido", obj.requerido);
                     if (obj.id_ws != 0)
-                        command.Parameters.AddWithValue("@id_ws", (object)obj.id_ws);
+                        command.Parameters.AddWithValue("@id_ws", obj.id_ws);
                     if (obj.value != string.Empty)
-                        command.Parameters.AddWithValue("@value", (object)obj.value);
+                        command.Parameters.AddWithValue("@value", obj.value);
                     if (obj.text != string.Empty)
-                        command.Parameters.AddWithValue("@text", (object)obj.text);
+                        command.Parameters.AddWithValue("@text", obj.text);
                     if (obj.formato_resultado != string.Empty)
-                        command.Parameters.AddWithValue("@formato_resultado", (object)obj.formato_resultado);
-                    command.Parameters.AddWithValue("@row", (object)obj.row);
-                    command.Parameters.AddWithValue("@col", (object)obj.col);
+                        command.Parameters.AddWithValue("@formato_resultado", obj.formato_resultado);
+                    command.Parameters.AddWithValue("@row", obj.row);
+                    command.Parameters.AddWithValue("@col", obj.col);
+                    if (obj.cod_enlaza != string.Empty)
+                        command.Parameters.AddWithValue("@cod_enlaza", obj.cod_enlaza);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -358,7 +377,20 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
+        public static void insertenlazados(List<CampoTextoModel> lst)
+        {
+            try
+            {
+                foreach (var obj in lst)
+                {
+                    insert(obj);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void update(CampoTextoModel obj)
         {
             try
@@ -380,15 +412,15 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@etiqueta", (object)obj.etiqueta);
-                    command.Parameters.AddWithValue("@place_holder", (object)obj.place_holder);
-                    command.Parameters.AddWithValue("@requerido", (object)obj.requerido);
+                    command.Parameters.AddWithValue("@etiqueta", obj.etiqueta);
+                    command.Parameters.AddWithValue("@place_holder", obj.place_holder);
+                    command.Parameters.AddWithValue("@requerido", obj.requerido);
                     if (obj.id_ws != 0)
-                        command.Parameters.AddWithValue("@id_ws", (object)obj.id_ws);
-                    command.Parameters.AddWithValue("@value", (object)obj.value);
-                    command.Parameters.AddWithValue("@text", (object)obj.text);
-                    command.Parameters.AddWithValue("@formato_resultado", (object)obj.formato_resultado);
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                        command.Parameters.AddWithValue("@id_ws", obj.id_ws);
+                    command.Parameters.AddWithValue("@value", obj.value);
+                    command.Parameters.AddWithValue("@text", obj.text);
+                    command.Parameters.AddWithValue("@formato_resultado", obj.formato_resultado);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -412,7 +444,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@id", id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

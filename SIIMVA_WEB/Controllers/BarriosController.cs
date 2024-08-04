@@ -27,20 +27,20 @@ namespace MOTOR_WORKFLOW.Controllers
     public IActionResult getByPk()
     {
       List<Combo> comboList = this._BarriosService.read();
-      return comboList == null ? (IActionResult) this.BadRequest((object) new
+      return comboList == null ? (IActionResult) this.BadRequest( new
       {
         message = "Error al obtener los datos"
-      }) : (IActionResult) this.Ok((object) comboList);
+      }) : (IActionResult) this.Ok( comboList);
     }
 
     [HttpGet]
     public IActionResult read()
     {
       List<Combo> comboList = this._BarriosService.read();
-      return comboList == null ? (IActionResult) this.BadRequest((object) new
+      return comboList == null ? (IActionResult) this.BadRequest( new
       {
         message = "Error al obtener los datos"
-      }) : (IActionResult) this.Ok((object) comboList);
+      }) : (IActionResult) this.Ok( comboList);
     }
   }
 }

@@ -16,7 +16,7 @@ namespace MOTOR_WORKFLOW.Entities
         public string VERBO { get; set; }
         public string TIPO { get; set; }
         public string BODY_JSON { get; set; }
-
+        public string TEXT { get; set; }
         public Ws_web_service()
         {
             ID = 0;
@@ -26,6 +26,7 @@ namespace MOTOR_WORKFLOW.Entities
             VERBO = string.Empty;
             TIPO = string.Empty;
             BODY_JSON = string.Empty;
+            TEXT = string.Empty;    
         }
 
         private static List<Ws_web_service> mapeo(SqlDataReader dr)
@@ -51,6 +52,7 @@ namespace MOTOR_WORKFLOW.Entities
                     if (!dr.IsDBNull(VERBO)) { obj.VERBO = dr.GetString(VERBO); }
                     if (!dr.IsDBNull(TIPO)) { obj.TIPO = dr.GetString(TIPO); }
                     if (!dr.IsDBNull(BODY_JSON)) { obj.BODY_JSON = dr.GetString(BODY_JSON); }
+                    obj.TEXT=string.Format("{0} ({1})", obj.NOMBRE, obj.BODY_JSON);
                     lst.Add(obj);
                 }
             }

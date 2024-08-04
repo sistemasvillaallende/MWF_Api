@@ -326,7 +326,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<Tramite> tramiteList = Tramite.mapeoCompleto(command.ExecuteReader());
                     if (tramiteList.Count != 0)
@@ -340,7 +340,7 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static int insert(Tramite obj)
+        public static int insert(Models.TramiteInsert obj)
         {
             try
             {
@@ -366,9 +366,9 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@usu_crea", (object)obj.usu_crea);
-                    command.Parameters.AddWithValue("@id_unidad_organizativa", (object)obj.id_unidad_organizativa);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@usu_crea", obj.usu_crea);
+                    command.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -379,7 +379,7 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void update(Tramite obj)
+        public static void update(Models.TramiteInsert obj)
         {
             try
             {
@@ -396,10 +396,10 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", (object)obj.nombre);
-                    command.Parameters.AddWithValue("@usu_modifica", (object)obj.usu_modifica);
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
-                    command.Parameters.AddWithValue("@id_unidad_organizativa", (object)obj.id_unidad_organizativa);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@usu_modifica", obj.usu_crea);
+                    command.Parameters.AddWithValue("@id", obj.id);
+                    command.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -410,7 +410,7 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void activaDesactiva(Tramite obj)
+        public static void activaDesactiva(Models.TramiteInsert obj)
         {
             try
             {
@@ -424,8 +424,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@activo", obj.activo);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -436,20 +436,16 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void delete(Tramite obj)
+        public static void delete(int id_tramite)
         {
             try
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("DELETE  Tramite ");
-                stringBuilder.AppendLine("WHERE");
-                stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
                 {
                     SqlCommand command = connection.CreateCommand();
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_tramite_delete";
+                    command.Parameters.AddWithValue("@id_tramite", id_tramite);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

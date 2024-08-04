@@ -90,7 +90,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)id);
+                    command.Parameters.AddWithValue("@id", id);
                     command.Connection.Open();
                     List<Ddjjs> ddjjsList = Ddjjs.mapeo(command.ExecuteReader());
                     if (ddjjsList.Count != 0)
@@ -117,7 +117,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_pasos", (object)id_pasos);
+                    command.Parameters.AddWithValue("@id_pasos", id_pasos);
                     command.Connection.Open();
                     List<Ddjjs> ddjjsList = Ddjjs.mapeo(command.ExecuteReader());
                     if (ddjjsList.Count != 0)
@@ -153,9 +153,9 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
-                    command.Parameters.AddWithValue("@ddjj", (object)obj.ddjj);
-                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
+                    command.Parameters.AddWithValue("@ddjj", obj.ddjj);
+                    command.Parameters.AddWithValue("@orden", obj.orden);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -182,9 +182,9 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_pasos", (object)obj.id_pasos);
-                    command.Parameters.AddWithValue("@ddjj", (object)obj.ddjj);
-                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
+                    command.Parameters.AddWithValue("@id_pasos", obj.id_pasos);
+                    command.Parameters.AddWithValue("@ddjj", obj.ddjj);
+                    command.Parameters.AddWithValue("@orden", obj.orden);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -208,7 +208,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

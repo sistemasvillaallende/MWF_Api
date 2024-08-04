@@ -46,7 +46,7 @@ namespace MOTOR_WORKFLOW.Entities.LOGIN
             user = user.Replace("'", "").Replace(",", "").Replace("=", "");
             stringBuilder.AppendLine("SELECT U.*, O.nombre_oficina From USUARIOS_V2 U INNER JOIN OFICINAS O ON U.COD_OFICINA = O.codigo_oficina WHERE nombre = @user");
             SqlCommand sqlCommand = new SqlCommand();
-            sqlCommand.Parameters.Add(new SqlParameter("@user", (object)user));
+            sqlCommand.Parameters.Add(new SqlParameter("@user", user));
             try
             {
                 sqlConnection = DALBase.GetConnectionSIIMVA();
@@ -118,7 +118,7 @@ namespace MOTOR_WORKFLOW.Entities.LOGIN
                 sqlCommand.Connection = sqlConnection;
                 sqlCommand.CommandType = CommandType.Text;
                 sqlCommand.CommandText = stringBuilder.ToString();
-                sqlCommand.Parameters.AddWithValue("@cod_usuario", (object)cod_usuario);
+                sqlCommand.Parameters.AddWithValue("@cod_usuario", cod_usuario);
                 sqlCommand.Connection.Open();
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 int ordinal1 = sqlDataReader.GetOrdinal(nameof(cod_usuario));

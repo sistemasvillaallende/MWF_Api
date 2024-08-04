@@ -27,10 +27,10 @@ namespace MOTOR_WORKFLOW.Controllers
     public IActionResult getByPk()
     {
       Ws_contenido_campo_formulario byPk = this._Ws_contenido_campo_formularioService.getByPk();
-      return byPk == null ? (IActionResult) this.BadRequest((object) new
+      return byPk == null ? (IActionResult) this.BadRequest( new
       {
         message = "Error al obtener los datos"
-      }) : (IActionResult) this.Ok((object) byPk);
+      }) : (IActionResult) this.Ok( byPk);
     }
   }
 }

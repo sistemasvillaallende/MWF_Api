@@ -83,7 +83,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = "SELECT *FROM ingresos_x_paso WHERE id_paso=@id_paso";
-                    command.Parameters.AddWithValue("@id_paso", (object)idPaso);
+                    command.Parameters.AddWithValue("@id_paso", idPaso);
                     command.Connection.Open();
                     return ingresos_x_paso.mapeo(command.ExecuteReader());
                 }
@@ -107,7 +107,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<ingresos_x_paso> ingresosXPasoList = ingresos_x_paso.mapeo(command.ExecuteReader());
                     if (ingresosXPasoList.Count != 0)
@@ -235,7 +235,7 @@ namespace MOTOR_WORKFLOW.Entities
                         SELECT ISNULL(MAX(ORDEN), 0)                                
                         FROM INGRESOS_X_PASO                               
                         WHERE ID_PASO = @ID_PASO";
-                    command.Parameters.AddWithValue("@ID_PASO", (object)idPaso);
+                    command.Parameters.AddWithValue("@ID_PASO", idPaso);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -259,7 +259,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     SqlDataReader sqlDataReader = command.ExecuteReader();
                     if (sqlDataReader.HasRows)
@@ -305,9 +305,9 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_paso", (object)obj.id_paso);
-                    command.Parameters.AddWithValue("@titulo", (object)obj.titulo);
-                    command.Parameters.AddWithValue("@orden", (object)num);
+                    command.Parameters.AddWithValue("@id_paso", obj.id_paso);
+                    command.Parameters.AddWithValue("@titulo", obj.titulo);
+                    command.Parameters.AddWithValue("@orden", num);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -317,7 +317,25 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
+        public static int insertValidaForm(ingreso_paso_model obj)
+        {
+            try
+            {
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_genera_form_valida_inmueble";
+                    command.Parameters.AddWithValue("@id_paso", obj.id_paso);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void update(ingreso_paso_model obj)
         {
             try
@@ -332,8 +350,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
-                    command.Parameters.AddWithValue("@titulo", (object)obj.titulo);
+                    command.Parameters.AddWithValue("@id", obj.id);
+                    command.Parameters.AddWithValue("@titulo", obj.titulo);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -343,13 +361,13 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
-        public static void delete(ingresos_x_paso obj)
+        public static void activaDesactiva(ingreso_paso_model obj)
         {
             try
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("DELETE  ingresos_x_paso ");
+                stringBuilder.AppendLine("UPDATE  ingresos_x_paso SET");
+                stringBuilder.AppendLine("titulo=@titulo");
                 stringBuilder.AppendLine("WHERE");
                 stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -357,7 +375,27 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@id", obj.id);
+                    command.Parameters.AddWithValue("@titulo", obj.titulo);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static void delete(string id)
+        {
+            try
+            {
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_ingreso_x_paso_delete";
+                    command.Parameters.AddWithValue("@ingreso_x_paso", id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

@@ -74,18 +74,11 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public void delete(int id)
+        public void delete(int id, int row)
         {
             try
             {
-                using (TransactionScope transactionScope = new TransactionScope())
-                {
-                    Formulario.delete(id);
-                    ddjj.delete(id);
-                    Adjunto.delete(id);
-                    contenido_ingreso_paso.delete(id);
-                    transactionScope.Complete();
-                }
+                contenido_ingreso_paso.delete(id, row);
             }
             catch (Exception ex)
             {

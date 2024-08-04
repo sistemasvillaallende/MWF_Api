@@ -12,7 +12,7 @@ namespace MOTOR_WORKFLOW.Services
 {
     public interface ITramiteService
     {
-        void activaDesactiva(Tramite obj);
+        void activaDesactiva(Models.TramiteInsert obj);
 
         List<Tramite> read();
 
@@ -20,10 +20,10 @@ namespace MOTOR_WORKFLOW.Services
 
         Tramite getByPk(int ID);
 
-        int insert(Tramite obj);
+        int insert(Models.TramiteInsert obj);
 
-        void update(Tramite obj);
+        void update(Models.TramiteInsert obj);
 
-        void delete(Tramite obj);
+        void delete(int id_tramite);
     }
 }

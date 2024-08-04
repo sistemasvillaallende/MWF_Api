@@ -83,7 +83,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)ID);
+                    command.Parameters.AddWithValue("@id", ID);
                     command.Connection.Open();
                     List<ddjj> ddjjList = ddjj.mapeo(command.ExecuteReader());
                     if (ddjjList.Count != 0)
@@ -115,8 +115,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@texto", (object)obj.texto);
-                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", (object)obj.id_contenido_ingreso_paso);
+                    command.Parameters.AddWithValue("@texto", obj.texto);
+                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", obj.id_contenido_ingreso_paso);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -141,8 +141,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@texto", (object)obj.texto);
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.Parameters.AddWithValue("@texto", obj.texto);
+                    command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -153,20 +153,16 @@ namespace MOTOR_WORKFLOW.Entities
             }
         }
 
-        public static void delete(ddjj obj)
+        public static void delete(string id)
         {
             try
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("DELETE  ddjj ");
-                stringBuilder.AppendLine("WHERE");
-                stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
                 {
                     SqlCommand command = connection.CreateCommand();
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_DDJJ_delete";
+                    command.Parameters.AddWithValue("@id_ddjj", id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -190,7 +186,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", (object)ID_CONTENIDO_INGRESO_PASO);
+                    command.Parameters.AddWithValue("@ID_CONTENIDO_INGRESO_PASO", ID_CONTENIDO_INGRESO_PASO);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

@@ -24,7 +24,17 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-
+        public int valida(int idTramite)
+        {
+            try
+            {
+                return Tramites.valida(idTramite);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public Tramites getByPkSimple(int id)
         {
             try

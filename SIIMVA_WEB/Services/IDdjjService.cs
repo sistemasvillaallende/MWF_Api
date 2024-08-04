@@ -12,7 +12,7 @@ namespace MOTOR_WORKFLOW.Services
         public ddjj getByPk(int ID);
         public int insert(ddjj obj);
         public void update(ddjj obj);
-        public void delete(ddjj obj);
+        public void delete(string id);
     }
 }
 

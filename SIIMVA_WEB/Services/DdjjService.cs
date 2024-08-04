@@ -55,11 +55,11 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public void delete(ddjj obj)
+        public void delete(string id)
         {
             try
             {
-                ddjj.delete(obj);
+                ddjj.delete(id);
             }
             catch (Exception ex)
             {

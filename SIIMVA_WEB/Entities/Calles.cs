@@ -116,7 +116,7 @@ namespace MOTOR_WORKFLOW.Entities
                         INNER JOIN CALLES_X_BARRIO B ON A.COD_CALLE=B.cod_calle
                         WHERE B.cod_barrio=@COD_BARRIO
                         ORDER BY A.NOM_CALLE ASC";
-                    command.Parameters.AddWithValue("@cod_barrio", (object)cod_barrio);
+                    command.Parameters.AddWithValue("@cod_barrio", cod_barrio);
                     command.Connection.Open();
                     return Calles.mapeo(command.ExecuteReader());
                 }
@@ -142,7 +142,7 @@ namespace MOTOR_WORKFLOW.Entities
                             INNER JOIN CALLES_X_BARRIO B ON A.COD_CALLE=B.cod_calle
                             WHERE B.COD_CALLE=@COD_CALLE
                             ORDER BY NOM_CALLE";
-                    command.Parameters.AddWithValue("@COD_CALLE", (object)COD_CALLE);
+                    command.Parameters.AddWithValue("@COD_CALLE", COD_CALLE);
                     command.Connection.Open();
                     List<Calles> callesList = Calles.mapeo(command.ExecuteReader());
                     if (callesList.Count != 0)

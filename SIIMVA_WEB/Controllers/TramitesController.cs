@@ -27,62 +27,74 @@ namespace MOTOR_WORKFLOW.Controllers
         public IActionResult getByPk(int id)
         {
             Tramites byPk = this._TramitesService.getByPk(id);
-            return byPk == null ? (IActionResult)this.BadRequest((object)new
+            return byPk == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPk);
+            }) : (IActionResult)this.Ok(byPk);
         }
 
         [HttpGet]
         public IActionResult getByPkSimple(int id)
         {
             Tramites byPkSimple = this._TramitesService.getByPkSimple(id);
-            return byPkSimple == null ? (IActionResult)this.BadRequest((object)new
+            return byPkSimple == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)byPkSimple);
+            }) : (IActionResult)this.Ok(byPkSimple);
         }
 
         [HttpGet]
         public IActionResult getResultados(int id)
         {
             List<ResultadoTramites> resultados = this._TramitesService.getResultados(id);
-            return resultados == null ? (IActionResult)this.BadRequest((object)new
+            return resultados == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)resultados);
+            }) : (IActionResult)this.Ok(resultados);
         }
 
         [HttpGet]
         public IActionResult read(string cuit)
         {
             List<Tramites> tramitesList = this._TramitesService.read(cuit);
-            return tramitesList == null ? (IActionResult)this.BadRequest((object)new
+            return tramitesList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)tramitesList);
+            }) : (IActionResult)this.Ok(tramitesList);
         }
 
         [HttpGet]
         public IActionResult readAdministrador()
         {
             List<Tramites> tramitesList = this._TramitesService.read();
-            return tramitesList == null ? (IActionResult)this.BadRequest((object)new
+            return tramitesList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)tramitesList);
+            }) : (IActionResult)this.Ok(tramitesList);
         }
 
         [HttpGet]
         public IActionResult readOficinas(int id_oficina)
         {
             List<Tramites> tramitesList = this._TramitesService.readOficina(id_oficina);
-            return tramitesList == null ? (IActionResult)this.BadRequest((object)new
+            return tramitesList == null ? (IActionResult)this.BadRequest(new
             {
                 message = "Error al obtener los datos"
-            }) : (IActionResult)this.Ok((object)tramitesList);
+            }) : (IActionResult)this.Ok(tramitesList);
         }
-
+        [HttpGet]
+        public int valida(int id_tramite)
+        {
+            try
+            {
+                int cant = this._TramitesService.valida(id_tramite);
+                return cant;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpGet]
         public IActionResult recibir(
           int id_tramite,
@@ -90,7 +102,7 @@ namespace MOTOR_WORKFLOW.Controllers
           int id_tramites,
           int cod_usuario)
         {
-            return (IActionResult)this.Ok((object)this._TramitesService.recibir(id_tramite, paso_actual, id_tramites, cod_usuario));
+            return (IActionResult)this.Ok(this._TramitesService.recibir(id_tramite, paso_actual, id_tramites, cod_usuario));
         }
     }
 }

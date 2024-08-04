@@ -108,7 +108,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@codigo_oficina", (object)codigo_oficina);
+                    command.Parameters.AddWithValue("@codigo_oficina", codigo_oficina);
                     command.Connection.Open();
                     List<Oficinas> oficinasList = Oficinas.mapeo(command.ExecuteReader());
                     if (oficinasList.Count != 0)
@@ -151,13 +151,13 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@codigo_oficina", (object)obj.codigo_oficina);
-                    command.Parameters.AddWithValue("@nombre_oficina", (object)obj.nombre_oficina);
-                    command.Parameters.AddWithValue("@secretaria", (object)obj.secretaria);
-                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
-                    command.Parameters.AddWithValue("@subsistema", (object)obj.subsistema);
-                    command.Parameters.AddWithValue("@vecino_digital", (object)obj.vecino_digital);
-                    command.Parameters.AddWithValue("@Genera_multas", (object)obj.Genera_multas);
+                    command.Parameters.AddWithValue("@codigo_oficina", obj.codigo_oficina);
+                    command.Parameters.AddWithValue("@nombre_oficina", obj.nombre_oficina);
+                    command.Parameters.AddWithValue("@secretaria", obj.secretaria);
+                    command.Parameters.AddWithValue("@activo", obj.activo);
+                    command.Parameters.AddWithValue("@subsistema", obj.subsistema);
+                    command.Parameters.AddWithValue("@vecino_digital", obj.vecino_digital);
+                    command.Parameters.AddWithValue("@Genera_multas", obj.Genera_multas);
                     command.Connection.Open();
                     return command.ExecuteNonQuery();
                 }
@@ -187,13 +187,13 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@codigo_oficina", (object)obj.codigo_oficina);
-                    command.Parameters.AddWithValue("@nombre_oficina", (object)obj.nombre_oficina);
-                    command.Parameters.AddWithValue("@secretaria", (object)obj.secretaria);
-                    command.Parameters.AddWithValue("@activo", (object)obj.activo);
-                    command.Parameters.AddWithValue("@subsistema", (object)obj.subsistema);
-                    command.Parameters.AddWithValue("@vecino_digital", (object)obj.vecino_digital);
-                    command.Parameters.AddWithValue("@Genera_multas", (object)obj.Genera_multas);
+                    command.Parameters.AddWithValue("@codigo_oficina", obj.codigo_oficina);
+                    command.Parameters.AddWithValue("@nombre_oficina", obj.nombre_oficina);
+                    command.Parameters.AddWithValue("@secretaria", obj.secretaria);
+                    command.Parameters.AddWithValue("@activo", obj.activo);
+                    command.Parameters.AddWithValue("@subsistema", obj.subsistema);
+                    command.Parameters.AddWithValue("@vecino_digital", obj.vecino_digital);
+                    command.Parameters.AddWithValue("@Genera_multas", obj.Genera_multas);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -217,7 +217,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@codigo_oficina", (object)obj.codigo_oficina);
+                    command.Parameters.AddWithValue("@codigo_oficina", obj.codigo_oficina);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

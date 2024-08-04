@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using MOTOR_WORKFLOW.Entities;
+using MOTOR_WORKFLOW.Models;
 
 namespace MOTOR_WORKFLOW.Services
 {
@@ -33,7 +34,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public int insert(Formulario obj)
+        public int insert(FormularioModel obj)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public void update(Formulario obj)
+        public void update(FormularioModel obj)
         {
             try
             {
@@ -55,11 +56,11 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public void delete(Formulario obj)
+        public void delete(string id)
         {
             try
             {
-                Formulario.delete(obj);
+                Formulario.delete(id);
             }
             catch (Exception ex)
             {

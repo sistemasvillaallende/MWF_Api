@@ -73,11 +73,11 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public void delete(Paso obj)
+        public void delete(int idPaso)
         {
             try
             {
-                Paso.delete(obj);
+                Paso.delete(idPaso);
             }
             catch (Exception ex)
             {

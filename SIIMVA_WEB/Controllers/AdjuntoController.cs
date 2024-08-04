@@ -26,10 +26,10 @@ namespace MOTOR_WORKFLOW.Controllers
     public IActionResult getByPk(int ID)
     {
       Adjunto byPk = this._AdjuntoService.getByPk(ID);
-      return byPk == null ? (IActionResult) this.BadRequest((object) new
+      return byPk == null ? (IActionResult) this.BadRequest( new
       {
         message = "Error al obtener los datos"
-      }) : (IActionResult) this.Ok((object) byPk);
+      }) : (IActionResult) this.Ok( byPk);
     }
   }
 }

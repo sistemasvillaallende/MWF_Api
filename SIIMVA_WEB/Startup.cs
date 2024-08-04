@@ -54,6 +54,7 @@ namespace MOTOR_WORKFLOW
             services.AddScoped<IAdjuntoService, AdjuntoService>();
             services.AddScoped<IBarriosService, BarriosService>();
             services.AddScoped<ICallesService, CallesService>();
+            services.AddScoped<IValidacionesServices, ValidacionesServices>();
             services.AddCors();
         }
 

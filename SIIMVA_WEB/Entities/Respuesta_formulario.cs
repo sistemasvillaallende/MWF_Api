@@ -85,7 +85,7 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = "SELECT *FROM Respuesta_formulario WHERE id_formularios=@id_formularios";
-                    command.Parameters.AddWithValue("@id_formularios", (object)id_formularios);
+                    command.Parameters.AddWithValue("@id_formularios", id_formularios);
                     command.Connection.Open();
                     return Respuesta_formulario.mapeo(command.ExecuteReader());
                 }
@@ -148,12 +148,12 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_formularios", (object)obj.id_formularios);
-                    command.Parameters.AddWithValue("@nombre_campo", (object)obj.nombre_campo);
-                    command.Parameters.AddWithValue("@respuesta_usuario", (object)obj.respuesta_usuario);
-                    command.Parameters.AddWithValue("@id_tipo_campo", (object)obj.id_tipo_campo);
-                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
-                    command.Parameters.AddWithValue("@etiqueta_campo", (object)obj.etiqueta_campo);
+                    command.Parameters.AddWithValue("@id_formularios", obj.id_formularios);
+                    command.Parameters.AddWithValue("@nombre_campo", obj.nombre_campo);
+                    command.Parameters.AddWithValue("@respuesta_usuario", obj.respuesta_usuario);
+                    command.Parameters.AddWithValue("@id_tipo_campo", obj.id_tipo_campo);
+                    command.Parameters.AddWithValue("@orden", obj.orden);
+                    command.Parameters.AddWithValue("@etiqueta_campo", obj.etiqueta_campo);
                     command.Connection.Open();
                     return command.ExecuteNonQuery();
                 }
@@ -183,13 +183,13 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id", (object)obj.id);
-                    command.Parameters.AddWithValue("@id_formularios", (object)obj.id_formularios);
-                    command.Parameters.AddWithValue("@nombre_campo", (object)obj.nombre_campo);
-                    command.Parameters.AddWithValue("@respuesta_usuario", (object)obj.respuesta_usuario);
-                    command.Parameters.AddWithValue("@id_tipo_campo", (object)obj.id_tipo_campo);
-                    command.Parameters.AddWithValue("@orden", (object)obj.orden);
-                    command.Parameters.AddWithValue("@etiqueta_campo", (object)obj.etiqueta_campo);
+                    command.Parameters.AddWithValue("@id", obj.id);
+                    command.Parameters.AddWithValue("@id_formularios", obj.id_formularios);
+                    command.Parameters.AddWithValue("@nombre_campo", obj.nombre_campo);
+                    command.Parameters.AddWithValue("@respuesta_usuario", obj.respuesta_usuario);
+                    command.Parameters.AddWithValue("@id_tipo_campo", obj.id_tipo_campo);
+                    command.Parameters.AddWithValue("@orden", obj.orden);
+                    command.Parameters.AddWithValue("@etiqueta_campo", obj.etiqueta_campo);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

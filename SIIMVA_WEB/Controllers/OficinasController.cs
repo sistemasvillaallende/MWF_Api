@@ -29,10 +29,10 @@ namespace MOTOR_WORKFLOW.Controllers
     public IActionResult read()
     {
       List<Oficinas> oficinasList = this._OficinaService.read();
-      return oficinasList == null ? (IActionResult) this.BadRequest((object) new
+      return oficinasList == null ? (IActionResult) this.BadRequest( new
       {
         message = "Error al obtener los datos"
-      }) : (IActionResult) this.Ok((object) oficinasList);
+      }) : (IActionResult) this.Ok( oficinasList);
     }
   }
 }
