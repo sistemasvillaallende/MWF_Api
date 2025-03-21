@@ -13,6 +13,17 @@ namespace MOTOR_WORKFLOW.Services
 {
     public class TramiteService : ITramiteService
     {
+        public string getImgOficina(int ID)
+        {
+            try
+            {
+                return Entities.Tramite.getImgOficina(ID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public Tramite getByPk(int ID)
         {
             try
@@ -45,7 +56,7 @@ namespace MOTOR_WORKFLOW.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ex;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      throw ex;
             }
         }
 
@@ -53,6 +64,7 @@ namespace MOTOR_WORKFLOW.Services
         {
             try
             {
+                obj.logo_unidad_administrativa = getImgOficina(obj.id_unidad_organizativa);
                 return Tramite.insert(obj);
             }
             catch (Exception ex)
@@ -60,11 +72,22 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-
+        public void duplicar(Models.TramiteDuplicar obj)
+        {
+            try
+            {
+                Tramite.duplicar(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public void update(Models.TramiteInsert obj)
         {
             try
             {
+                obj.logo_unidad_administrativa = getImgOficina(obj.id_unidad_organizativa);
                 Tramite.update(obj);
             }
             catch (Exception ex)

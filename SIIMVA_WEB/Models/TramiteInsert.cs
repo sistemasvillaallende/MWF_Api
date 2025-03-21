@@ -15,7 +15,10 @@
         public int id_unidad_organizativa { get; set; }
 
         public string logo_unidad_administrativa { get; set; }
+        public string nombre_unidad_organizativa { get;set; }
         public bool activo { get; set; }
+        public int nro_expediente { get; set; }
+        public int anio { get; set; }
 
     }
 }

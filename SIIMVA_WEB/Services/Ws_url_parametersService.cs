@@ -22,17 +22,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public List<Ws_url_parameters> read()
-        {
-            try
-            {
-                return Ws_url_parameters.read();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+
         public int insert(Ws_url_parameters obj)
         {
             try
@@ -65,6 +55,11 @@ namespace MOTOR_WORKFLOW.Services
             {
                 throw ex;
             }
+        }
+
+        public List<Ws_url_parameters> read()
+        {
+            throw new NotImplementedException();
         }
     }
 }

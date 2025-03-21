@@ -19,7 +19,9 @@ namespace MOTOR_WORKFLOW.Services
         int insert(ingreso_paso_model obj);
 
         void update(ingreso_paso_model obj);
-        int insertValidaForm(ingreso_paso_model obj);
+        int insertValidaForm(int id_paso);
+        int insertValidaPersona(int id_paso);
+        int insertMultinota(int id_paso);
 
         void delete(string id);
     }

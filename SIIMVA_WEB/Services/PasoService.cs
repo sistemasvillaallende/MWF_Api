@@ -24,7 +24,39 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-
+        public int getProximoVecino(int id_tramite, int id_tramites)
+        {
+            try
+            {
+                return Paso.getProximoVecino(id_tramite, id_tramites);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public Models.PasoModel getByTramite(int idTramite)
+        {
+            try
+            {
+                return Paso.getByTramite(idTramite);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public MOTOR_WORKFLOW.Entities.Paso getProximo(int id_tramite, int paso_actual)
+        {
+            try
+            {
+                return Paso.getProximo(id_tramite, paso_actual);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<Paso> readBackEnd(int idTramite)
         {
             try
@@ -84,5 +116,6 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
     }
 }

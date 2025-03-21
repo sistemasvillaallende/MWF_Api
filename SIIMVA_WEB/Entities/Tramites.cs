@@ -54,6 +54,14 @@ namespace MOTOR_WORKFLOW.Entities
         public int en_vecino { get; set; }
 
         public string _estado { get; set; }
+        public int proximo_paso_vecinio { get; set; }
+        public int legajo { get; set; }
+        public string dominio { get; set; }
+        public int cir { get; set; }
+        public int sec { get; set; }
+        public int man { get; set; }
+        public int par { get; set; }
+        public int p_h { get; set; }
 
         public Tramites()
         {
@@ -77,7 +85,10 @@ namespace MOTOR_WORKFLOW.Entities
             this.estado = 0;
             this.en_vecino = 0;
             this._estado = string.Empty;
+
         }
+
+
 
         private static List<Tramites> mapeo(SqlDataReader dr)
         {
@@ -338,7 +349,8 @@ namespace MOTOR_WORKFLOW.Entities
                                 A.cuit COLLATE SQL_Latin1_General_CP1_CI_AS =
                                 C.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
                                 LEFT JOIN SIIMVA.dbo.OFICINAS D ON 
-                                A.id_oficina = D.codigo_oficina";
+                                A.id_oficina = D.codigo_oficina 
+                            WHERE id_oficina <> 0";
                     command.Connection.Open();
                     return Tramites.mapeo(command.ExecuteReader());
                 }
@@ -428,135 +440,138 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = @"
-                    SELECT
-                        B.id_paso, 
-	                    B.id_ingreso_paso, 
-	                    B.orden_ingreso_paso, 
-	                    B.row, 
-	                    B.col,
-                        B.nombre_ingreso_paso AS 'nombre_paso', 
-	                    'DDJJ' AS 'nombre_ingreso_paso',
-                        C.ddjj AS contenido, 
-	                    'DDJJ' AS tipo, 
-	                    '' AS extenciones,
-                        A.cuit, 
-	                    A.cuit_representado, 
-	                    V.APELLIDO + ', ' + V.NOMBRE AS nombre_contribuyente,
-                        VR.APELLIDO + ', ' + VR.NOMBRE AS nombre_representado,
-                        T.NOMBRE AS nombre_tramite, T.nombre_unidad_organizativa,
-                        T.ID AS id_tramite, 
-	                    A.estado,
-                        nombre_estado = CASE estado
-                            WHEN 1 THEN 'INICIADO'
-                            WHEN 2 THEN 'EN PROCESO'
-                            WHEN 3 THEN 'CANCELADO'
-                            WHEN 4 THEN 'FINALIZADO'
-                            WHEN 5 THEN 'CAMBIO OFICINA'
+               SELECT
+                   B.id_paso, 
+                   B.id_ingreso_paso, 
+                   B.orden_ingreso_paso, 
+                   B.row, 
+                   B.col,
+                   P.NOMBRE  AS 'nombre_paso', 
+                   'DDJJ' AS 'nombre_ingreso_paso',
+                   C.ddjj AS contenido, 
+                   'DDJJ' AS tipo, 
+                   '' AS extenciones,
+                   A.cuit, 
+                   A.cuit_representado, 
+                   V.APELLIDO + ', ' + V.NOMBRE AS nombre_contribuyente,
+                   VR.APELLIDO + ', ' + VR.NOMBRE AS nombre_representado,
+                   T.NOMBRE AS nombre_tramite, T.nombre_unidad_organizativa,
+                   T.ID AS id_tramite, 
+                   A.estado,
+                   nombre_estado = CASE estado
+                       WHEN 1 THEN 'INICIADO'
+                       WHEN 2 THEN 'EN PROCESO'
+                       WHEN 3 THEN 'CANCELADO'
+                       WHEN 4 THEN 'FINALIZADO'
+                       WHEN 5 THEN 'CAMBIO OFICINA'
+                   END,
+                   A.paso_actual, 
+                   A.paso_anterior, 
+                   P.en_usuario AS en_vecino, 
+                   P.es_final,
+                   P.ORDEN,
+                   p.proxima_oficina
+               FROM TRAMITES A
+                   INNER JOIN PASOS B ON A.id=B.id_tramites
+                   INNER JOIN DDJJs C ON B.id=C.id_pasos
+                   INNER JOIN SIIMVA.dbo.VECINO_DIGITAL V ON A.cuit 
+                    COLLATE SQL_Latin1_General_CP1_CI_AS = V.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
+                   LEFT JOIN SIIMVA.dbo.VECINO_DIGITAL VR ON A.cuit_representado 
+                    COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
+                   INNER JOIN TRAMITE T ON A.id_tramite=T.ID
+                   INNER JOIN PASO P ON B.ID_PASO=P.ID
+               WHERE A.id = @idTramite
+               UNION
+               SELECT 
+                   B.id_paso,  
+                   B.id_ingreso_paso, 
+                   B.orden_ingreso_paso,
+                   B.row,
+                   B.col,
+                   P.NOMBRE  AS 'nombre_paso', 
+                   D.nombre AS 'nombre_ingreso_paso', 
+                   CONVERT(VARCHAR(MAX),D.archivo) AS contenido,
+                   'ADJUNTO' AS tipo,
+                   D.extenciones_aceptadas AS extenciones,
+                   A.cuit, 
+                   A.cuit_representado,
+                   V.APELLIDO + ', ' + V.NOMBRE AS nombre_contribuyente,
+                   VR.APELLIDO + ', ' + VR.NOMBRE AS nombre_representado,
+                   T.NOMBRE AS nombre_tramite,  
+                   T.nombre_unidad_organizativa,
+                   T.ID AS id_tramite,
+                   A.estado, 
+                   nombre_estado = CASE estado
+                       WHEN 1 THEN 'INICIADO'
+                       WHEN 2 THEN 'EN PROCESO'
+                       WHEN 3 THEN 'CANCELADO'
+                       WHEN 4 THEN 'FINALIZADO'
+                       WHEN 5 THEN 'CAMBIO OFICINA'
+                   END,
+                   A.paso_actual, 
+                   A.paso_anterior, 
+                   P.en_usuario AS en_vecino, 
+                   P.es_final,
+                   P.ORDEN,
+                   p.proxima_oficina
+               FROM TRAMITES A
+                   INNER JOIN PASOS B ON A.id=B.id_tramites
+                   INNER JOIN ADJUNTOS D ON B.id=D.id_pasos
+                   INNER JOIN SIIMVA.dbo.VECINO_DIGITAL V ON A.cuit 
+                    COLLATE SQL_Latin1_General_CP1_CI_AS = V.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
+                   LEFT JOIN SIIMVA.dbo.VECINO_DIGITAL VR ON A.cuit_representado
+                    COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
+                   INNER JOIN TRAMITE T ON A.id_tramite=T.ID
+                   INNER JOIN PASO P ON B.ID_PASO=P.ID
+               WHERE A.id = @idTramite
+               UNION
+               SELECT 
+                   B.id_paso, 
+                   B.id_ingreso_paso, 
+                   B.orden_ingreso_paso,   
+                   B.row,
+                   B.col, 
+                   P.NOMBRE  AS 'nombre_paso', 
+                   D.nombre AS 'nombre_ingreso_paso', 
+                   (SELECT *FROM RESPUESTA_FORMULARIO               
+                    WHERE id_formularios=D.id                
+                    FOR JSON PATH) AS contenido,                 
+                   'FORMULARIO' AS tipo,        
+                   '' AS extenciones,
+                   A.cuit,
+                   A.cuit_representado,
+                   V.APELLIDO + ', ' + V.NOMBRE AS nombre_contribuyente,
+                   VR.APELLIDO + ', ' + VR.NOMBRE AS nombre_representado,
+                   T.NOMBRE AS tnombre_tramite,
+                   T.nombre_unidad_organizativa,
+                    T.ID AS id_tramite,
+                    A.estado,
+                    nombre_estado = CASE estado
+                        WHEN 1 THEN 'INICIADO'
+                        WHEN 2 THEN 'EN PROCESO'
+                        WHEN 3 THEN 'CANCELADO'
+                        WHEN 4 THEN 'FINALIZADO'
+                        WHEN 5 THEN 'CAMBIO OFICINA' 
                         END,
-                        A.paso_actual, 
-	                    A.paso_anterior, 
-	                    A.en_vecino, 
-	                    P.es_final,
-	                    P.ORDEN
-                    FROM TRAMITES A
-                        INNER JOIN PASOS B ON A.id=B.id_tramites
-                        INNER JOIN DDJJs C ON B.id=C.id_pasos
-                        INNER JOIN SIIMVA.dbo.VECINO_DIGITAL V ON A.cuit 
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS = V.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
-                        LEFT JOIN SIIMVA.dbo.VECINO_DIGITAL VR ON A.cuit_representado 
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
-                        INNER JOIN TRAMITE T ON A.id_tramite=T.ID
-                        INNER JOIN PASO P ON A.paso_actual=P.ID
-                    WHERE A.id = @idTramite
-                    UNION
-                    SELECT 
-                        B.id_paso,  
-	                    B.id_ingreso_paso, 
-	                    B.orden_ingreso_paso,
-                        B.row,
-	                    B.col,
-	                    B.nombre_ingreso_paso AS 'nombre_paso', 
-                        D.nombre AS 'nombre_ingreso_paso', 
-                        CONVERT(VARCHAR(MAX),D.archivo) AS contenido,
-                        'ADJUNTO' AS tipo,
-                        D.extenciones_aceptadas AS extenciones,
-                        A.cuit, 
-	                    A.cuit_representado,
-                        V.APELLIDO + ', ' + V.NOMBRE AS nombre_contribuyente,
-                        VR.APELLIDO + ', ' + VR.NOMBRE AS nombre_representado,
-                        T.NOMBRE AS nombre_tramite,  
-	                    T.nombre_unidad_organizativa,
-                        T.ID AS id_tramite,
-                        A.estado, 
-	                    nombre_estado = CASE estado
-                            WHEN 1 THEN 'INICIADO'
-                            WHEN 2 THEN 'EN PROCESO'
-                            WHEN 3 THEN 'CANCELADO'
-                            WHEN 4 THEN 'FINALIZADO'
-                            WHEN 5 THEN 'CAMBIO OFICINA'
-                        END,
-                        A.paso_actual, 
-	                    A.paso_anterior, 
-	                    A.en_vecino, 
-	                    P.es_final,
-	                    P.ORDEN
-                    FROM TRAMITES A
-                        INNER JOIN PASOS B ON A.id=B.id_tramites
-                        INNER JOIN ADJUNTOS D ON B.id=D.id_pasos
-                        INNER JOIN SIIMVA.dbo.VECINO_DIGITAL V ON A.cuit 
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS = V.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
-                        LEFT JOIN SIIMVA.dbo.VECINO_DIGITAL VR ON A.cuit_representado
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
-                        INNER JOIN TRAMITE T ON A.id_tramite=T.ID
-                        INNER JOIN PASO P ON A.paso_actual=P.ID
-                    WHERE A.id = @idTramite
-                    UNION
-                    SELECT 
-                        B.id_paso, 
-	                    B.id_ingreso_paso, 
-	                    B.orden_ingreso_paso,   
-                        B.row,
-	                    B.col, 
-	                    B.nombre_ingreso_paso AS 'nombre_paso', 
-                        D.nombre AS 'nombre_ingreso_paso', 
-	                    (SELECT *FROM RESPUESTA_FORMULARIO               
-		                    WHERE id_formularios=D.id                
-		                    FOR JSON PATH) AS contenido,                 
-                        'FORMULARIO' AS tipo,        
-                        '' AS extenciones,
-                        A.cuit,
-                        A.cuit_representado,
-                        V.APELLIDO + ', ' + V.NOMBRE AS nombre_contribuyente,
-                        VR.APELLIDO + ', ' + VR.NOMBRE AS nombre_representado,
-                        T.NOMBRE AS tnombre_tramite,
-                        T.nombre_unidad_organizativa,
-                        T.ID AS id_tramite,
-                        A.estado,
-                        nombre_estado = CASE estado
-                            WHEN 1 THEN 'INICIADO'
-                            WHEN 2 THEN 'EN PROCESO'
-                            WHEN 3 THEN 'CANCELADO'
-                            WHEN 4 THEN 'FINALIZADO'
-                            WHEN 5 THEN 'CAMBIO OFICINA' 
-                            END,
-                        A.paso_actual, 
-	                    A.paso_anterior,  
-	                    A.en_vecino, 
-	                    P.es_final,
-	                    P.ORDEN
-                    FROM TRAMITES A 
-	                    INNER JOIN PASOS B ON A.id=B.id_tramites 
-                        INNER JOIN FORMULARIOS D ON B.id=D.id_pasos
-                        INNER JOIN SIIMVA.dbo.VECINO_DIGITAL V ON A.cuit 
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS = V.CUIT 
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS
-	                    LEFT JOIN SIIMVA.dbo.VECINO_DIGITAL VR ON A.cuit_representado 
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT 
-		                    COLLATE SQL_Latin1_General_CP1_CI_AS
-	                    INNER JOIN TRAMITE T ON A.id_tramite=T.ID
-	                    INNER JOIN PASO P ON A.paso_actual=P.ID     
-                    WHERE A.id = @idTramite            
-                    ORDER BY orden_ingreso_paso, row";
+                    A.paso_actual, 
+                    A.paso_anterior,  
+                    P.en_usuario AS en_vecino,
+                    P.es_final,
+                    P.ORDEN,
+                    p.proxima_oficina
+                FROM TRAMITES A 
+                    INNER JOIN PASOS B ON A.id=B.id_tramites 
+                    INNER JOIN FORMULARIOS D ON B.id=D.id_pasos
+                    INNER JOIN SIIMVA.dbo.VECINO_DIGITAL V ON A.cuit 
+                    COLLATE SQL_Latin1_General_CP1_CI_AS = V.CUIT 
+                    COLLATE SQL_Latin1_General_CP1_CI_AS
+                    LEFT JOIN SIIMVA.dbo.VECINO_DIGITAL VR ON A.cuit_representado 
+                    COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT 
+                    COLLATE SQL_Latin1_General_CP1_CI_AS
+                    INNER JOIN TRAMITE T ON A.id_tramite=T.ID
+                    INNER JOIN PASO P ON B.ID_PASO=P.ID     
+                WHERE A.id = @idTramite            
+                ORDER BY orden_ingreso_paso, row";
                     command.Parameters.AddWithValue("@idTramite", idTramite);
                     command.Connection.Open();
                     SqlDataReader sqlDataReader = command.ExecuteReader();
@@ -585,6 +600,8 @@ namespace MOTOR_WORKFLOW.Entities
                         int ordinal21 = sqlDataReader.GetOrdinal("paso_anterior");
                         int ordinal22 = sqlDataReader.GetOrdinal("en_vecino");
                         int ordinal23 = sqlDataReader.GetOrdinal("es_final");
+                        int orden = sqlDataReader.GetOrdinal("orden");
+                        int proxima_oficina = sqlDataReader.GetOrdinal("proxima_oficina");
                         while (sqlDataReader.Read())
                         {
                             ResultadoTramites resultadoTramites2 = new ResultadoTramites();
@@ -634,6 +651,16 @@ namespace MOTOR_WORKFLOW.Entities
                                 resultadoTramites2.en_vecino = sqlDataReader.GetBoolean(ordinal22);
                             if (!sqlDataReader.IsDBNull(ordinal23))
                                 resultadoTramites2.es_final = sqlDataReader.GetBoolean(ordinal23);
+
+                            if (!sqlDataReader.IsDBNull(orden))
+                                resultadoTramites2.orden = sqlDataReader.GetInt32(orden);
+                            if (!sqlDataReader.IsDBNull(proxima_oficina))
+                                resultadoTramites2.proxima_oficina = sqlDataReader.GetInt32(proxima_oficina);
+
+                            if (resultadoTramites2.estado == 5)
+                                resultadoTramites2.estado = 1;
+
+
                             resultados.Add(resultadoTramites2);
                         }
                     }
@@ -837,7 +864,32 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
+        public static void asignar_legajo(int id_tramites, int legajo)
+        {
+            try
+            {
+                int num = 0;
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Tramites SET");
+                stringBuilder.AppendLine("legajo=@legajo");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@legajo", legajo);
+                    command.Parameters.AddWithValue("@id", id_tramites);
+                    command.Connection.Open();
+                    num = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void delete(Tramites obj)
         {
             try

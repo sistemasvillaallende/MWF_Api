@@ -78,6 +78,17 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+        public void updateEnlazados(List<CampoTextoModel> lst)
+        {
+            try
+            {
+                Entities.campos_x_formulario.updateenlazados(lst);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

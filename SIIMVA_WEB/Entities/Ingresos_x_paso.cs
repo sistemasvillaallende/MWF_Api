@@ -317,7 +317,7 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-        public static int insertValidaForm(ingreso_paso_model obj)
+        public static int insertValidaForm(int id_paso)
         {
             try
             {
@@ -326,7 +326,45 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "Sp_genera_form_valida_inmueble";
-                    command.Parameters.AddWithValue("@id_paso", obj.id_paso);
+                    command.Parameters.AddWithValue("@id_paso", id_paso);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static int insertValidaPersona(int id_paso)
+        {
+            try
+            {
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_genera_form_valida_persona";
+                    command.Parameters.AddWithValue("@id_paso", id_paso);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static int insertMultiNota(int id_paso)
+        {
+            try
+            {
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "Sp_genera_multinota";
+                    command.Parameters.AddWithValue("@id_paso", id_paso);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }

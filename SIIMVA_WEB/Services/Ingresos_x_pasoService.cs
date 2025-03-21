@@ -10,6 +10,17 @@ namespace MOTOR_WORKFLOW.Services
 {
     public class Ingresos_x_pasoService : IIngresos_x_pasoService
     {
+        public int insertMultinota(int id_paso)
+        {
+            try
+            {
+                return ingresos_x_paso.insertMultiNota(id_paso);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public ingresos_x_paso getByPk(int ID)
         {
             try
@@ -43,11 +54,22 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
-        public int insertValidaForm(ingreso_paso_model obj)
+        public int insertValidaForm(int id_paso)
         {
             try
             {
-                return ingresos_x_paso.insertValidaForm(obj);
+                return ingresos_x_paso.insertValidaForm(id_paso);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public int insertValidaPersona(int id_paso)
+        {
+            try
+            {
+                return ingresos_x_paso.insertValidaPersona(id_paso);
             }
             catch (Exception ex)
             {
@@ -76,6 +98,7 @@ namespace MOTOR_WORKFLOW.Services
                 throw ex;
             }
         }
+
     }
 }
 

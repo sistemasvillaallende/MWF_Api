@@ -42,8 +42,9 @@ namespace MOTOR_WORKFLOW.Entities
         public string logo_unidad_administrativa { get; set; }
 
         public int primer_paso { get; set; }
-
+        public bool es_multinota { get; set; }
         public List<Paso> lstPasos { get; set; }
+
 
         public Tramite()
         {
@@ -61,6 +62,7 @@ namespace MOTOR_WORKFLOW.Entities
             this.nombre_unidad_organizativa = string.Empty;
             this.logo_unidad_administrativa = string.Empty;
             this.primer_paso = 0;
+            es_multinota = false;
             this.lstPasos = new List<Paso>();
         }
 
@@ -82,6 +84,9 @@ namespace MOTOR_WORKFLOW.Entities
                 int ordinal11 = dr.GetOrdinal("ID_UNIDAD_ORGANIZATIVA");
                 int ordinal12 = dr.GetOrdinal("nombre_unidad_organizativa");
                 int ordinal13 = dr.GetOrdinal("logo_unidad_administrativa");
+
+                int es_multinota = dr.GetOrdinal("es_multinota");
+
                 while (dr.Read())
                 {
                     Tramite tramite = new Tramite();
@@ -111,6 +116,10 @@ namespace MOTOR_WORKFLOW.Entities
                         tramite.nombre_unidad_organizativa = dr.GetString(ordinal12);
                     if (!dr.IsDBNull(ordinal13))
                         tramite.logo_unidad_administrativa = dr.GetString(ordinal13);
+
+                    if (!dr.IsDBNull(es_multinota))
+                        tramite.es_multinota = dr.GetBoolean(es_multinota);
+
                     tramiteList.Add(tramite);
                 }
             }
@@ -135,6 +144,9 @@ namespace MOTOR_WORKFLOW.Entities
                 int ordinal11 = dr.GetOrdinal("ID_UNIDAD_ORGANIZATIVA");
                 int ordinal12 = dr.GetOrdinal("nombre_unidad_organizativa");
                 int ordinal13 = dr.GetOrdinal("logo_unidad_administrativa");
+
+                int es_multinota = dr.GetOrdinal("es_multinota");
+
                 while (dr.Read())
                 {
                     Tramite tramite = new Tramite();
@@ -164,13 +176,52 @@ namespace MOTOR_WORKFLOW.Entities
                         tramite.nombre_unidad_organizativa = dr.GetString(ordinal12);
                     if (!dr.IsDBNull(ordinal13))
                         tramite.logo_unidad_administrativa = dr.GetString(ordinal13);
-                    tramite.lstPasos = Paso.readEnUsuario(tramite.id);
+
+                    if (!dr.IsDBNull(es_multinota))
+                        tramite.es_multinota = dr.GetBoolean(es_multinota);
+
+                    tramite.lstPasos = Paso.read(tramite.id);
                     tramiteList.Add(tramite);
                 }
             }
             return tramiteList;
         }
+        public static string getImgOficina(int id)
+        {
 
+            try
+            {
+                string img = string.Empty;
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"
+                                SELECT 
+                                    img 
+                                FROM SIIMVA.dbo.OFICINAS
+                                WHERE 
+                                    codigo_oficina = @codigo_oficina";
+                    command.Parameters.AddWithValue("@codigo_oficina", id);
+                    command.Connection.Open();
+                    SqlDataReader dr = command.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        int _img = dr.GetOrdinal("img");
+                        while (dr.Read())
+                        {
+                            img = dr.GetString(_img);
+                        }
+                    }
+                    return img;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static List<Tramite> read()
         {
             try
@@ -180,7 +231,12 @@ namespace MOTOR_WORKFLOW.Entities
                 {
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT A.*,                                (SELECT TOP 1 ID FROM PASO B WHERE ID_TRAMITE = A.ID                                 ORDER BY B.ORDEN ASC)                                AS primer_paso                                FROM TRAMITE A                                WHERE ACTIVO = 1";
+                    command.CommandText =
+                            @"SELECT 
+                                A.*, 
+                                (SELECT TOP 1 ID FROM PASO B WHERE ID_TRAMITE = A.ID ORDER BY B.ORDEN ASC) AS primer_paso
+                            FROM TRAMITE A                                
+                            WHERE ACTIVO = 1";
                     command.Connection.Open();
                     SqlDataReader sqlDataReader = command.ExecuteReader();
                     if (sqlDataReader.HasRows)
@@ -199,6 +255,7 @@ namespace MOTOR_WORKFLOW.Entities
                         int ordinal12 = sqlDataReader.GetOrdinal("nombre_unidad_organizativa");
                         int ordinal13 = sqlDataReader.GetOrdinal("logo_unidad_administrativa");
                         int ordinal14 = sqlDataReader.GetOrdinal("primer_paso");
+
                         while (sqlDataReader.Read())
                         {
                             Tramite tramite = new Tramite();
@@ -230,6 +287,7 @@ namespace MOTOR_WORKFLOW.Entities
                                 tramite.logo_unidad_administrativa = sqlDataReader.GetString(ordinal13);
                             if (!sqlDataReader.IsDBNull(ordinal14))
                                 tramite.primer_paso = sqlDataReader.GetInt32(ordinal14);
+
                             tramiteList.Add(tramite);
                         }
                     }
@@ -251,7 +309,8 @@ namespace MOTOR_WORKFLOW.Entities
                 {
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT A.*,                                (SELECT TOP 1 ID FROM PASO B WHERE ID_TRAMITE = A.ID                                 ORDER BY B.ORDEN ASC)                                AS primer_paso                                FROM TRAMITE A";
+                    command.CommandText =
+                        "SELECT A.*, (SELECT TOP 1 ID FROM PASO B WHERE ID_TRAMITE = A.ID  ORDER BY B.ORDEN ASC) AS primer_paso FROM TRAMITE A";
                     command.Connection.Open();
                     SqlDataReader sqlDataReader = command.ExecuteReader();
                     if (sqlDataReader.HasRows)
@@ -270,6 +329,9 @@ namespace MOTOR_WORKFLOW.Entities
                         int ordinal12 = sqlDataReader.GetOrdinal("nombre_unidad_organizativa");
                         int ordinal13 = sqlDataReader.GetOrdinal("logo_unidad_administrativa");
                         int ordinal14 = sqlDataReader.GetOrdinal("primer_paso");
+
+                        int es_multinota = sqlDataReader.GetOrdinal("es_multinota");
+
                         while (sqlDataReader.Read())
                         {
                             Tramite tramite = new Tramite();
@@ -301,6 +363,10 @@ namespace MOTOR_WORKFLOW.Entities
                                 tramite.logo_unidad_administrativa = sqlDataReader.GetString(ordinal13);
                             if (!sqlDataReader.IsDBNull(ordinal14))
                                 tramite.primer_paso = sqlDataReader.GetInt32(ordinal14);
+
+                            if (!sqlDataReader.IsDBNull(es_multinota))
+                                tramite.es_multinota = sqlDataReader.GetBoolean(es_multinota);
+                           
                             tramiteList.Add(tramite);
                         }
                     }
@@ -351,6 +417,10 @@ namespace MOTOR_WORKFLOW.Entities
                 stringBuilder.AppendLine(", usu_crea");
                 stringBuilder.AppendLine(", activo");
                 stringBuilder.AppendLine(", id_unidad_organizativa");
+                stringBuilder.AppendLine(", logo_unidad_administrativa");
+                stringBuilder.AppendLine(", nombre_unidad_organizativa");
+
+
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("VALUES");
                 stringBuilder.AppendLine("(");
@@ -359,6 +429,9 @@ namespace MOTOR_WORKFLOW.Entities
                 stringBuilder.AppendLine(", @usu_crea");
                 stringBuilder.AppendLine(", 0");
                 stringBuilder.AppendLine(", @id_unidad_organizativa");
+                stringBuilder.AppendLine(", @logo_unidad_administrativa");
+                stringBuilder.AppendLine(", @nombre_unidad_organizativa");
+
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -369,6 +442,9 @@ namespace MOTOR_WORKFLOW.Entities
                     command.Parameters.AddWithValue("@nombre", obj.nombre);
                     command.Parameters.AddWithValue("@usu_crea", obj.usu_crea);
                     command.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
+                    command.Parameters.AddWithValue("@logo_unidad_administrativa", obj.logo_unidad_administrativa);
+                    command.Parameters.AddWithValue("@nombre_unidad_organizativa", obj.nombre_unidad_organizativa);
+
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -378,7 +454,28 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
+        public static int duplicar(Models.TramiteDuplicar obj)
+        {
+            try
+            {
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "DUPLICA_TRAMITE";
+                    command.Parameters.AddWithValue("@ID_TRAMITE", obj.ID_TRAMITE);
+                    command.Parameters.AddWithValue("@NOMBRE", obj.NOMBRE);
 
+
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void update(Models.TramiteInsert obj)
         {
             try
@@ -389,6 +486,9 @@ namespace MOTOR_WORKFLOW.Entities
                 stringBuilder.AppendLine(", fecha_modifica=GETDATE()");
                 stringBuilder.AppendLine(", usu_modifica=@usu_modifica");
                 stringBuilder.AppendLine(", id_unidad_organizativa=@id_unidad_organizativa");
+                stringBuilder.AppendLine(", logo_unidad_administrativa=@logo_unidad_administrativa");
+                stringBuilder.AppendLine(", nombre_unidad_organizativa=@nombre_unidad_organizativa");
+
                 stringBuilder.AppendLine("WHERE");
                 stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -400,6 +500,9 @@ namespace MOTOR_WORKFLOW.Entities
                     command.Parameters.AddWithValue("@usu_modifica", obj.usu_crea);
                     command.Parameters.AddWithValue("@id", obj.id);
                     command.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
+                    command.Parameters.AddWithValue("@logo_unidad_administrativa", obj.logo_unidad_administrativa);
+                    command.Parameters.AddWithValue("@nombre_unidad_organizativa", obj.nombre_unidad_organizativa);
+
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -409,6 +512,34 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
+
+        public static void set_es_multinota(int id_tramite, bool es_multinota)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Tramite SET");
+                stringBuilder.AppendLine("es_multinota=@es_multinota");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@es_multinota", es_multinota);
+                    command.Parameters.AddWithValue("@id", id_tramite);
+
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public static void activaDesactiva(Models.TramiteInsert obj)
         {

@@ -81,6 +81,7 @@ namespace MOTOR_WORKFLOW.Entities
                 int ordinal10 = dr.GetOrdinal("id_formulario");
                 int ordinal11 = dr.GetOrdinal("id_adjunto");
                 int ordinal12 = dr.GetOrdinal("id_ddjj");
+
                 while (dr.Read())
                 {
                     Pasos pasos = new Pasos();
@@ -165,59 +166,120 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
-        public static int insert(Pasos obj)
+        public static Pasos getByTramites(int idTramite)
         {
             try
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("INSERT INTO Pasos(");
-                stringBuilder.AppendLine("id_tramites");
-                stringBuilder.AppendLine(", id_paso");
-                stringBuilder.AppendLine(", orden_paso");
-                stringBuilder.AppendLine(", id_ingreso_paso");
-                stringBuilder.AppendLine(", orden_ingreso_paso");
-                stringBuilder.AppendLine(", nombre_ingreso_paso");
-                stringBuilder.AppendLine(", row");
-                stringBuilder.AppendLine(", col");
-                stringBuilder.AppendLine(", id_formulario");
-                stringBuilder.AppendLine(", id_adjunto");
-                stringBuilder.AppendLine(", id_ddjj");
-                stringBuilder.AppendLine(")");
-                stringBuilder.AppendLine("VALUES");
-                stringBuilder.AppendLine("(");
-                stringBuilder.AppendLine("@id_tramites");
-                stringBuilder.AppendLine(", @id_paso");
-                stringBuilder.AppendLine(", @orden_paso");
-                stringBuilder.AppendLine(", @id_ingreso_paso");
-                stringBuilder.AppendLine(", @orden_ingreso_paso");
-                stringBuilder.AppendLine(", @nombre_ingreso_paso");
-                stringBuilder.AppendLine(", @row");
-                stringBuilder.AppendLine(", @col");
-                stringBuilder.AppendLine(", @id_formulario");
-                stringBuilder.AppendLine(", @id_adjunto");
-                stringBuilder.AppendLine(", @id_ddjj");
-                stringBuilder.AppendLine(")");
-                stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                Pasos byPk = (Pasos)null;
                 using (SqlConnection connection = DALBase.GetConnection())
                 {
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
-                    command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@id_tramites", obj.id_tramites);
-                    command.Parameters.AddWithValue("@id_paso", obj.id_paso);
-                    command.Parameters.AddWithValue("@orden_paso", obj.orden_paso);
-                    command.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
-                    command.Parameters.AddWithValue("@orden_ingreso_paso", obj.orden_ingreso_paso);
-                    command.Parameters.AddWithValue("@nombre_ingreso_paso", obj.nombre_ingreso_paso);
-                    command.Parameters.AddWithValue("@row", obj.row);
-                    command.Parameters.AddWithValue("@col", obj.col);
-                    command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
-                    command.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
-                    command.Parameters.AddWithValue("@id_ddjj", obj.id_ddjj);
+                    command.CommandText =
+                        @"SELECT *FROM PASOS
+                        WHERE id = (
+                        SELECT MAX(id) FROM PASOS
+                        WHERE id_tramites = @id_tramites) ";
+                    command.Parameters.AddWithValue("@id_tramites", idTramite);
                     command.Connection.Open();
-                    return Convert.ToInt32(command.ExecuteScalar());
+                    List<Pasos> pasosList = Pasos.mapeo(command.ExecuteReader());
+                    if (pasosList.Count != 0)
+                        byPk = pasosList[0];
                 }
+                return byPk;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static Pasos existe(int id_paso, int id_ingreso_paso, int id_adjunto, int id_tramites)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                Pasos byPk = (Pasos)null;
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"SELECT *FROM PASOS
+                                            WHERE id_paso = @id_paso AND id_ingreso_paso=@id_ingreso_paso 
+                                            AND id_adjunto=@id_adjunto AND id_tramites=@id_tramites";
+                    command.Parameters.AddWithValue("@id_paso", id_paso);
+                    command.Parameters.AddWithValue("@id_ingreso_paso", id_ingreso_paso);
+                    command.Parameters.AddWithValue("@id_adjunto", id_adjunto);
+                    command.Parameters.AddWithValue("@id_tramites", id_tramites);
+                    command.Connection.Open();
+                    List<Pasos> pasosList = Pasos.mapeo(command.ExecuteReader());
+                    if (pasosList.Count != 0)
+                        byPk = pasosList[0];
+                }
+                return byPk;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static int insert(Pasos obj)
+        {
+            try
+            {
+                if (existe(obj.id_paso, obj.id_ingreso_paso, obj.id_adjunto, obj.id_tramites) == null)
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.AppendLine("INSERT INTO Pasos(");
+                    stringBuilder.AppendLine("id_tramites");
+                    stringBuilder.AppendLine(", id_paso");
+                    stringBuilder.AppendLine(", orden_paso");
+                    stringBuilder.AppendLine(", id_ingreso_paso");
+                    stringBuilder.AppendLine(", orden_ingreso_paso");
+                    stringBuilder.AppendLine(", nombre_ingreso_paso");
+                    stringBuilder.AppendLine(", row");
+                    stringBuilder.AppendLine(", col");
+                    stringBuilder.AppendLine(", id_formulario");
+                    stringBuilder.AppendLine(", id_adjunto");
+                    stringBuilder.AppendLine(", id_ddjj");
+                    stringBuilder.AppendLine(")");
+                    stringBuilder.AppendLine("VALUES");
+                    stringBuilder.AppendLine("(");
+                    stringBuilder.AppendLine("@id_tramites");
+                    stringBuilder.AppendLine(", @id_paso");
+                    stringBuilder.AppendLine(", @orden_paso");
+                    stringBuilder.AppendLine(", @id_ingreso_paso");
+                    stringBuilder.AppendLine(", @orden_ingreso_paso");
+                    stringBuilder.AppendLine(", @nombre_ingreso_paso");
+                    stringBuilder.AppendLine(", @row");
+                    stringBuilder.AppendLine(", @col");
+                    stringBuilder.AppendLine(", @id_formulario");
+                    stringBuilder.AppendLine(", @id_adjunto");
+                    stringBuilder.AppendLine(", @id_ddjj");
+                    stringBuilder.AppendLine(")");
+                    stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
+                    using (SqlConnection connection = DALBase.GetConnection())
+                    {
+                        SqlCommand command = connection.CreateCommand();
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = stringBuilder.ToString();
+                        command.Parameters.AddWithValue("@id_tramites", obj.id_tramites);
+                        command.Parameters.AddWithValue("@id_paso", obj.id_paso);
+                        command.Parameters.AddWithValue("@orden_paso", obj.orden_paso);
+                        command.Parameters.AddWithValue("@id_ingreso_paso", obj.id_ingreso_paso);
+                        command.Parameters.AddWithValue("@orden_ingreso_paso", obj.orden_ingreso_paso);
+                        command.Parameters.AddWithValue("@nombre_ingreso_paso", obj.nombre_ingreso_paso);
+                        command.Parameters.AddWithValue("@row", obj.row);
+                        command.Parameters.AddWithValue("@col", obj.col);
+                        command.Parameters.AddWithValue("@id_formulario", obj.id_formulario);
+                        command.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
+                        command.Parameters.AddWithValue("@id_ddjj", obj.id_ddjj);
+                        command.Connection.Open();
+                        return Convert.ToInt32(command.ExecuteScalar());
+                    }
+                }
+                else
+                    return 0;
             }
             catch (Exception ex)
             {

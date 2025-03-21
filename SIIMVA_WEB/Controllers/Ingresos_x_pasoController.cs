@@ -23,7 +23,6 @@ namespace MOTOR_WORKFLOW.Controllers
         {
             this._Ingresos_x_pasoService = Ingresos_x_pasoService;
         }
-
         [HttpGet]
         public IActionResult getByPk(int ID)
         {
@@ -33,7 +32,6 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
-
         [HttpGet]
         public IActionResult read(int idPaso)
         {
@@ -43,7 +41,6 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(ingresosXPasoList);
         }
-
         [HttpPost]
         public IActionResult insert(ingreso_paso_model obj)
         {
@@ -57,7 +54,6 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
         [HttpPost]
         public IActionResult update(ingreso_paso_model obj)
         {
@@ -71,13 +67,12 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
-        [HttpPost]
-        public IActionResult insertValidaForm(ingreso_paso_model obj)
+        [HttpGet]
+        public IActionResult insertValidaForm(int id_paso)
         {
             try
             {
-                this._Ingresos_x_pasoService.insertValidaForm(obj);
+                this._Ingresos_x_pasoService.insertValidaForm(id_paso);
                 return (IActionResult)this.Ok();
             }
             catch (Exception ex)
@@ -86,11 +81,37 @@ namespace MOTOR_WORKFLOW.Controllers
             }
         }
         [HttpGet]
-        public IActionResult delete(string id)
+        public IActionResult insertValidaPersona(int id_paso)
         {
             try
             {
-                this._Ingresos_x_pasoService.delete(id);
+                this._Ingresos_x_pasoService.insertValidaPersona(id_paso);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpGet]
+        public IActionResult insertMultiNota(int id_paso)
+        {
+            try
+            {
+                this._Ingresos_x_pasoService.insertMultinota(id_paso);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpGet]
+        public IActionResult delete(string id_paso)
+        {
+            try
+            {
+                this._Ingresos_x_pasoService.delete(id_paso);
                 return (IActionResult)this.Ok();
             }
             catch (Exception ex)

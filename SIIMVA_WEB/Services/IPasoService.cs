@@ -13,7 +13,8 @@ namespace MOTOR_WORKFLOW.Services
     public interface IPasoService
     {
         List<Paso> read(int idTramite);
-
+        public int getProximoVecino(int id_tramite, int id_tramites);
+        public MOTOR_WORKFLOW.Entities.Paso getProximo(int id_tramite, int paso_actual);
         List<Paso> readBackEnd(int idTramite);
 
         Paso getByPk(int ID);
@@ -23,5 +24,6 @@ namespace MOTOR_WORKFLOW.Services
         void update(PasoModel obj);
 
         void delete(int idPaso);
+        public Models.PasoModel getByTramite(int idTramite);
     }
 }

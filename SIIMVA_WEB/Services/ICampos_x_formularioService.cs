@@ -12,6 +12,7 @@ namespace MOTOR_WORKFLOW.Services
         public int insert(CampoTextoModel obj);
         public void insertEnlazados(List<CampoTextoModel> obj);
         public void update(CampoTextoModel obj);
+        public void updateEnlazados(List<CampoTextoModel> obj);
         public void delete(int id);
     }
 }

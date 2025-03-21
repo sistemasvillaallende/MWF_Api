@@ -7,23 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\CIDI\**" />
+    <Compile Remove="Services\CIDI\**" />
     <Compile Remove="wwwroot\**" />
+    <Content Remove="Entities\CIDI\**" />
+    <Content Remove="Services\CIDI\**" />
     <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="Entities\CIDI\**" />
+    <EmbeddedResource Remove="Services\CIDI\**" />
     <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="Entities\CIDI\**" />
+    <None Remove="Services\CIDI\**" />
     <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="RestSharp" Version="111.2.0" />
+    <PackageReference Include="RestSharp" Version="112.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\CIDI\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Services\CIDI\" />
   </ItemGroup>
 
   <ItemGroup>

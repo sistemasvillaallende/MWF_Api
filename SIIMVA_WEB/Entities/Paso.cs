@@ -193,7 +193,67 @@ namespace MOTOR_WORKFLOW.Entities
             }
             return pasoList;
         }
+        private static Models.PasoModel mapeoModel(SqlDataReader dr)
+        {
+            Models.PasoModel paso = null;
+            if (dr.HasRows)
+            {
+                int ID_PASO = dr.GetOrdinal("ID_PASO");
+                int NOMBRE = dr.GetOrdinal("NOMBRE");
+                int ID_INGRESOS_PASO = dr.GetOrdinal("ID_INGRESOS_PASO");
+                int NOMBRE_PASO = dr.GetOrdinal("NOMBRE_PASO");
+                int ID_CONTENIDO_INGRESO_PASO = dr.GetOrdinal("ID_CONTENIDO_INGRESO_PASO");
+                int ACTIVO = dr.GetOrdinal("ACTIVO");
+                int ID_FORMULARIO = dr.GetOrdinal("ID_FORMULARIO");
+                int ID_TIPO_CAMPO = dr.GetOrdinal("ID_TIPO_CAMPO");
+                int URL_LINK_PAGO = dr.GetOrdinal("URL_LINK_PAGO");
+                int TITULO = dr.GetOrdinal("TITULO");
+                int SUBTITULO = dr.GetOrdinal("SUBTITULO");
+                int TEXTO = dr.GetOrdinal("TEXTO");
+                int ID = dr.GetOrdinal("ID");
+                int COL = dr.GetOrdinal("COL");
+                int ROW = dr.GetOrdinal("ROW");
+                int NOMBRE_INGRESO_PASO = dr.GetOrdinal("NOMBRE_INGRESO_PASO");
 
+                while (dr.Read())
+                {
+                    paso = new Models.PasoModel();
+                    if (!dr.IsDBNull(ID_PASO))
+                        paso.ID_PASO = dr.GetInt32(ID_PASO);
+                    if (!dr.IsDBNull(NOMBRE))
+                        paso.NOMBRE = dr.GetString(NOMBRE);
+                    if (!dr.IsDBNull(ID_INGRESOS_PASO))
+                        paso.ID_INGRESOS_PASO = dr.GetInt32(ID_INGRESOS_PASO);
+                    if (!dr.IsDBNull(NOMBRE_PASO))
+                        paso.NOMBRE_PASO = dr.GetString(NOMBRE_PASO);
+                    if (!dr.IsDBNull(ID_CONTENIDO_INGRESO_PASO))
+                        paso.ID_CONTENIDO_INGRESO_PASO = dr.GetInt32(ID_CONTENIDO_INGRESO_PASO);
+                    if (!dr.IsDBNull(ACTIVO))
+                        paso.ACTIVO = dr.GetBoolean(ACTIVO);
+                    if (!dr.IsDBNull(ID_FORMULARIO))
+                        paso.ID_FORMULARIO = dr.GetInt32(ID_FORMULARIO);
+                    if (!dr.IsDBNull(ID_TIPO_CAMPO))
+                        paso.ID_TIPO_CAMPO = dr.GetInt32(ID_TIPO_CAMPO);
+                    if (!dr.IsDBNull(URL_LINK_PAGO))
+                        paso.URL_LINK_PAGO = dr.GetString(URL_LINK_PAGO);
+                    if (!dr.IsDBNull(TITULO))
+                        paso.TITULO = dr.GetString(TITULO);
+                    if (!dr.IsDBNull(SUBTITULO))
+                        paso.SUBTITULO = dr.GetString(SUBTITULO);
+                    if (!dr.IsDBNull(TEXTO))
+                        paso.TEXTO = dr.GetString(TEXTO);
+                    if (!dr.IsDBNull(ID))
+                        paso.ID = dr.GetInt32(ID);
+                    if (!dr.IsDBNull(COL))
+                        paso.COL = dr.GetInt32(COL);
+                    if (!dr.IsDBNull(ROW))
+                        paso.ROW = dr.GetInt32(ROW);
+                    if (!dr.IsDBNull(NOMBRE_INGRESO_PASO))
+                        paso.NOMBRE_INGRESO_PASO = dr.GetString(NOMBRE_INGRESO_PASO);
+                }
+            }
+            return paso;
+        }
         public static List<Paso> read(int idTramite)
         {
             try
@@ -309,7 +369,54 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
+        public static Models.PasoModel getByTramite(int idTramite)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                Models.PasoModel byPk = null;
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText =
+                        @"SELECT 
+	                        A.ID AS ID_PASO, 
+	                        A.NOMBRE,
+	                        B.ID AS ID_INGRESOS_PASO, 
+	                        A.NOMBRE AS NOMBRE_PASO,
+	                        C.ID AS ID_CONTENIDO_INGRESO_PASO,
+	                        A.ACTIVO,
+	                        D.ID AS ID_FORMULARIO,
+	                        E.ID_TIPO_CAMPO,
+	                        E.URL_LINK_PAGO,
+	                        E.TITULO,
+	                        E.SUBTITULO,
+	                        E.TEXTO,
+	                        E.ID,
+	                        E.COL,
+	                        E.ROW,
+	                        B.TITULO AS NOMBRE_INGRESO_PASO
+                        FROM PASO A
+	                        FULL JOIN INGRESOS_X_PASO B ON B.ID_PASO = A.ID
+	                        FULL JOIN CONTENIDO_INGRESO_PASO C ON C.ID_INGRESO_PASO = B.ID
+	                        FULL JOIN FORMULARIO D ON D.ID_CONTENIDO_INGRESO_PASO = C.ID
+	                        FULL JOIN CAMPOS_X_FORMULARIO E ON E.ID_FORMULARIO = D.ID
+                        WHERE A.id = (
+                        SELECT MAX(id) FROM PASO
+                        WHERE id_tramite = @id_tramite)";
+                    command.Parameters.AddWithValue("@id_tramite", idTramite);
+                    command.Connection.Open();
+                    return Paso.mapeoModel(command.ExecuteReader());
 
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static Paso getProximo(int id_tramite, int paso_actual)
         {
             try
@@ -337,6 +444,35 @@ namespace MOTOR_WORKFLOW.Entities
                         proximo = pasoList[0];
                 }
                 return proximo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int getProximoVecino(int id_tramite, int id_tramites)
+        {
+            try
+            {
+                Paso proximo = (Paso)null;
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"
+                        SELECT id FROM PASO
+                        WHERE EN_USUARIO = 1
+                            AND ID_TRAMITE = @id_tramite
+                            AND id NOT IN(SELECT id_paso FROM 
+                                PASOS WHERE id_tramites=@id_tramites)";
+
+                    command.Parameters.AddWithValue("@id_tramite", id_tramite);
+                    command.Parameters.AddWithValue("@id_tramites", id_tramites);
+                    command.Connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+
             }
             catch (Exception ex)
             {

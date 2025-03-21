@@ -75,7 +75,7 @@
           }
         }
       },
-      "RestSharp/111.2.0": {
+      "RestSharp/112.0.0": {
         "type": "package",
         "compile": {
           "lib/net6.0/RestSharp.dll": {
@@ -603,10 +603,10 @@
         "packageIcon.png"
       ]
     },
-    "RestSharp/111.2.0": {
-      "sha512": "OkWr6AGM0zirdkRpxVOxXMWx9OHEIWrDzrpx1XIx5KyvTcmtjJVsKBscVkYTcFerhj5w5Bny7boRIV4a0ENGaQ==",
+    "RestSharp/112.0.0": {
+      "sha512": "vezxJ6DLk0eDx+rmXwVHQvJ3elZCJfnLd8neRrkA+IvTs9falf2CEAolsjI1YKkkHTOvG13xWTnHK7gU0zgaaw==",
       "type": "package",
-      "path": "restsharp/111.2.0",
+      "path": "restsharp/112.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -623,7 +623,7 @@
         "lib/net8.0/RestSharp.xml",
         "lib/netstandard2.0/RestSharp.dll",
         "lib/netstandard2.0/RestSharp.xml",
-        "restsharp.111.2.0.nupkg.sha512",
+        "restsharp.112.0.0.nupkg.sha512",
         "restsharp.nuspec",
         "restsharp.png"
       ]
@@ -983,7 +983,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Newtonsoft.Json >= 13.0.3",
-      "RestSharp >= 111.2.0",
+      "RestSharp >= 112.0.0",
       "Swashbuckle.AspNetCore >= 6.6.2",
       "System.Data.SqlClient >= 4.8.6"
     ]
@@ -1039,7 +1039,7 @@
           },
           "RestSharp": {
             "target": "Package",
-            "version": "[111.2.0, )"
+            "version": "[112.0.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

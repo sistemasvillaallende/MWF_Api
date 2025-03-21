@@ -13,6 +13,10 @@ namespace MOTOR_WORKFLOW.Services
 {
     public class TramitesService : ITramitesService
     {
+        void ITramitesService.asignar_legajo(int id_tramites, int legajo)
+        {
+            Tramites.asignar_legajo(id_tramites, 710);
+        }
         public Tramites getByPk(int id)
         {
             try
@@ -61,16 +65,9 @@ namespace MOTOR_WORKFLOW.Services
 
         public List<Tramites> read(string cuit)
         {
-            try
-            {
-                return Tramites.read(cuit);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return Tramites.read(cuit);
         }
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         public List<Tramites> read()
         {
             try

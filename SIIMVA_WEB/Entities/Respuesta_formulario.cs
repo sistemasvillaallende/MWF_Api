@@ -145,15 +145,33 @@ namespace MOTOR_WORKFLOW.Entities
                 stringBuilder.AppendLine(")");
                 using (SqlConnection connection = DALBase.GetConnection())
                 {
+                    string nombre_campo=string.Empty;
+                    string respuesta_usuario = string.Empty;
+                    string etiqueta_campo = string.Empty;
+
+                    if(obj.nombre_campo == null)
+                        nombre_campo= string.Empty;
+                    else
+                        nombre_campo = obj.nombre_campo.ToString();
+                    if (obj.respuesta_usuario == null)
+                        respuesta_usuario = string.Empty;
+                    else
+                        respuesta_usuario = obj.respuesta_usuario.ToString();
+                    if (obj.etiqueta_campo == null)
+                        etiqueta_campo = string.Empty;
+                    else
+                        etiqueta_campo = obj.etiqueta_campo.ToString();
+
+
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
                     command.Parameters.AddWithValue("@id_formularios", obj.id_formularios);
-                    command.Parameters.AddWithValue("@nombre_campo", obj.nombre_campo);
-                    command.Parameters.AddWithValue("@respuesta_usuario", obj.respuesta_usuario);
+                    command.Parameters.AddWithValue("@nombre_campo", nombre_campo);
+                    command.Parameters.AddWithValue("@respuesta_usuario", respuesta_usuario);
                     command.Parameters.AddWithValue("@id_tipo_campo", obj.id_tipo_campo);
                     command.Parameters.AddWithValue("@orden", obj.orden);
-                    command.Parameters.AddWithValue("@etiqueta_campo", obj.etiqueta_campo);
+                    command.Parameters.AddWithValue("@etiqueta_campo", etiqueta_campo);
                     command.Connection.Open();
                     return command.ExecuteNonQuery();
                 }

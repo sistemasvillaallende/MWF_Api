@@ -10,6 +10,17 @@ namespace MOTOR_WORKFLOW.Services
 {
     public class PasosService : IPasosService
     {
+        public Pasos getByTramites(int idTramite)
+        {
+            try
+            {
+                return Pasos.getByTramites(idTramite);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public Pasos getByPk(int id)
         {
             try

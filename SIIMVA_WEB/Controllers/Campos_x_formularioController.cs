@@ -33,7 +33,6 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
-
         [HttpPost]
         public IActionResult insert(Entities.CampoTextoModel obj)
         {
@@ -61,6 +60,33 @@ namespace MOTOR_WORKFLOW.Controllers
             }
         }
         [HttpPost]
+        public IActionResult updateEnlazados(List<Entities.CampoTextoModel> lst)
+        {
+            try
+            {
+                this._Campos_x_formularioService.updateEnlazados(lst);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpPost]
+        public IActionResult insertUrl(List<Entities.CampoTextoModel> lst)
+        {
+            try
+            {
+                this._Campos_x_formularioService.insertEnlazados(lst);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        [HttpPost]
         public IActionResult update(CampoTextoModel obj)
         {
             try
@@ -73,7 +99,6 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
         [HttpGet]
         public IActionResult delete(int id)
         {

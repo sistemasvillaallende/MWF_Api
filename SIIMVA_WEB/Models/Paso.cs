@@ -19,7 +19,7 @@
 
         public ObjDDJJs objDDJJs { get; set; }
 
-        public objAdjuntos objAdjuntos { get; set; }
+        public List<objAdjuntos> objAdjuntos { get; set; }
 
         public int id_ddjj { get; set; }
 
@@ -38,7 +38,7 @@
             this.id_ingreso_paso = 0;
             this.objFormulario = new List<ObjFormulario>();
             this.objDDJJs = new ObjDDJJs();
-            this.objAdjuntos = new objAdjuntos();
+            this.objAdjuntos = new List<objAdjuntos>();
             this.id_ddjj = 0;
             this.id_adjunto = 0;
             this.id_formulario = 0;

@@ -7,6 +7,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
@@ -28,9 +29,14 @@ namespace MOTOR_WORKFLOW
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 104857600; // 100 MB, ajusta este valor según tus necesidades
+            });
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddScoped<IAdjuntoService, AdjuntoService>();
+            services.AddScoped<ICIDIServices, CIDIServices>();
             services.AddScoped<ICampos_x_formularioService, Campos_x_formularioService>();
             services.AddScoped<IFormularioService, FormularioService>();
             services.AddScoped<IIngresos_x_pasoService, Ingresos_x_pasoService>();
@@ -54,7 +60,13 @@ namespace MOTOR_WORKFLOW
             services.AddScoped<IAdjuntoService, AdjuntoService>();
             services.AddScoped<IBarriosService, BarriosService>();
             services.AddScoped<ICallesService, CallesService>();
+            services.AddScoped<IControlPagoServices, ControlPagoServices>();
             services.AddScoped<IValidacionesServices, ValidacionesServices>();
+            services.AddScoped<IInmuebles_rentasServices, Inmuebles_rentasServices>();
+            services.AddScoped<IPagosPayperticServices, PagosPayPerTicServices>();
+            services.AddScoped<ICtasCtesInmServices, CtasCtesServices>();
+            services.AddScoped<IVecinoDigitalServices, VecinoDigitalServices>();
+
             services.AddCors();
         }
 

@@ -21,9 +21,9 @@ namespace MOTOR_WORKFLOW.Services
         Tramite getByPk(int ID);
 
         int insert(Models.TramiteInsert obj);
-
+        void duplicar(Models.TramiteDuplicar obj);
         void update(Models.TramiteInsert obj);
-
+        string getImgOficina(int ID);
         void delete(int id_tramite);
     }
 }

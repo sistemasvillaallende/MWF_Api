@@ -34,5 +34,6 @@ namespace MOTOR_WORKFLOW.Services
         void update(Tramites obj);
 
         void delete(Tramites obj);
+        public void asignar_legajo(int id_tramites, int legajo);
     }
 }

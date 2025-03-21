@@ -1,4 +1,6 @@
-﻿namespace MOTOR_WORKFLOW.Entities
+﻿using System.Reflection.PortableExecutable;
+
+namespace MOTOR_WORKFLOW.Entities
 {
     public class CampoTextoModel
     {
@@ -32,6 +34,13 @@
 
         public int col { get; set; }
         public string cod_enlaza { get; set; }
+        public int SUBSISTEMA { get; set; }
+        public int NRO_TRAN { get; set; }
+        public string URL_LINK_PAGO { get; set; }
+
+        public string TITULO { get; set; }
+        public string SUBTITULO { get; set; }
+        public string TEXTO { get; set; }
         public CampoTextoModel()
         {
             this.id = 0;
@@ -50,6 +59,12 @@
             this.row = 0;
             this.col = 0;
             cod_enlaza = string.Empty;
+            SUBSISTEMA = 0;
+            NRO_TRAN = 0;
+            URL_LINK_PAGO = string.Empty;
+            TITULO = string.Empty;
+            SUBTITULO = string.Empty;
+            TEXTO = string.Empty;
         }
     }
 }

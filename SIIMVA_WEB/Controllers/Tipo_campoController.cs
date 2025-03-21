@@ -29,7 +29,7 @@ namespace MOTOR_WORKFLOW.Controllers
       return byPk == null ? (IActionResult) this.BadRequest( new
       {
         message = "Error al obtener los datos"
-      }) : (IActionResult) this.Ok( byPk);
+      }) : Ok( byPk);
     }
   }
 }

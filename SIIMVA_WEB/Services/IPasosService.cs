@@ -12,6 +12,7 @@ namespace MOTOR_WORKFLOW.Services
         public int insert(Pasos obj);
         public void update(Pasos obj);
         public void delete(Pasos obj);
+        public Pasos getByTramites(int idTramite);
     }
 }
 

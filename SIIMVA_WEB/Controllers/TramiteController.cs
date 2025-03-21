@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
@@ -18,10 +19,11 @@ namespace MOTOR_WORKFLOW.Controllers
     public class TramiteController : Controller
     {
         private ITramiteService _TramiteService;
-
-        public TramiteController(ITramiteService TramiteService)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public TramiteController(ITramiteService TramiteService, IWebHostEnvironment webHostEnvironment)
         {
             this._TramiteService = TramiteService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -80,6 +82,19 @@ namespace MOTOR_WORKFLOW.Controllers
             try
             {
                 this._TramiteService.insert(obj);
+                return (IActionResult)this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpPost]
+        public IActionResult duplicar(Models.TramiteDuplicar obj)
+        {
+            try
+            {
+                this._TramiteService.duplicar(obj);
                 return (IActionResult)this.Ok();
             }
             catch (Exception ex)
