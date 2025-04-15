@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using MOTOR_WORKFLOW.Services;
+using MOTOR_WORKFLOW.Services.CIDI;
 using MOTOR_WORKFLOW.Services.LOGIN;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
@@ -66,6 +67,7 @@ namespace MOTOR_WORKFLOW
             services.AddScoped<IPagosPayperticServices, PagosPayPerTicServices>();
             services.AddScoped<ICtasCtesInmServices, CtasCtesServices>();
             services.AddScoped<IVecinoDigitalServices, VecinoDigitalServices>();
+            services.AddScoped<IComunicacionesService, ComunicacionesService>();
 
             services.AddCors();
         }

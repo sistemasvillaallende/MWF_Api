@@ -52,6 +52,8 @@ namespace MOTOR_WORKFLOW.Entities
 
         public string nombre_proxima_oficina { get; set; }
 
+        public bool notificacidi { get; set; }
+
         public Paso()
         {
             this.id = 0;
@@ -70,6 +72,7 @@ namespace MOTOR_WORKFLOW.Entities
             this.es_final = false;
             this.proxima_oficina = 0;
             this.proxima_oficina_rechazo = 0;
+            this.notificacidi = false;
         }
 
         private static List<Paso> mapeoSimple(SqlDataReader dr)

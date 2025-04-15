@@ -11,10 +11,12 @@ using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using MOTOR_WORKFLOW.Entities;
+using MOTOR_WORKFLOW.Entities.CIDI.Comunicacion;
 using MOTOR_WORKFLOW.Models;
 using MOTOR_WORKFLOW.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using MOTOR_WORKFLOW.Services.CIDI;
 using RestSharp;
 using System;
 using System.Collections;
@@ -25,8 +27,10 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Diagnostics;
 
 #nullable enable
 namespace MOTOR_WORKFLOW.Controllers
@@ -38,15 +42,19 @@ namespace MOTOR_WORKFLOW.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IWebHostEnvironment _HostEnvironment;
         private IPasoService _PasoService;
+        private readonly IComunicacionesService _ComunicacionesService;
+
 
         public PasoController(
           IPasoService PasoService,
           IWebHostEnvironment webHostEnvironment,
-          IWebHostEnvironment hostEnvironment)
+          IWebHostEnvironment hostEnvironment,
+          IComunicacionesService comunicacionesService)
         {
             this._PasoService = PasoService;
             this._HostEnvironment = hostEnvironment;
             this._webHostEnvironment = webHostEnvironment;
+            this._ComunicacionesService = comunicacionesService;
         }
         [HttpGet]
         public IActionResult GetProximoVecino(int idTramite, int idTramites)
@@ -223,7 +231,7 @@ namespace MOTOR_WORKFLOW.Controllers
     MOTOR_WORKFLOW.Entities.Paso.getByTramite(idTramite);
                     if (paso1 != null)
                     {
-                        multinota(paso1, formData.cuit.ToString(), idTramites, 
+                        multinota(paso1, formData.cuit.ToString(), idTramites,
                             contenidoMultinota);
                     }
                 }
@@ -281,7 +289,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 model.Observaciones = contenido;
 
                 System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                
+
                 string nro_expediente_completo = string.Empty;
                 string anio = string.Empty;
                 string nro_expediente = string.Empty;
@@ -291,7 +299,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 {
                     MaxTimeout = -1,
                 };
-                
+
                 var client = new RestClient(options);
                 var request = new RestRequest("", Method.Post);
                 request.AddHeader("Content-Type", "application/json");
@@ -336,7 +344,7 @@ namespace MOTOR_WORKFLOW.Controllers
                     orden = 1
                 });
 
-               // Tramites.finalizar_rechazar(idTramites, 4);
+                // Tramites.finalizar_rechazar(idTramites, 4);
 
 
                 Movimiento_tramites.insert(new Movimiento_tramites()
@@ -364,15 +372,21 @@ namespace MOTOR_WORKFLOW.Controllers
         {
             try
             {
-                var form = Request.Form["data"];
 
+                var form = Request.Form["data"];
+                var sessionHash = Request.Form["sessionHash"];
                 var estado = Request.Form["estado"];
                 Int32 idTramites = int.Parse(Request.Form["idTramites"]);
-
-                IFormFileCollection files = Request.Form.Files;
+                bool notificacidi = false; 
+                if (!string.IsNullOrEmpty(Request.Form["notificacioncidi"]))
+                {
+                    Boolean.TryParse(Request.Form["notificacioncidi"], out notificacidi);
+                }
                 dynamic respuestaTramite =
                     JsonConvert.DeserializeObject<dynamic>((string)form);
+
                 var cod_usuario = Request.Form["cod_usuario"];
+                IFormFileCollection files = Request.Form.Files;
                 string str = "";
                 if (respuestaTramite != null)
                 {
@@ -551,12 +565,39 @@ namespace MOTOR_WORKFLOW.Controllers
                             id_oficina = objPaso.id_oficina,
                             cod_usuario = int.Parse((string)cod_usuario)
                         });
+                        if (notificacidi is true)
+                        {
+
+                            string cuit = ""; // falta sacar el cuit de respuestaTramite
+                            //string cuit = respuestaTramite.idTramite.ToString();
+                            string hash = "";
+                            var req = Request.Headers;
+                            string cuerpoNotif = " <p> NOTIFICAR SIGUIENTE PASO DEL PROCESO- MUNICIPALIDAD DE VILLA ALLENDE </p>";
+                            
+                            cuit = "20355767966";  // HARDCODEO SI CUIT 
+                             hash = sessionHash.ToString();
+                            Email objEmail = new Email();
+                            objEmail.HashCookie = hash;
+                            objEmail.Cuil = cuit;// "20355767966";
+                            objEmail.Asunto = "Notificacion - Municipalidad Villa Allende";
+                            objEmail.Mensaje = cuerpoNotif;
+                            objEmail.Firma = "Dirección de Sistemas";
+                            objEmail.Ente = "Municipalidad de Villa Allende";
+                            objEmail.Id_App = Config.CiDiIdAplicacion;
+                            objEmail.Pass_App = Config.CiDiPassAplicacion;
+                            objEmail.TimeStamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                            objEmail.TokenValue = Config.ObtenerToken_SHA512(objEmail.TimeStamp);
+
+                            var respuesta = _ComunicacionesService.enviarNotificacionCUIT(cuit, objEmail);
+
+                }
                     }
                 }
                 return "";
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex);
                 return null;
             }
         }
