@@ -112,3 +112,10 @@ EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/unix/lib/net6.0/Syste
 EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/win/lib/net6.0/System.Data.SqlClient.dll
 EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/win-arm64/native/sni.dll
 SIIMVA_WEB/Properties/PublishProfiles/FolderProfile.pubxml.user
+MWF_Api.sln
+SIIMVA_WEB/.vs/MOTOR_WORKFLOW/v15/.suo
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.dll
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.exe
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.staticwebassets.endpoints.json
+SIIMVA_WEB/Properties/launchSettings.json
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.pdb
