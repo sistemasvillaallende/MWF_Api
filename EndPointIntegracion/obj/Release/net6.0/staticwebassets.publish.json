@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "VEVtglkwfoKSx83Ft9RAgR1tNQU+UATzAMpV18xT+1E=",
+  "Hash": "X8mAm+svQHN8mAU/ua0rNaETtjSdpM51sHLW/KQ6kdM=",
   "Source": "EndPointIntegracion",
   "BasePath": "_content/EndPointIntegracion",
   "Mode": "Default",
   "ManifestType": "Publish",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
