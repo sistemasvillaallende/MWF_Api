@@ -1,0 +1,17 @@
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\EndPointIntegracion.exe
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\EndPointIntegracion.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\EndPointIntegracion.deps.json
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\EndPointIntegracion.runtimeconfig.json
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\EndPointIntegracion.pdb
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\System.Data.SqlClient.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm64\native\sni.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\runtimes\win-x64\native\sni.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\runtimes\win-x86\native\sni.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\net6.0\System.Data.SqlClient.dll
+C:\DEV\Muni2025\MWF\MWF_Api\EndPointIntegracion\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Data.SqlClient.dll

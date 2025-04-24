@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "knVwlan/6LXQL1ZkWDOuhne5kXtOHImoTfTVLlCCKrY=",
+  "Hash": "7hBReac0pwVkUqKNvBtHOImy1AunO5IwRzw81gkS6oo=",
   "Source": "MOTOR_WORKFLOW",
   "BasePath": "_content/MOTOR_WORKFLOW",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
