@@ -1,0 +1,110 @@
+[
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.ColegiosController",
+    "Method": "read",
+    "RelativePath": "Colegios/read",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.RubrosController",
+    "Method": "getByComercio",
+    "RelativePath": "Rubros/getByComercio",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "leg",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.RubrosController",
+    "Method": "getByPk",
+    "RelativePath": "Rubros/getByPk",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cod_rubro",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "anio",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.RubrosController",
+    "Method": "read",
+    "RelativePath": "Rubros/read",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.RubrosController",
+    "Method": "readBajoRiesgo",
+    "RelativePath": "Rubros/readBajoRiesgo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.TipoEntidadController",
+    "Method": "Tipos_entidad",
+    "RelativePath": "TipoEntidad/Tipos_entidad",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.UtilsController",
+    "Method": "read",
+    "RelativePath": "Utils/read",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EndPointIntegracion.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[EndPointIntegracion.WeatherForecast, EndPointIntegracion, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]
