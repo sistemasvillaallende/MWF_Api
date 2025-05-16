@@ -18,12 +18,13 @@ namespace MOTOR_WORKFLOW.Entities
         public int orden { get; set; }
 
         public bool activo { get; set; }
-
+        public string subtitulo { get; set; }
         public ingreso_paso_model()
         {
             this.id = 0;
             this.id_paso = 0;
             this.titulo = string.Empty;
+            this.subtitulo = string.Empty;
             this.orden = 0;
             this.activo = false;
         }

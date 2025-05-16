@@ -18,6 +18,7 @@
         public int COL { get; set; }
         public int ROW { get; set; }
         public string NOMBRE_INGRESO_PASO { get; set; }
+        public bool notificacidi { get; set; }
         public PasoModel()
         {
             ID_PASO = 0;
@@ -36,6 +37,7 @@
             COL = 0;
             ROW = 0;
             NOMBRE_INGRESO_PASO = string.Empty;
+            notificacidi = false;   
         }
     }
 }

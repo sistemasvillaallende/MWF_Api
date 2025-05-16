@@ -380,7 +380,8 @@ namespace MOTOR_WORKFLOW.Entities
             {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine("UPDATE  ingresos_x_paso SET");
-                stringBuilder.AppendLine("titulo=@titulo");
+                stringBuilder.AppendLine("titulo=@titulo,");
+                stringBuilder.AppendLine("subtitulo=@subtitulo");
                 stringBuilder.AppendLine("WHERE");
                 stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -390,6 +391,7 @@ namespace MOTOR_WORKFLOW.Entities
                     command.CommandText = stringBuilder.ToString();
                     command.Parameters.AddWithValue("@id", obj.id);
                     command.Parameters.AddWithValue("@titulo", obj.titulo);
+                    command.Parameters.AddWithValue("@subtitulo", obj.subtitulo);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }

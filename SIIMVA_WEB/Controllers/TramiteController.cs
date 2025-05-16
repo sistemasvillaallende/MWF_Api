@@ -35,7 +35,12 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
-
+        [HttpGet]
+        public IActionResult VerificaConsistencia(int ID)
+        {
+            string error = this._TramiteService.VerificaConsistencia(ID);
+            return Ok(error);
+        }
         [HttpGet]
         public IActionResult read()
         {
@@ -118,7 +123,7 @@ namespace MOTOR_WORKFLOW.Controllers
         }
 
         [HttpPost]
-        public IActionResult activaDesactiva(Models.TramiteInsert obj)
+        public IActionResult activaDesactiva(Models.TramiteActivar obj)
         {
             try
             {

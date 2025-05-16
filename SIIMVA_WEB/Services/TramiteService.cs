@@ -13,6 +13,17 @@ namespace MOTOR_WORKFLOW.Services
 {
     public class TramiteService : ITramiteService
     {
+        public string VerificaConsistencia(int idTramite)
+        {
+            try
+            {
+                return Entities.Tramite.VerificaConsistencia(idTramite);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public string getImgOficina(int ID)
         {
             try
@@ -96,7 +107,7 @@ namespace MOTOR_WORKFLOW.Services
             }
         }
 
-        public void activaDesactiva(Models.TramiteInsert obj)
+        public void activaDesactiva(Models.TramiteActivar obj)
         {
             try
             {

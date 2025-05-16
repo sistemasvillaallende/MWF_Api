@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "62jsw6KwD/dsuvQLN6Uudj2zkbKUKVj7wd7JslQCnWo=",
+  "Hash": "xj/i9YP0qDhQUM0u6qwmve3expvyyFpQOAEel89YxFg=",
   "Source": "MOTOR_WORKFLOW",
   "BasePath": "_content/MOTOR_WORKFLOW",
   "Mode": "Default",
   "ManifestType": "Publish",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

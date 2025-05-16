@@ -57,6 +57,7 @@ namespace MOTOR_WORKFLOW.Entities
         public int orden { get; set; }
         public int proxima_oficina { get; set; }
         public int proximo_paso_ne_vecino { get; set; }
+        public string nombre_oficina { get; set; }
         public ResultadoTramites()
         {
             this.id_paso = 0;
@@ -84,6 +85,7 @@ namespace MOTOR_WORKFLOW.Entities
             this.es_final = false;
             orden = 0;
             proxima_oficina = 0;
+            nombre_oficina = string.Empty;
         }
     }
 }
