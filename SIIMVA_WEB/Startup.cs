@@ -13,10 +13,12 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
+using MOTOR_WORKFLOW.Controllers.Controllers;
 using MOTOR_WORKFLOW.Services;
 using MOTOR_WORKFLOW.Services.CIDI;
 using MOTOR_WORKFLOW.Services.JWT;
 using MOTOR_WORKFLOW.Services.LOGIN;
+
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 
@@ -98,6 +100,7 @@ namespace MOTOR_WORKFLOW
             services.AddScoped<ICtasCtesInmServices, CtasCtesServices>();
             services.AddScoped<IVecinoDigitalServices, VecinoDigitalServices>();
             services.AddScoped<IComunicacionesService, ComunicacionesService>();
+            services.AddScoped<IContenido_ingreso_paso_particularService, Contenido_ingreso_paso_particularService>();
             services.AddScoped<JwtTokenService>();
 
             services.AddCors();

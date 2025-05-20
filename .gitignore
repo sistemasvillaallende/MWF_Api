@@ -1,6 +1,17 @@
 
 /.vs/MOTOR_WORKFLOW
 /.vs
+<<<<<<< HEAD
+EndPointIntegracion/bin/Release/net6.0/publish/System.Data.SqlClient.dll
+EndPointIntegracion/bin/Release/net6.0/publish/runtimes/unix/lib/net6.0/System.Data.SqlClient.dll
+EndPointIntegracion/bin/Release/net6.0/publish/runtimes/win/lib/net6.0/System.Data.SqlClient.dll
+EndPointIntegracion/bin/Release/net6.0/publish/runtimes/win-arm64/native/sni.dll
+EndPointIntegracion/bin/Release/net6.0/publish/runtimes/win-x64/native/sni.dll
+EndPointIntegracion/bin/Release/net6.0/publish/runtimes/win-x86/native/sni.dll
+EndPointIntegracion/bin/Release/net6.0/runtimes/unix/lib/net6.0/System.Data.SqlClient.dll
+EndPointIntegracion/bin/Release/net6.0/runtimes/win/lib/net6.0/System.Data.SqlClient.dll
+EndPointIntegracion/bin/Release/net6.0/runtimes/win-arm64/native/sni.dll
+=======
 .vs/MOTOR_WORKFLOW/DesignTimeBuild/.dtbcache.v2
 .vs/MOTOR_WORKFLOW/DesignTimeBuild/.dtbcache.v2
 .vs/MOTOR_WORKFLOW/v17/.suo
@@ -33,6 +44,7 @@ SIIMVA_WEB/bin/Release/net6.0/MOTOR_WORKFLOW.dll
 SIIMVA_WEB/bin/Release/net6.0/publish/Microsoft.OpenApi.dll
 SIIMVA_WEB/bin/Release/net6.0/publish/MOTOR_WORKFLOW.dll
 SIIMVA_WEB/bin/Release/net6.0/publish/MOTOR_WORKFLOW.exe
+>>>>>>> main
 EndPointIntegracion/EndPointIntegracion.csproj.user
 EndPointIntegracion/bin/Debug/net6.0/EndPointIntegracion.dll
 EndPointIntegracion/bin/Debug/net6.0/EndPointIntegracion.exe
@@ -62,6 +74,10 @@ EndPointIntegracion/bin/Release/net6.0/publish/Microsoft.OpenApi.dll
 EndPointIntegracion/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.Swagger.dll
 EndPointIntegracion/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.SwaggerGen.dll
 EndPointIntegracion/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.SwaggerUI.dll
+<<<<<<< HEAD
+EndPointIntegracion/bin/Release/net6.0/runtimes/win-x64/native/sni.dll
+EndPointIntegracion/bin/Release/net6.0/runtimes/win-x86/native/sni.dll
+=======
 EndPointIntegracion/bin/Release/net6.0/publish/System.Data.SqlClient.dll
 EndPointIntegracion/bin/Release/net6.0/publish/runtimes/unix/lib/net6.0/System.Data.SqlClient.dll
 EndPointIntegracion/bin/Release/net6.0/publish/runtimes/win/lib/net6.0/System.Data.SqlClient.dll
@@ -76,12 +92,16 @@ EndPointIntegracion/bin/Release/net6.0/runtimes/win-x86/native/sni.dll
 EndPointIntegracion/obj/EndPointIntegracion.csproj.nuget.dgspec.json
 EndPointIntegracion/obj/EndPointIntegracion.csproj.nuget.g.props
 EndPointIntegracion/obj/project.assets.json
+>>>>>>> main
 EndPointIntegracion/obj/project.nuget.cache
 EndPointIntegracion/obj/Debug/net6.0/apphost.exe
 EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.AssemblyInfo.cs
 EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.AssemblyInfoInputs.cache
 EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.assets.cache
+<<<<<<< HEAD
+=======
 EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.csproj.AssemblyReference.cache
+>>>>>>> main
 EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.csproj.CoreCompileInputs.cache
 EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.dll
 EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.GeneratedMSBuildEditorConfig.editorconfig
@@ -111,6 +131,75 @@ EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/System.Data.SqlClient.dll
 EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/unix/lib/net6.0/System.Data.SqlClient.dll
 EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/win/lib/net6.0/System.Data.SqlClient.dll
 EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/win-arm64/native/sni.dll
+<<<<<<< HEAD
+EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/win-x64/native/sni.dll
+EndPointIntegracion/obj/Release/net6.0/PubTmp/Out/runtimes/win-x86/native/sni.dll
+EndPointIntegracion/obj/Release/net6.0/ref/EndPointIntegracion.dll
+EndPointIntegracion/obj/Release/net6.0/refint/EndPointIntegracion.dll
+EndPointIntegracion/Properties/PublishProfiles/FolderProfile.pubxml.user
+SIIMVA_WEB/bin/Release/net6.0/MOTOR_WORKFLOW.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/Microsoft.OpenApi.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/MOTOR_WORKFLOW.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/MOTOR_WORKFLOW.exe
+SIIMVA_WEB/bin/Release/net6.0/publish/MOTOR_WORKFLOW.pdb
+SIIMVA_WEB/bin/Release/net6.0/publish/Newtonsoft.Json.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/RestSharp.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.Swagger.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.SwaggerGen.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.SwaggerUI.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/System.Data.SqlClient.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/runtimes/win-arm64/native/sni.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/runtimes/win-x64/native/sni.dll
+SIIMVA_WEB/bin/Release/net6.0/publish/runtimes/win-x86/native/sni.dll
+SIIMVA_WEB/obj/Debug/net6.0/MOTOR_WORKFLOW.AssemblyInfo.cs
+SIIMVA_WEB/obj/Debug/net6.0/MOTOR_WORKFLOW.AssemblyInfoInputs.cache
+SIIMVA_WEB/obj/Debug/net6.0/MOTOR_WORKFLOW.assets.cache
+SIIMVA_WEB/obj/Debug/net6.0/MOTOR_WORKFLOW.GeneratedMSBuildEditorConfig.editorconfig
+SIIMVA_WEB/obj/Debug/net6.0/staticwebassets.removed.txt
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/Microsoft.OpenApi.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/MOTOR_WORKFLOW.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/MOTOR_WORKFLOW.exe
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/MOTOR_WORKFLOW.pdb
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/Newtonsoft.Json.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/RestSharp.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/Swashbuckle.AspNetCore.Swagger.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/Swashbuckle.AspNetCore.SwaggerGen.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/Swashbuckle.AspNetCore.SwaggerUI.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/System.Data.SqlClient.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/runtimes/win-arm64/native/sni.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/runtimes/win-x64/native/sni.dll
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/runtimes/win-x86/native/sni.dll
+SIIMVA_WEB/Properties/PublishProfiles/FolderProfile.pubxml.user
+SIIMVA_WEB/obj/Debug/net6.0/MOTOR_WORKFLOW.csproj.AssemblyReference.cache
+SIIMVA_WEB/obj/MOTOR_WORKFLOW.csproj.nuget.dgspec.json
+SIIMVA_WEB/obj/MOTOR_WORKFLOW.csproj.nuget.g.props
+SIIMVA_WEB/obj/project.assets.json
+SIIMVA_WEB/obj/project.nuget.cache
+EndPointIntegracion/obj/Debug/net6.0/EndPointIntegracion.csproj.AssemblyReference.cache
+SIIMVA_WEB/.vs/MOTOR_WORKFLOW/v15/.suo
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.staticwebassets.endpoints.json
+SIIMVA_WEB/obj/Debug/net6.0/ApiEndpoints.json
+SIIMVA_WEB/obj/Debug/net6.0/staticwebassets.build.endpoints.json
+SIIMVA_WEB/obj/Debug/net6.0/staticwebassets.references.upToDateCheck.txt
+SIIMVA_WEB/obj/Debug/net6.0/EndpointInfo/MOTOR_WORKFLOW.json
+SIIMVA_WEB/obj/Debug/net6.0/EndpointInfo/MOTOR_WORKFLOW.OpenApiFiles.cache
+SIIMVA_WEB/obj/Release/net6.0/ApiEndpoints.json
+SIIMVA_WEB/obj/Release/net6.0/PublishOutputs.30d1d6365c.txt
+SIIMVA_WEB/obj/Release/net6.0/staticwebassets.build.endpoints.json
+SIIMVA_WEB/obj/Release/net6.0/staticwebassets.publish.endpoints.json
+SIIMVA_WEB/obj/Release/net6.0/staticwebassets.references.upToDateCheck.txt
+SIIMVA_WEB/obj/Release/net6.0/staticwebassets.removed.txt
+SIIMVA_WEB/obj/Release/net6.0/EndpointInfo/MOTOR_WORKFLOW.json
+SIIMVA_WEB/obj/Release/net6.0/EndpointInfo/MOTOR_WORKFLOW.OpenApiFiles.cache
+SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/MOTOR_WORKFLOW.staticwebassets.endpoints.json
+MWF_Api.sln
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.dll
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.exe
+=======
 SIIMVA_WEB/Properties/PublishProfiles/FolderProfile.pubxml.user
 MWF_Api.sln
 SIIMVA_WEB/.vs/MOTOR_WORKFLOW/v15/.suo
@@ -147,3 +236,4 @@ EndPointIntegracion/bin/Release/net6.0/publish/publish.rar
 SIIMVA_WEB/obj/Release/net6.0/staticwebassets/msbuild.build.MOTOR_WORKFLOW.props
 /SIIMVA_WEB/obj/Release
 SIIMVA_WEB/obj/Release/net6.0/refint/MOTOR_WORKFLOW.dll
+>>>>>>> main
