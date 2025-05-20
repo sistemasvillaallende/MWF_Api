@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc; 
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Models;
@@ -34,7 +35,7 @@ namespace MOTOR_WORKFLOW.Controllers
             this._AdjuntoService = adjuntoService;
             this._FormularioService = formularioService;
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult getByPk(int ID)
         {
@@ -44,7 +45,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult read(int id_ingreso_paso)
         {
@@ -54,13 +55,13 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(contenidoIngresoPasoList);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult maxRow(int id_ingreso_paso)
         {
             return (IActionResult)this.Ok(this._Contenido_ingreso_pasoService.maxRow(id_ingreso_paso));
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult insertDDJJ(ddjj obj)
         {
@@ -74,7 +75,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult updateDDJJ(ddjj obj)
         {
@@ -88,6 +89,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult deleteDDJJ(string id)
         {
@@ -101,6 +103,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult insertAdjunto(AdjuntoModel obj)
         {
@@ -114,6 +117,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult updateAdjunto(AdjuntoModel obj)
         {
@@ -127,6 +131,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult deleteAdjunto(string id)
         {
@@ -140,6 +145,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult insertFormulario(FormularioModel obj)
         {
@@ -153,6 +159,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult updateFormlario(FormularioModel obj)
         {
@@ -166,6 +173,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult deleteFormulario(string id)
         {
@@ -179,6 +187,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult insert(contenido_ingreso_paso_model obj)
         {
@@ -193,7 +202,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult update(contenido_ingreso_paso obj)
         {
@@ -207,7 +216,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult delete(int id, int row)
         {

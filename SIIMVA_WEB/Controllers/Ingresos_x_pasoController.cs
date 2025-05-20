@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
@@ -23,6 +24,7 @@ namespace MOTOR_WORKFLOW.Controllers
         {
             this._Ingresos_x_pasoService = Ingresos_x_pasoService;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult getByPk(int ID)
         {
@@ -32,6 +34,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult read(int idPaso)
         {
@@ -41,6 +44,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(ingresosXPasoList);
         }
+        [Authorize]
         [HttpPost]
         public IActionResult insert(ingreso_paso_model obj)
         {
@@ -54,6 +58,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult update(ingreso_paso_model obj)
         {
@@ -67,6 +72,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult insertValidaForm(int id_paso)
         {
@@ -80,6 +86,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult insertValidaPersona(int id_paso)
         {
@@ -93,6 +100,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult insertMultiNota(int id_paso)
         {
@@ -106,6 +114,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult delete(string id_paso)
         {

@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -36,8 +37,8 @@ namespace MOTOR_WORKFLOW.Controllers
     {
       this._logger = logger;
     }
-
-    [HttpGet(Name = "GetWeatherForecast")]
+        [Authorize]
+        [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
       return (IEnumerable<WeatherForecast>) Enumerable.Range(1, 5).Select<int, WeatherForecast>((Func<int, WeatherForecast>) (index => new WeatherForecast()

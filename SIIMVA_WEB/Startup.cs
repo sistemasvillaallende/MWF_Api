@@ -3,7 +3,7 @@
 // Assembly: MOTOR_WORKFLOW, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using MOTOR_WORKFLOW.Services;
 using MOTOR_WORKFLOW.Services.CIDI;
+using MOTOR_WORKFLOW.Services.JWT;
 using MOTOR_WORKFLOW.Services.LOGIN;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
@@ -30,6 +31,35 @@ namespace MOTOR_WORKFLOW
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = "TuIssuer",
+                ValidAudience = "TuAudience",
+                IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                    System.Text.Encoding.UTF8.GetBytes("your-very-long-secret-key-that-is-at-least-32-characters"))
+            };
+            options.Events = new JwtBearerEvents
+            {
+                OnAuthenticationFailed = context =>
+                {
+                    Console.WriteLine("❌ Error de autenticación: " + context.Exception.Message);
+                    return Task.CompletedTask;
+                },
+                OnTokenValidated = context =>
+                {
+                    Console.WriteLine("✅ Token validado correctamente para: " + context.Principal.Identity.Name);
+                    return Task.CompletedTask;
+                }
+            };
+
+        });
             services.Configure<FormOptions>(options =>
             {
                 options.MultipartBodyLengthLimit = 104857600; // 100 MB, ajusta este valor según tus necesidades
@@ -68,6 +98,7 @@ namespace MOTOR_WORKFLOW
             services.AddScoped<ICtasCtesInmServices, CtasCtesServices>();
             services.AddScoped<IVecinoDigitalServices, VecinoDigitalServices>();
             services.AddScoped<IComunicacionesService, ComunicacionesService>();
+            services.AddScoped<JwtTokenService>();
 
             services.AddCors();
         }
@@ -78,6 +109,8 @@ namespace MOTOR_WORKFLOW
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseStaticFiles();
+            app.UseAuthentication();  
+            app.UseAuthorization();  
             app.UseStaticFiles(new StaticFileOptions()
             {
                 OnPrepareResponse = (Action<StaticFileResponseContext>)(ctx => ctx.Context.Response.Headers.Add("X-Copyright", (string)"Copyright 2016 - JMA"))

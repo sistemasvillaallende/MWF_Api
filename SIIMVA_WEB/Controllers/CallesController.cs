@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
@@ -19,7 +20,7 @@ namespace MOTOR_WORKFLOW.Controllers
     private ICallesService _CallesService;
 
     public CallesController(ICallesService CallesService) => this._CallesService = CallesService;
-
+        [Authorize]
     [HttpGet]
     public IActionResult getByPk(int COD_CALLE)
     {
@@ -29,8 +30,8 @@ namespace MOTOR_WORKFLOW.Controllers
         message = "Error al obtener los datos"
       }) : (IActionResult) this.Ok( byPk);
     }
-
-    [HttpGet]
+        [Authorize]
+        [HttpGet]
     public IActionResult read()
     {
       List<Combo> comboList = this._CallesService.read();

@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
@@ -25,7 +26,7 @@ namespace MOTOR_WORKFLOW.Controllers
             this._TramiteService = TramiteService;
             _webHostEnvironment = webHostEnvironment;
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult getByPk(int ID)
         {
@@ -35,12 +36,14 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult VerificaConsistencia(int ID)
         {
             string error = this._TramiteService.VerificaConsistencia(ID);
             return Ok(error);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult read()
         {
@@ -50,7 +53,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(tramiteList);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult readBack()
         {
@@ -60,7 +63,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(tramiteList);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult IniciaTramite(int ID)
         {
@@ -70,7 +73,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult getDatosIniciador(int ID)
         {
@@ -80,7 +83,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult insert(Models.TramiteInsert obj)
         {
@@ -94,6 +97,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult duplicar(Models.TramiteDuplicar obj)
         {
@@ -107,7 +111,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult update(Models.TramiteInsert obj)
         {
@@ -121,7 +125,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult activaDesactiva(Models.TramiteActivar obj)
         {
@@ -136,6 +140,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult delete(int id_tramite)
         {

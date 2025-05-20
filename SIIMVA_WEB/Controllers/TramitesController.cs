@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
@@ -32,7 +33,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult getByPkSimple(int id)
         {
@@ -42,7 +43,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPkSimple);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult getResultados(int id)
         {
@@ -52,7 +53,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(resultados);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult read(string cuit)
         {
@@ -62,7 +63,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(tramitesList);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult readAdministrador()
         {
@@ -72,7 +73,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(tramitesList);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult readOficinas(int id_oficina)
         {
@@ -82,6 +83,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(tramitesList);
         }
+        [Authorize]
         [HttpGet]
         public int valida(int id_tramite)
         {
@@ -95,6 +97,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
+        [Authorize]
         [HttpGet]
         public IActionResult recibir(
           int id_tramite,

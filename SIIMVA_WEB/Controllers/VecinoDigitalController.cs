@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
@@ -16,7 +17,7 @@ namespace MOTOR_WORKFLOW.Controllers
         {
             this._VecinoDigitalService = VecinoDigitalService;
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult getByPk(string cuit)
         {

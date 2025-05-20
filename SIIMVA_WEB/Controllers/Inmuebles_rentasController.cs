@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
 
@@ -12,6 +13,7 @@ namespace MOTOR_WORKFLOW.Controllers
         private IInmuebles_rentasServices _Inmuebles_rentasServices;
 
         public Inmuebles_rentasController(IInmuebles_rentasServices Inmuebles_rentasServices) => this._Inmuebles_rentasServices = Inmuebles_rentasServices;
+        [Authorize]
         [HttpGet]
         public IActionResult getByPk(double nro_cta)
         {
@@ -21,6 +23,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 message = "Error al obtener los datos"
             }) : (IActionResult)this.Ok(byPk);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult getByCoordenadas(decimal lat, decimal lng)
         {

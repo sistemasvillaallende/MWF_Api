@@ -3,7 +3,9 @@ using EndPointIntegracion;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
+using MOTOR_WORKFLOW.Services.JWT;
 using System.Data.SqlClient;
+using Newtonsoft.Json;
 
 
 namespace MOTOR_WORKFLOW.Controllers
@@ -13,10 +15,12 @@ namespace MOTOR_WORKFLOW.Controllers
     public class CIDIController : Controller
     {
         private ICIDIServices _CIDIServices;
+        private readonly JwtTokenService _jwtTokenService;
 
-        public CIDIController(ICIDIServices CIDIServices)
+        public CIDIController(ICIDIServices CIDIServices, JwtTokenService jwtTokenService)
         {
             this._CIDIServices = CIDIServices;
+            this._jwtTokenService = jwtTokenService;
         }
         [HttpGet]
         public IActionResult getByPk(string cuit, string hash)
@@ -32,12 +36,18 @@ namespace MOTOR_WORKFLOW.Controllers
             EjemploCiDi.Models.Usuario usuario = Config.LlamarWebAPI<Entrada,
                 EjemploCiDi.Models.Usuario>(APICuenta.Usuario.Obtener_Usuario, entrada);
 
-
-            return usuario.Respuesta.Resultado != Config.CiDi_OK ?
-                BadRequest(new
+            if (usuario.Respuesta.Resultado != Config.CiDi_OK)
+            {
+                return BadRequest(new
                 {
                     message = "Error al obtener los datos"
-                }) : Ok(usuario);
+                });
+            }
+            // Generar el JWT para el usuario
+            var token = _jwtTokenService.GenerateToken(usuario.CUIL);
+
+            // Retornar el usuario y el token JWT
+            return Ok(new { Usuario = usuario, Token = token });
 
 
         }

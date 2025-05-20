@@ -31,6 +31,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 #nullable enable
 namespace MOTOR_WORKFLOW.Controllers
@@ -56,6 +57,7 @@ namespace MOTOR_WORKFLOW.Controllers
             this._webHostEnvironment = webHostEnvironment;
             this._ComunicacionesService = comunicacionesService;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult GetProximoVecino(int idTramite, int idTramites)
         {
@@ -72,6 +74,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw;
             }
         }
+        [Authorize]
         [HttpPost]
         [RequestSizeLimit(104857600)] // 100 MB
         public string SavePaso2()
@@ -365,7 +368,7 @@ namespace MOTOR_WORKFLOW.Controllers
                 throw ex;
             }
         }
-
+        [Authorize]
         [HttpPost]
 
         public string SavePasoMunicipal2()

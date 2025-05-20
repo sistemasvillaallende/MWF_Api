@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
@@ -22,7 +23,8 @@ namespace MOTOR_WORKFLOW.Controllers
       this._AdjuntoService = AdjuntoService;
     }
 
-    [HttpGet]
+        [Authorize]
+        [HttpGet]
     public IActionResult getByPk(int ID)
     {
       Adjunto byPk = this._AdjuntoService.getByPk(ID);

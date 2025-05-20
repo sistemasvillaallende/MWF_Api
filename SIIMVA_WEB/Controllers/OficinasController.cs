@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
@@ -24,7 +25,7 @@ namespace MOTOR_WORKFLOW.Controllers
     {
       this._OficinaService = OficinaService;
     }
-
+    [Authorize]
     [HttpGet]
     public IActionResult read()
     {

@@ -4,6 +4,7 @@
 // MVID: 007B8F5F-49BB-4EE7-8464-22FD2F567A18
 // Assembly location: C:\Muni\DEV\WebApiMWF\MOTOR_WORKFLOW.dll
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Services;
@@ -23,6 +24,7 @@ namespace MOTOR_WORKFLOW.Controllers
       this._BarriosService = BarriosService;
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult getByPk()
     {
@@ -33,6 +35,7 @@ namespace MOTOR_WORKFLOW.Controllers
       }) : (IActionResult) this.Ok( comboList);
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult read()
     {

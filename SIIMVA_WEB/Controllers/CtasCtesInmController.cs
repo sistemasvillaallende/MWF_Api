@@ -3,6 +3,7 @@ using MOTOR_WORKFLOW.Services;
 using System.Text.RegularExpressions;
 using MOTOR_WORKFLOW.Entities;
 using MOTOR_WORKFLOW.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MOTOR_WORKFLOW.Controllers
 {
@@ -14,6 +15,7 @@ namespace MOTOR_WORKFLOW.Controllers
 
         public CtasCtesInmController(ICtasCtesInmServices CtasCtesInmService) => this._Ctasctes_inmueblesServices = CtasCtesInmService;
 
+        [Authorize]
         [HttpPost]
         public IActionResult NuevaDeuda(CtasCtes_Con_Auditoria obj, string estado)
         {
