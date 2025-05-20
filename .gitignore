@@ -140,3 +140,5 @@ SIIMVA_WEB/obj/Release/net6.0/EndpointInfo/MOTOR_WORKFLOW.json
 SIIMVA_WEB/obj/Release/net6.0/EndpointInfo/MOTOR_WORKFLOW.OpenApiFiles.cache
 SIIMVA_WEB/obj/Release/net6.0/PubTmp/Out/MOTOR_WORKFLOW.staticwebassets.endpoints.json
 MWF_Api.sln
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.dll
+SIIMVA_WEB/bin/Debug/net6.0/MOTOR_WORKFLOW.exe
