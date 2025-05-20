@@ -22,6 +22,10 @@ namespace MOTOR_WORKFLOW.Entities
         public string extenciones_aceptadas { get; set; }
 
         public bool multiple { get; set; }
+        public bool rechazado { get; set; }
+        public string observaciones { get; set; }
+        public int id_adjunto { get; set; } 
+
 
         public Adjuntos()
         {
@@ -32,6 +36,9 @@ namespace MOTOR_WORKFLOW.Entities
             this.archivo = string.Empty;
             this.extenciones_aceptadas = string.Empty;
             this.multiple = false;
+            rechazado = false;
+            observaciones = string.Empty;
+            id_adjunto = 0;
         }
 
         private static List<Adjuntos> mapeo(SqlDataReader dr)
@@ -39,30 +46,41 @@ namespace MOTOR_WORKFLOW.Entities
             List<Adjuntos> adjuntosList = new List<Adjuntos>();
             if (dr.HasRows)
             {
-                int ordinal1 = dr.GetOrdinal("id");
-                int ordinal2 = dr.GetOrdinal("nombre");
-                int ordinal3 = dr.GetOrdinal("id_pasos");
-                int ordinal4 = dr.GetOrdinal("orden");
-                int ordinal5 = dr.GetOrdinal("archivo");
-                int ordinal6 = dr.GetOrdinal("extenciones_aceptadas");
-                int ordinal7 = dr.GetOrdinal("multiple");
+                int id = dr.GetOrdinal("id");
+                int nombre = dr.GetOrdinal("nombre");
+                int id_pasos = dr.GetOrdinal("id_pasos");
+                int orden = dr.GetOrdinal("orden");
+                int archivo = dr.GetOrdinal("archivo");
+                int extenciones_aceptadas = dr.GetOrdinal("extenciones_aceptadas");
+                int multiple = dr.GetOrdinal("multiple");
+
+                int rechazado = dr.GetOrdinal("rechazado");
+                int observaciones = dr.GetOrdinal("observaciones");
+                int id_adjunto = dr.GetOrdinal("id_adjunto");
+
                 while (dr.Read())
                 {
                     Adjuntos adjuntos = new Adjuntos();
-                    if (!dr.IsDBNull(ordinal1))
-                        adjuntos.id = dr.GetInt32(ordinal1);
-                    if (!dr.IsDBNull(ordinal2))
-                        adjuntos.nombre = dr.GetString(ordinal2);
-                    if (!dr.IsDBNull(ordinal3))
-                        adjuntos.id_pasos = dr.GetInt32(ordinal3);
-                    if (!dr.IsDBNull(ordinal4))
-                        adjuntos.orden = dr.GetInt32(ordinal4);
-                    if (!dr.IsDBNull(ordinal5))
-                        adjuntos.archivo = dr.GetString(ordinal5);
-                    if (!dr.IsDBNull(ordinal6))
-                        adjuntos.extenciones_aceptadas = dr.GetString(ordinal6);
-                    if (!dr.IsDBNull(ordinal7))
-                        adjuntos.multiple = dr.GetBoolean(ordinal7);
+                    if (!dr.IsDBNull(id))
+                        adjuntos.id = dr.GetInt32(id);
+                    if (!dr.IsDBNull(nombre))
+                        adjuntos.nombre = dr.GetString(nombre);
+                    if (!dr.IsDBNull(id_pasos))
+                        adjuntos.id_pasos = dr.GetInt32(id_pasos);
+                    if (!dr.IsDBNull(orden))
+                        adjuntos.orden = dr.GetInt32(orden);
+                    if (!dr.IsDBNull(archivo))
+                        adjuntos.archivo = dr.GetString(archivo);
+                    if (!dr.IsDBNull(extenciones_aceptadas))
+                        adjuntos.extenciones_aceptadas = dr.GetString(extenciones_aceptadas);
+                    if (!dr.IsDBNull(multiple))
+                        adjuntos.multiple = dr.GetBoolean(multiple);
+                    if (!dr.IsDBNull(rechazado))
+                        adjuntos.rechazado = dr.GetBoolean(rechazado);
+                    if (!dr.IsDBNull(observaciones))
+                        adjuntos.observaciones = dr.GetString(observaciones);
+                    if (!dr.IsDBNull(id_adjunto))
+                        adjuntos.id_adjunto = dr.GetInt32(id_adjunto);
                     adjuntosList.Add(adjuntos);
                 }
             }
@@ -155,6 +173,9 @@ namespace MOTOR_WORKFLOW.Entities
                 stringBuilder.AppendLine(", archivo");
                 stringBuilder.AppendLine(", extenciones_aceptadas");
                 stringBuilder.AppendLine(", multiple");
+                stringBuilder.AppendLine(", rechazado");
+                stringBuilder.AppendLine(", observaciones");
+                stringBuilder.AppendLine(", id_adjunto");
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("VALUES");
                 stringBuilder.AppendLine("(");
@@ -164,6 +185,9 @@ namespace MOTOR_WORKFLOW.Entities
                 stringBuilder.AppendLine(", @archivo");
                 stringBuilder.AppendLine(", @extenciones_aceptadas");
                 stringBuilder.AppendLine(", @multiple");
+                stringBuilder.AppendLine(", @rechazado");
+                stringBuilder.AppendLine(", @observaciones");
+                stringBuilder.AppendLine(", @id_adjunto");
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -177,6 +201,9 @@ namespace MOTOR_WORKFLOW.Entities
                     command.Parameters.AddWithValue("@archivo", obj.archivo);
                     command.Parameters.AddWithValue("@extenciones_aceptadas", obj.extenciones_aceptadas);
                     command.Parameters.AddWithValue("@multiple", obj.multiple);
+                    command.Parameters.AddWithValue("@rechazado", false);
+                    command.Parameters.AddWithValue("@observaciones", "");
+                    command.Parameters.AddWithValue("@id_adjunto", obj.id_adjunto);
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -243,7 +270,33 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
-
+        public static void RechazaArchivo(int id, string obs)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("UPDATE  Adjuntos SET");
+                stringBuilder.AppendLine("rechazado=@rechazado");
+                stringBuilder.AppendLine("observaciones=@observaciones");
+                stringBuilder.AppendLine("WHERE");
+                stringBuilder.AppendLine("id=@id");
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = stringBuilder.ToString();
+                    command.Parameters.AddWithValue("@rechazado", 1);
+                    command.Parameters.AddWithValue("@observaciones", obs);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void delete(Adjuntos obj)
         {
             try

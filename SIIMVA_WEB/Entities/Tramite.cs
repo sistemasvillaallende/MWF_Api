@@ -439,11 +439,11 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", obj.nombre);
-                    command.Parameters.AddWithValue("@usu_crea", obj.usu_crea);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre.Trim());
+                    command.Parameters.AddWithValue("@usu_crea", obj.usu_crea.Trim());
                     command.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
-                    command.Parameters.AddWithValue("@logo_unidad_administrativa", obj.logo_unidad_administrativa);
-                    command.Parameters.AddWithValue("@nombre_unidad_organizativa", obj.nombre_unidad_organizativa);
+                    command.Parameters.AddWithValue("@logo_unidad_administrativa", obj.logo_unidad_administrativa.Trim());
+                    command.Parameters.AddWithValue("@nombre_unidad_organizativa", obj.nombre_unidad_organizativa.Trim());
 
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
@@ -496,12 +496,12 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@nombre", obj.nombre);
-                    command.Parameters.AddWithValue("@usu_modifica", obj.usu_crea);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre.Trim());
+                    command.Parameters.AddWithValue("@usu_modifica", obj.usu_crea.Trim());
                     command.Parameters.AddWithValue("@id", obj.id);
                     command.Parameters.AddWithValue("@id_unidad_organizativa", obj.id_unidad_organizativa);
-                    command.Parameters.AddWithValue("@logo_unidad_administrativa", obj.logo_unidad_administrativa);
-                    command.Parameters.AddWithValue("@nombre_unidad_organizativa", obj.nombre_unidad_organizativa);
+                    command.Parameters.AddWithValue("@logo_unidad_administrativa", obj.logo_unidad_administrativa.Trim());
+                    command.Parameters.AddWithValue("@nombre_unidad_organizativa", obj.nombre_unidad_organizativa.Trim());
 
                     command.Connection.Open();
                     command.ExecuteNonQuery();
@@ -541,7 +541,7 @@ namespace MOTOR_WORKFLOW.Entities
         }
 
 
-        public static void activaDesactiva(Models.TramiteInsert obj)
+        public static void activaDesactiva(Models.TramiteActivar obj)
         {
             try
             {
@@ -555,8 +555,8 @@ namespace MOTOR_WORKFLOW.Entities
                     SqlCommand command = connection.CreateCommand();
                     command.CommandType = CommandType.Text;
                     command.CommandText = stringBuilder.ToString();
-                    command.Parameters.AddWithValue("@activo", obj.activo);
-                    command.Parameters.AddWithValue("@id", obj.id);
+                    command.Parameters.AddWithValue("@activo", obj.activaDesactiva);
+                    command.Parameters.AddWithValue("@id", obj.ID_TRAMITE);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -566,7 +566,35 @@ namespace MOTOR_WORKFLOW.Entities
                 throw ex;
             }
         }
+        public static string VerificaConsistencia(int idTramite)
+        {
+            try
+            {
+                string error = string.Empty;    
+                using (SqlConnection connection = DALBase.GetConnection())
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "VALIDA_INTEGRIDAD_TRAMITE";
+                    command.Parameters.AddWithValue("@ID_TRAMITE", idTramite);
+                    // Parámetro de salida
+                    SqlParameter errorParam = new SqlParameter("@ERROR", SqlDbType.VarChar, 500);
+                    errorParam.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(errorParam);
+                    connection.Open();
+                    // Ejecutar
+                    command.ExecuteNonQuery();
 
+                    // Recuperar valor del parámetro de salida
+                    error = errorParam.Value?.ToString();
+                }
+                return error;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void delete(int id_tramite)
         {
             try

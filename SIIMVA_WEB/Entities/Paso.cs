@@ -95,6 +95,7 @@ namespace MOTOR_WORKFLOW.Entities
                 int ordinal13 = dr.GetOrdinal("proxima_oficina_rechazo");
                 int ordinal14 = dr.GetOrdinal("nombre_proxima_oficina");
                 int ordinal15 = dr.GetOrdinal("nombre_unidad_organizativa");
+                int notificacidi = dr.GetOrdinal("notificacidi");
                 while (dr.Read())
                 {
                     Paso paso = new Paso();
@@ -128,6 +129,8 @@ namespace MOTOR_WORKFLOW.Entities
                         paso.nombre_proxima_oficina = dr.GetString(ordinal14);
                     if (!dr.IsDBNull(ordinal15))
                         paso.nombre_unidad_organizativa = dr.GetString(ordinal15);
+                    if (!dr.IsDBNull(notificacidi))
+                        paso.notificacidi = dr.GetBoolean(notificacidi);
                     pasoList.Add(paso);
                 }
             }
@@ -155,6 +158,7 @@ namespace MOTOR_WORKFLOW.Entities
                 int ordinal14 = dr.GetOrdinal("nombre_tramite");
                 int ordinal15 = dr.GetOrdinal("proxima_oficina");
                 int ordinal16 = dr.GetOrdinal("proxima_oficina_rechazo");
+                int notificacidi = dr.GetOrdinal("notificacidi");
                 while (dr.Read())
                 {
                     Paso paso = new Paso();
@@ -190,7 +194,10 @@ namespace MOTOR_WORKFLOW.Entities
                         paso.logo_unidad_administrativa = dr.GetString(ordinal13);
                     if (!dr.IsDBNull(ordinal14))
                         paso.nombre_tramite = dr.GetString(ordinal14);
+                    if (!dr.IsDBNull(notificacidi))
+                        paso.notificacidi = dr.GetBoolean(notificacidi);
                     paso.lstIngresos = ingresos_x_paso.read(paso.id);
+
                     pasoList.Add(paso);
                 }
             }
@@ -217,7 +224,7 @@ namespace MOTOR_WORKFLOW.Entities
                 int COL = dr.GetOrdinal("COL");
                 int ROW = dr.GetOrdinal("ROW");
                 int NOMBRE_INGRESO_PASO = dr.GetOrdinal("NOMBRE_INGRESO_PASO");
-
+                int notificacidi = dr.GetOrdinal("notificacidi");
                 while (dr.Read())
                 {
                     paso = new Models.PasoModel();
@@ -253,6 +260,8 @@ namespace MOTOR_WORKFLOW.Entities
                         paso.ROW = dr.GetInt32(ROW);
                     if (!dr.IsDBNull(NOMBRE_INGRESO_PASO))
                         paso.NOMBRE_INGRESO_PASO = dr.GetString(NOMBRE_INGRESO_PASO);
+                    if (!dr.IsDBNull(notificacidi))
+                        paso.notificacidi = dr.GetBoolean(notificacidi);
                 }
             }
             return paso;
@@ -399,7 +408,8 @@ namespace MOTOR_WORKFLOW.Entities
 	                        E.ID,
 	                        E.COL,
 	                        E.ROW,
-	                        B.TITULO AS NOMBRE_INGRESO_PASO
+	                        B.TITULO AS NOMBRE_INGRESO_PASO,
+                            A.notificacidi
                         FROM PASO A
 	                        FULL JOIN INGRESOS_X_PASO B ON B.ID_PASO = A.ID
 	                        FULL JOIN CONTENIDO_INGRESO_PASO C ON C.ID_INGRESO_PASO = B.ID
@@ -524,6 +534,7 @@ namespace MOTOR_WORKFLOW.Entities
                     stringBuilder.AppendLine(", es_final");
                 else
                     stringBuilder.AppendLine(", proxima_oficina");
+                stringBuilder.AppendLine(", notificacidi");
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("VALUES");
                 stringBuilder.AppendLine("(");
@@ -539,6 +550,7 @@ namespace MOTOR_WORKFLOW.Entities
                     stringBuilder.AppendLine(", @es_final");
                 else
                     stringBuilder.AppendLine(", @proxima_oficina");
+                stringBuilder.AppendLine(", @notificacidi");
                 stringBuilder.AppendLine(")");
                 stringBuilder.AppendLine("SELECT SCOPE_IDENTITY()");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -551,13 +563,14 @@ namespace MOTOR_WORKFLOW.Entities
                         command.Parameters.AddWithValue("@id_oficina", obj.id_oficina);
                     else
                         command.Parameters.AddWithValue("@en_usuario", obj.en_usuario);
-                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre.Trim());
                     command.Parameters.AddWithValue("@orden", (num + 1));
                     command.Parameters.AddWithValue("@activo", 1);
                     if (obj.es_final)
                         command.Parameters.AddWithValue("@es_final", obj.es_final);
                     else
                         command.Parameters.AddWithValue("@proxima_oficina", obj.proxima_oficina);
+                    command.Parameters.AddWithValue("@notificacidi", obj.notificacidi); 
                     command.Connection.Open();
                     return Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -579,6 +592,7 @@ namespace MOTOR_WORKFLOW.Entities
                 stringBuilder.AppendLine(", nombre=@nombre");
                 stringBuilder.AppendLine(", es_final=@es_final");
                 stringBuilder.AppendLine(", proxima_oficina=@proxima_oficina");
+                stringBuilder.AppendLine(", notificacidi=@notificacidi");
                 stringBuilder.AppendLine("WHERE");
                 stringBuilder.AppendLine("id=@id");
                 using (SqlConnection connection = DALBase.GetConnection())
@@ -588,9 +602,10 @@ namespace MOTOR_WORKFLOW.Entities
                     command.CommandText = stringBuilder.ToString();
                     command.Parameters.AddWithValue("@id_oficina", obj.id_oficina);
                     command.Parameters.AddWithValue("@en_usuario", obj.en_usuario);
-                    command.Parameters.AddWithValue("@nombre", obj.nombre);
+                    command.Parameters.AddWithValue("@nombre", obj.nombre.Trim());
                     command.Parameters.AddWithValue("@es_final", obj.es_final);
                     command.Parameters.AddWithValue("@proxima_oficina", obj.proxima_oficina);
+                    command.Parameters.AddWithValue("@notificacidi", obj.notificacidi);
                     command.Parameters.AddWithValue("@id", obj.id);
                     command.Connection.Open();
                     command.ExecuteNonQuery();

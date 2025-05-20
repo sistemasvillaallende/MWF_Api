@@ -17,7 +17,9 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                return new SqlConnection("Data Source=10.0.0.23;Initial Catalog=MOTOR_WORKFLOW;User ID=general;");
+                //POR FAVOR NO TOCAR
+                return new SqlConnection(
+                    Environment.GetEnvironmentVariable("CONN_STRING_MTF"));
             }
             catch (Exception ex)
             {
@@ -29,7 +31,9 @@ namespace MOTOR_WORKFLOW.Entities
         {
             try
             {
-                return new SqlConnection("Data Source=10.0.0.8;Initial Catalog=SIIMVA;User ID=general;");
+                //POR FAVOR NO TOCAR
+                return new SqlConnection(
+                    Environment.GetEnvironmentVariable("CONN_STRING_SIIMVA"));
             }
             catch (Exception ex)
             {

@@ -4,11 +4,16 @@ namespace EndPointIntegracion.Services
 {
     public class ColegiosServices : IColegiosServices
     {
-        public List<Colegios> read()
+        public List<Combo> read()
         {
-            List<Colegios> lst = new List<Colegios>();
-            lst.Add(new(1, "Colegio de Arquitectos"));
-            lst.Add(new(2, "Colegio de Ingenieros"));
+            List<Combo> lst = new List<Combo>();
+            Combo obj = new Combo();
+            obj.value = 1.ToString();
+            obj.text = "Colegio de Arquitectos";
+            lst.Add(obj);
+            obj.value = 1.ToString();
+            obj.text = "Colegio de Ingenieros";
+            lst.Add(obj);
             return lst;
         }
     }

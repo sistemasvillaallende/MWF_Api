@@ -470,7 +470,8 @@ namespace MOTOR_WORKFLOW.Entities
                    P.en_usuario AS en_vecino, 
                    P.es_final,
                    P.ORDEN,
-                   p.proxima_oficina
+                   p.proxima_oficina,
+                   O.nombre_oficina
                FROM TRAMITES A
                    INNER JOIN PASOS B ON A.id=B.id_tramites
                    INNER JOIN DDJJs C ON B.id=C.id_pasos
@@ -480,6 +481,7 @@ namespace MOTOR_WORKFLOW.Entities
                     COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
                    INNER JOIN TRAMITE T ON A.id_tramite=T.ID
                    INNER JOIN PASO P ON B.ID_PASO=P.ID
+                   LEFT JOIN SIIMVA.dbo.OFICINAS O ON p.proxima_oficina=O.codigo_oficina
                WHERE A.id = @idTramite
                UNION
                SELECT 
@@ -513,7 +515,8 @@ namespace MOTOR_WORKFLOW.Entities
                    P.en_usuario AS en_vecino, 
                    P.es_final,
                    P.ORDEN,
-                   p.proxima_oficina
+                   p.proxima_oficina,
+                   O.nombre_oficina
                FROM TRAMITES A
                    INNER JOIN PASOS B ON A.id=B.id_tramites
                    INNER JOIN ADJUNTOS D ON B.id=D.id_pasos
@@ -523,6 +526,7 @@ namespace MOTOR_WORKFLOW.Entities
                     COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT COLLATE SQL_Latin1_General_CP1_CI_AS
                    INNER JOIN TRAMITE T ON A.id_tramite=T.ID
                    INNER JOIN PASO P ON B.ID_PASO=P.ID
+                   LEFT JOIN SIIMVA.dbo.OFICINAS O ON p.proxima_oficina=O.codigo_oficina
                WHERE A.id = @idTramite
                UNION
                SELECT 
@@ -558,7 +562,8 @@ namespace MOTOR_WORKFLOW.Entities
                     P.en_usuario AS en_vecino,
                     P.es_final,
                     P.ORDEN,
-                    p.proxima_oficina
+                    p.proxima_oficina,
+                    O.nombre_oficina
                 FROM TRAMITES A 
                     INNER JOIN PASOS B ON A.id=B.id_tramites 
                     INNER JOIN FORMULARIOS D ON B.id=D.id_pasos
@@ -569,7 +574,8 @@ namespace MOTOR_WORKFLOW.Entities
                     COLLATE SQL_Latin1_General_CP1_CI_AS = VR.CUIT 
                     COLLATE SQL_Latin1_General_CP1_CI_AS
                     INNER JOIN TRAMITE T ON A.id_tramite=T.ID
-                    INNER JOIN PASO P ON B.ID_PASO=P.ID     
+                    INNER JOIN PASO P ON B.ID_PASO=P.ID
+                    LEFT JOIN SIIMVA.dbo.OFICINAS O ON p.proxima_oficina=O.codigo_oficina
                 WHERE A.id = @idTramite            
                 ORDER BY orden_ingreso_paso, row";
                     command.Parameters.AddWithValue("@idTramite", idTramite);
@@ -602,6 +608,9 @@ namespace MOTOR_WORKFLOW.Entities
                         int ordinal23 = sqlDataReader.GetOrdinal("es_final");
                         int orden = sqlDataReader.GetOrdinal("orden");
                         int proxima_oficina = sqlDataReader.GetOrdinal("proxima_oficina");
+                        int nombre_oficina = sqlDataReader.GetOrdinal("nombre_oficina");
+                        int i = 0;
+                        string nombre_oficina_actual = string.Empty;
                         while (sqlDataReader.Read())
                         {
                             ResultadoTramites resultadoTramites2 = new ResultadoTramites();
@@ -660,6 +669,23 @@ namespace MOTOR_WORKFLOW.Entities
                             if (resultadoTramites2.estado == 5)
                                 resultadoTramites2.estado = 1;
 
+                            if (i == 0)
+                            {
+                                resultadoTramites2.nombre_oficina = "Vecino";
+                                if(!sqlDataReader.IsDBNull(nombre_oficina))
+                                    nombre_oficina_actual = sqlDataReader.GetString(nombre_oficina);
+                                i++;
+                            }
+                            else
+                            {
+                                if (!sqlDataReader.IsDBNull(nombre_oficina))
+                                {
+                                    resultadoTramites2.nombre_oficina = nombre_oficina_actual;
+                                    nombre_oficina_actual = sqlDataReader.GetString(nombre_oficina);
+                                }
+                                    
+
+                            }
 
                             resultados.Add(resultadoTramites2);
                         }

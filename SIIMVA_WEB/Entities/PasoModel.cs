@@ -26,7 +26,7 @@ namespace MOTOR_WORKFLOW.Entities
         public int orden { get; set; }
 
         public int proxima_oficina { get; set; }
-
+        public bool notificacidi { get; set; }  
         public PasoModel()
         {
             this.activo = false;
@@ -38,6 +38,7 @@ namespace MOTOR_WORKFLOW.Entities
             this.nombre = string.Empty;
             this.orden = 0;
             this.proxima_oficina = 0;
+            this.notificacidi = false;  
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MOTOR_WORKFLOW.Services
 {
     public interface ITramiteService
     {
-        void activaDesactiva(Models.TramiteInsert obj);
+        void activaDesactiva(Models.TramiteActivar obj);
 
         List<Tramite> read();
 
@@ -25,5 +25,7 @@ namespace MOTOR_WORKFLOW.Services
         void update(Models.TramiteInsert obj);
         string getImgOficina(int ID);
         void delete(int id_tramite);
+
+        string VerificaConsistencia(int idTramite);
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,17 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\CIDI\**" />
-    <Compile Remove="Services\CIDI\**" />
     <Compile Remove="wwwroot\**" />
-    <Content Remove="Entities\CIDI\**" />
-    <Content Remove="Services\CIDI\**" />
     <Content Remove="wwwroot\**" />
-    <EmbeddedResource Remove="Entities\CIDI\**" />
-    <EmbeddedResource Remove="Services\CIDI\**" />
     <EmbeddedResource Remove="wwwroot\**" />
-    <None Remove="Entities\CIDI\**" />
-    <None Remove="Services\CIDI\**" />
     <None Remove="wwwroot\**" />
   </ItemGroup>
 
