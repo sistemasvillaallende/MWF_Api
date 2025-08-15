@@ -34,8 +34,8 @@ namespace MOTOR_WORKFLOW.Entities
             {
                 //POR FAVOR NO TOCAR
                 //return new SqlConnection("Data Source=10.0.0.23;Initial Catalog=SIIMVA;User ID=general;");
-                return new sqlconnection(
-                   environment.getenvironmentvariable("conn_string_siimva"));
+                return new SqlConnection(
+                   Environment.GetEnvironmentVariable("CONN_STRING_SIIMVA"));
             }
             catch (Exception ex)
             {
